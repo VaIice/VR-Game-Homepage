@@ -24,13 +24,13 @@
 
 ---
 
-## 유니티
+## 유니티 화면
 - 제작 중
 
 
 ---
 
-## 웹 페이지
+## 웹 페이지 화면
 #### 메인 화면
 ![Home](https://github.com/VaIice/Capstone/assets/141003473/1ff68715-a7ac-4c61-9940-7034dc2d8e97)
 
@@ -58,6 +58,18 @@
 
 ---
 
+#### 🖥 BackEnd
+|   BackEnd |
+| :------------: |
+| 김지수|
+|  ****1677 |
+| [![GitHub](https://img.shields.io/badge/-GitHub-black?style=flat-square&logo=github)](https://github.com/VaIice) |
+
+🛠️ **Tools and Technologies :** <br><br>
+- 제작 중
+- 
+---
+
 #### 🎨 FrontEnd
 |   FrontEnd |
 | :------------: |
@@ -73,14 +85,3 @@
 ![Amazon S3](https://img.shields.io/badge/Amazon_S3-%23D9313D.svg?&style=for-the-badge&logo=amazon-aws&logoColor=white)
 ![Amazon CloudFront](https://img.shields.io/badge/Amazon_CloudFront-%23FF9900.svg?&style=for-the-badge&logo=amazon-aws&logoColor=black)
 ![Figma](https://img.shields.io/badge/-Figma-F24E1E?logo=Figma&logoColor=white&style=for-the-badge)
-
----
-#### 🖥 BackEnd
-|   BackEnd |
-| :------------: |
-| 김지수|
-|  ****1677 |
-| [![GitHub](https://img.shields.io/badge/-GitHub-black?style=flat-square&logo=github)](https://github.com/VaIice) |
-
-🛠️ **Tools and Technologies :** <br><br>
-- 제작 중
