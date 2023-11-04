@@ -1,0 +1,691 @@
+.titleBoard {
+    left: 320px;
+    top: 160px;
+    position: absolute;
+    color: white;
+    font-size: 30px;
+    font-family: 'Libre Bodoni';
+    font-weight: 500;
+  }
+
+.titleLine {
+    width: 1320px;
+    height: 0.1px;
+    left: 300px;
+    top: 225px;
+    position: absolute;
+    border: 1.5px rgba(255, 255, 255, 0.5) solid;    
+}
+
+.pageNumber {
+    left: 960px;
+    top: 850px;
+    position: absolute;
+    color: white;
+    font-size: 28px;
+    font-family: 'Libre Bodoni';
+    font-weight: 400;
+    word-wrap: break-word;
+}
+
+  .writeButton {
+    width: 105px;
+    height: 40px;
+    left: 1520px;
+    top: 870px;
+    position: absolute;
+    background: #171A23;
+    border-radius: 10px;
+    border: 0.50px white solid;  
+    cursor: pointer;
+  }
+
+  .writeWord {
+    width: 105px;
+    height: 54px;
+    left: 1543px;
+    top: 876px;
+    position: absolute;
+    color: white;
+    font-size: 20px;
+    font-family: 'Inter';
+    font-weight: 300;
+    word-wrap: break-word;
+    cursor: pointer;
+  }
+
+.searchLineInner {
+    width: 48px;
+    left: 1320px;
+    top: 153px;
+    position: absolute;
+    transform: rotate(90deg);
+    transform-origin: 0 0;
+    border: 1.20px rgba(255, 255, 255, 0.69) solid;    
+}
+
+.searchLineOuter {
+    width: 410px;
+    height: 50px;
+    left: 1210px;
+    top: 152px;
+    position: absolute;
+    background: rgba(81, 81, 81, 0.15);
+    border-radius: 10px;
+    border: 1.20px rgba(255, 255, 255, 0.69) solid;    
+}
+
+.searchWord {
+    left: 1230px;
+    top: 165px;
+    position: absolute;
+    color: white;
+    font-size: 17px;
+    font-family: 'Libre Bodoni';
+    font-weight: 300;
+    word-wrap: break-word;
+}
+  .bulletinLineInner {
+    width: 25px;
+    height: 0;
+    left: 1501px;
+    top: 236px;
+    position: absolute;
+    transform: rotate(90deg);
+    transform-origin: 0 0;
+    border: 1.20px rgba(255, 255, 255, 0.3) solid;
+  }
+
+  .bulletinLineOuter {
+    width: 1320px;
+    height: 0.01px;
+    left: 298px;
+    top: 275px;
+    position: absolute;
+    border: 0.1px rgba(255, 255, 255, 0.3) solid;    
+}
+
+.bulletinContents {
+  left: 322px;
+  top: 300px;
+  position: absolute;
+  color: white;
+  font-size: 17px;
+  font-family: 'Libre Bodoni';
+}
+
+.commentsNumber {
+    left: 415px;
+    top: 241px;
+    position: absolute;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 17px;
+    font-family: 'Libre Bodoni';    
+}
+
+.userName {
+    left: 1410px;
+    top: 240px;
+    position: absolute;
+    color: white;
+    font-size: 17px;
+    font-family: 'Libre Bodoni';
+}
+
+.bulletinWord {
+  left: 322px;
+  top: 238px;
+  position: absolute;
+  color: white;
+  font-size: 17px;
+  font-family: 'Libre Bodoni';
+  /* cursor: pointer; */
+}
+
+.commentsNumber {
+  left: 415px;
+  top: 241px;
+  position: absolute;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 17px;
+  font-family: 'Libre Bodoni';    
+}
+
+.date {
+    left: 1530px;
+    top: 238px;
+    position: absolute;
+    color: white;
+    font-size: 17px;
+    font-family: 'Libre Bodoni';    
+}
+
+.BottomLine {
+    width: 1320px;
+    height: 0.1px;
+    left: 310px;
+    top: 850px;
+    position: absolute;
+    border: 1.5px rgba(255, 255, 255, 0.5) solid;    
+}
+
+.inputSearch {
+    width: 225px;
+    height: 10px;
+    outline: none;
+    border: none;
+    padding-top: 20px;
+    padding-bottom: 9px;
+    padding-left: 20px;
+    margin-left: 109px;
+    margin-top: 1px;
+    font-size: 18px;
+    font-weight: 400;
+    background-color: rgba(255, 255, 255, 0.0);
+    color: white;
+  }
+
+.bulletinContentsLine {
+  width: 1320px;
+  height: 0.01px;
+  left: 298px;
+  top: 600px;
+  position: absolute;
+  border: 0.1px rgba(255, 255, 255, 0.3) solid;    
+}
+
+.bulletinCommentsNumber {
+  color: white;
+  font-size: 17px;
+  font-family: 'Libre Bodoni'; /* 원하는 폰트로 변경 */
+  font-weight: 500;
+  position: absolute;
+  top: 610px;
+  left: 322px;
+}
+
+.bulletinCommentsLine {
+  width: 1320px;
+  height: 0.01px;
+  left: 298px;
+  top: 643px;
+  position: absolute;
+  border: 0.1px rgba(255, 255, 255, 0.3) solid;    
+}
+
+.bulletinCommentsRectangle {
+  width: 1180px;
+  height: 76px;
+  left: 322px;
+  top: 665px;
+  background: white;
+  position: absolute;
+}
+
+.bulletinModifyButton {
+  left: 1480px;
+  top: 560px;
+  position: absolute;
+  color: white;
+  font-size: 17px;
+  font-family: 'Libre Bodoni';
+}
+
+.bulletinRemoveButton {
+  left: 1565px;
+  top: 560px;
+  position: absolute;
+  color: white;
+  font-size: 17px;
+  font-family: 'Libre Bodoni';
+}
+
+.bulletinModifyRemoveSpace {
+  width: 25px;
+  height: 0;
+  left: 1541px;
+  top: 560px;
+  position: absolute;
+  transform: rotate(90deg);
+  transform-origin: 0 0;
+  border: 1.20px rgba(255, 255, 255, 0.3) solid;
+}
+
+.bulletinCommentsEnrollButton {
+  width: 85px;
+  height: 38px;
+  left: 1525px;
+  top: 701px;
+  position: absolute;
+  background: #171A23;
+  border-radius: 10px;
+  border: 0.50px white solid;  
+  cursor: pointer;
+}
+
+.bulletinCommentsEnrollText {
+  left: 1550px;
+  top: 708px;
+  position: absolute;
+  color: white;
+  font-size: 17px;
+  font-family: 'Inter';
+  font-weight: 300;
+  cursor: pointer;
+}
+
+.bulletinCommentsRectangleLine {
+  width: 1320px;
+  height: 0.01px;
+  left: 298px;
+  top: 765px;
+  position: absolute;
+  border: 0.1px rgba(255, 255, 255, 0.3) solid;    
+}
+
+.bulletinCommentsWordNumber {
+  left: 1538px;
+  top: 660px;
+  color: white;
+  font-size: 18px;
+  font-family: 'Inter';
+  font-weight: 500;
+  word-wrap: break-word;
+  position: absolute;
+}
+
+.bulletinCommentsBottomLine {
+  width: 1320px;
+  height: 0.01px;
+  left: 298px;
+  top: 860px;
+  position: absolute;
+  border: 0.1px rgba(255, 255, 255, 0.3) solid;    
+}
+
+.bulletinCommentsWritingButton {
+  width: 100px;
+  height: 38px;
+  left: 840px;
+  top: 793px;
+  position: absolute;
+  background: #171A23;
+  border-radius: 10px;
+  border: 0.50px white solid;  
+  cursor: pointer;
+}
+
+.bulletinCommentsWritingCancelButton {
+  width: 100px;
+  height: 38px;
+  left: 1020px;
+  top: 793px;
+  position: absolute;
+  background: #171A23;
+  border-radius: 10px;
+  border: 0.50px white solid;  
+  cursor: pointer;
+}
+
+.bulletinCommentsWritingText {
+  left: 864px;
+  top: 799px;
+  position: absolute;
+  color: white;
+  font-size: 17px;
+  font-family: 'Inter';
+  font-weight: 300;
+  cursor: pointer;
+}
+
+.bulletinCommentsWritingCancelText {
+  left: 1053px;
+  top: 800px;
+  position: absolute;
+  color: white;
+  font-size: 17px;
+  font-family: 'Inter';
+  font-weight: 300;
+  cursor: pointer;
+}
+
+.bulletinTitleRectangle {
+  width: 1314px;
+  height: 50px;
+  left: 301px;
+  top: 235px;
+  position: absolute;
+  background-color: white;
+}
+
+.bulletinTitleWord {
+  width: 97.5%;
+  height: 17px;
+  outline: none;
+  border: none;
+  margin-top: 7px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 15px;
+  font-size: 18px;
+}
+
+.bulletinTitleBottomLine {
+  width: 1320px;
+  height: 0.01px;
+  left: 298px;
+  top: 295px;
+  position: absolute;
+  border: 0.1px rgba(255, 255, 255, 0.3) solid;    
+}
+
+.bulletinSecretBottomLine {
+  width: 1320px;
+  height: 0.01px;
+  left: 298px;
+  top: 775px;
+  position: absolute;
+  border: 0.1px rgba(255, 255, 255, 0.5) solid;    
+}
+
+.bulletinContentRectangle {
+  width: 1320px;
+  height: 450px;
+  left: 301px;
+  top: 310px;
+  position: absolute;
+  background-color: white;  
+}
+
+.bulletinContentWord {
+  width: 98.5%;
+  /* height: 96.5%; */
+  outline: none;
+  border: none;
+  margin: 13px;
+  font-size: 18px;
+}
+
+.bulletinWritingFileButton {
+  width: 115px;
+  height: 38px;
+  left: 1495px;
+  top: 165px;
+  position: absolute;
+  background: #171A23;
+  border-radius: 10px;
+  border: 0.50px white solid;  
+  cursor: pointer;
+  display: inline-block;
+
+}
+
+.bulletinWritingFileText {
+  left: 1515px;
+  top: 172px;
+  position: absolute;
+  color: white;
+  font-size: 17px;
+  font-family: 'Inter';
+  font-weight: 300;
+  cursor: pointer;
+  /* display: none; */
+}
+
+.bulletinWritingSecretButton {
+  width: 115px;
+  height: 38px;
+  left: 1350px;
+  top: 165px;
+  position: absolute;
+  background: #171A23;
+  border-radius: 10px;
+  border: 0.50px white solid;  
+  cursor: pointer;
+}
+
+.bulletinWritingSecretText {
+  left: 1370px;
+  top: 172px;
+  position: absolute;
+  color: white;
+  font-size: 17px;
+  font-family: 'Inter';
+  font-weight: 300;
+  cursor: pointer;
+}
+
+.searchIcon {
+  width: 30px;
+  height: 30px;
+  left: 1575px;
+  top: 162px;
+  position: absolute;
+  cursor: pointer;
+}
+
+.checkboxSecret {
+  width: 20px;
+  height: 20px;
+  color: white;
+  left: 1425px;
+  top: 172px;
+  position: absolute;
+}
+
+.checkboxImage {
+  width: 20px;
+  height: 20px;
+  color: white;
+  left: 1570px;
+  top: 172px;
+  position: absolute;
+}
+
+.dropdownIcon {
+  width: 40px;
+  height: 40px;
+  left: 1277px;
+  top: 157px;
+  position: absolute;
+  cursor: pointer;
+}
+
+.searchDropdownContent {
+  display: none;
+  position: absolute;
+  background-color: #171A23;
+  color: white;
+  padding-left: 18px;
+  padding-right: 18px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: center;
+  z-index: 1;
+  list-style-type: none; /* 리스트 마커 제거 */
+  left: 1210px;
+  top: 204px;
+  border: 1px solid rgba(255, 255, 255, 0.69);
+  border-radius: 10px;
+}
+
+.searchDropdownContent.active,
+.searchDropdownContent:hover {
+  display: block;
+}
+
+.searchDropdownMenu {
+  font-size: 17px;
+  background-color: #171A23;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.postList {
+  color: white;
+  left: 322px;
+  top: 238px;
+  position: absolute;
+  color: white;
+  font-size: 17px;
+  font-family: 'Libre Bodoni';
+  list-style-type: none; /* 리스트 마커 제거 */
+}
+
+.postListTitle {
+  margin-bottom: 38px;
+  cursor: pointer;
+}
+
+.postListUser {
+  margin-bottom: 38px;
+  margin-left: 1000px;
+}
+
+.pageList {
+  left: 800px;
+  top: 820px;
+  position: absolute;  
+}
+
+.postListItem {
+  display: flex;
+  justify-content: space-between; /* 요소를 수평으로 배치하고 사이 공간을 최대화 */
+  align-items: center; /* 요소를 수직 가운데 정렬 */
+}
+
+.pagination {
+  position: absolute;
+  justify-content: center;
+  left: 800px;
+  top: 860px;
+  margin-top: 15px;
+  display: flex; /* 수평으로 정렬하기 위해 flex를 사용합니다. */
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+ul.pagination li {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  border: 1px solid #e2e2e2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+}
+
+ul.pagination li:first-child{
+  border-radius: 5px 0 0 5px;
+}
+
+ul.pagination li:last-child{
+  border-radius: 0 5px 5px 0;
+}
+
+ul.pagination li a {
+  text-decoration: none;
+  color: #337ab7;
+  font-size: 1rem;
+}
+
+ul.pagination li.active a {
+  color: white;
+}
+
+ul.pagination li.active {
+  background-color: #337ab7;
+}
+
+ul.pagination li a:hover,
+ul.pagination li a.active {
+  color: blue;
+}
+
+.page-selection {
+  width: 48px;
+  height: 30px;
+  color: #337ab7;
+}
+
+.bulletinCommentWord {
+  width: 97.5%;
+  height: 17px;
+  outline: none;
+  border: none;
+  margin-top: 7px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 15px;
+  font-size: 18px;
+}
+
+.postCommentList {
+  color: white;
+  left: 322px;
+  top: 780px;
+  position: absolute;
+  font-size: 17px;
+  font-family: 'Libre Bodoni';
+  list-style-type: none; /* 리스트 마커 제거 */
+}
+
+
+.postCommentListItem {
+  display: flex;
+  justify-content: space-between; /* 요소를 수평으로 배치하고 사이 공간을 최대화 */
+  align-items: center; /* 요소를 수직 가운데 정렬 */
+}
+
+.postCommentListContent {
+  margin-bottom: 38px;
+}
+
+.postCommentListWriter {
+  margin-bottom: 38px;
+}
+
+
+.commentsUserNameDateSpace {
+  width: 25px;
+  height: 0;
+  left: 404px;
+  top: 776px;
+  position: absolute;
+  transform: rotate(90deg);
+  transform-origin: 0 0;
+  border: 1.20px rgba(255, 255, 255, 0.3) solid;
+}
+
+.commentsModifyButton {
+  left: 1480px;
+  top: 776px;
+  position: absolute;
+  color: white;
+  font-size: 17px;
+  font-family: 'Libre Bodoni';
+}
+
+.commentsRemoveButton {
+  left: 1565px;
+  top: 776px;
+  position: absolute;
+  color: white;
+  font-size: 17px;
+  font-family: 'Libre Bodoni';
+}
+
+.commentsModifyRemoveSpace {
+  width: 25px;
+  height: 0;
+  left: 1541px;
+  top: 776px;
+  position: absolute;
+  transform: rotate(90deg);
+  transform-origin: 0 0;
+  border: 1.20px rgba(255, 255, 255, 0.3) solid;
+}

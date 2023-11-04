@@ -1,0 +1,190 @@
+.page {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: black;
+}
+
+.wallPaper {
+    opacity: 0.5;
+    width: 1920px;
+    height: 1080px;
+    left: 0;
+    top: 0;
+    position: absolute;
+  }
+
+  @font-face {
+    font-family: "Libre Bodoni";
+    src: url("../public/assets/font/LibreBodoni-VariableFont_wght.ttf");
+  }
+
+  .topLoginButton {
+    width: 95px;
+    height: 38px;
+    left: 1780px;
+    top: 28px;
+    position: absolute;
+    background: #171A23;
+    border-radius: 10px;
+    border: 0.50px white solid;  
+    cursor: pointer;
+  }
+  
+  .topLogin {
+    left: 1804px;
+    top: 36px;
+    position: absolute;
+    color: white;
+    font-size: 18px;
+    font-family: 'Libre Bodoni';
+    font-weight: 400;
+    cursor: pointer;
+  }
+  
+  .topNotice {
+    left: 1380px;
+    top: 36px;
+    position: absolute;
+    color: white;
+    font-size: 20px;
+    font-family: 'Libre Bodoni';
+    font-weight: 400;
+    cursor: pointer;
+  }
+  
+  .topGuide {
+    left: 1500px;
+    top: 36px;
+    position: absolute;
+    color: white;
+    font-size: 20px;
+    font-family: 'Libre Bodoni';
+    font-weight: 400;
+    cursor: pointer;
+  }
+  
+  .topCommunity {
+    left: 1620px;
+    top: 36px;
+    width: 108px;
+    height: 45px;
+    position: absolute;
+    color: white;
+    font-size: 20px;
+    font-family: 'Libre Bodoni';
+    font-weight: 400;
+    cursor: pointer;
+  }
+  
+  .topHome {
+    left: 250px;
+    top: 36px;
+    position: absolute;
+    color: white;
+    font-size: 21px;
+    font-family: 'Libre Bodoni';
+    font-weight: 400;
+    cursor: pointer;
+  }
+  
+  .topHomeButton {
+    left: 217px;
+    top: 33.5px;
+    position: absolute;
+    cursor: pointer;
+  }
+  
+  .upper {
+    width: 100%;
+    height: 9%;
+    position: absolute;
+    background: black;
+    opacity: 0.5;
+  }
+
+  .darkestPlanet {
+    left: 230px;
+    top: 350px;
+    position: absolute;
+    color: white;
+    font-size: 100px;
+    font-family: 'Libre Bodoni';
+    font-weight: 400;
+  }
+
+  .VRGame {
+    left: 230px;
+    top: 500px;
+    position: absolute;
+    color: white;
+    font-size: 40px;
+    font-family: 'Libre Bodoni';
+  }
+
+  .Intro {
+    text-align: left;
+    width: 650px;
+    left: 230px;
+    top: 595px;
+    position: absolute;
+    color: white;
+    font-size: 17px;
+    font-weight: 400;
+    word-wrap: break-word;    
+  }
+
+  .DownloadButton {
+    width: 209px;
+    height: 66px;
+    left: 230px;
+    top: 708px;
+    position: absolute;
+    background: #171A23;
+    border-radius: 10px;
+    border: 1px white solid;
+  }
+
+  .Download {
+    width: 150px;
+    height: 39px;
+    left: 268px;
+    top: 724px;
+    position: absolute;
+    color: white;
+    font-family: 'Libre Bodoni', serif;
+    font-size: 30px;
+    font-weight: 300;   
+  }
+
+  .dropdownContent {
+    display: none;
+    position: absolute;
+    background-color: #171A23;
+    color: white;
+    padding: 20px;
+    z-index: 1;
+    list-style-type: none;
+    left: 1600px;
+    top: 80px;
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 10px;
+  }
+
+  /* 드롭다운 내용을 보일 때의 스타일 */
+  .dropdownContent.active,
+  .dropdownContent:hover {
+    display: block; /* 마우스를 올리거나 active 클래스가 있을 때 보이게 함 */
+  }
+  
+  .dropdownMenu {
+    font-size: 17px;
+    background-color: #171A23;
+    padding: 10px;
+    cursor: pointer;
+  }

@@ -1,0 +1,133 @@
+@media (max-width: 767px) {
+    .upperSpace123 {
+      height: 8%;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+    }
+  
+    .upperHome123,
+    .upperNotice123,
+    .upperGuide123,
+    .upperCommunity123,
+    .upperLogin123
+     {
+      font-size: 15px;
+      font-weight: bold;
+      color: white;
+    }
+  
+    .contentWrap123 {
+      flex: 1;
+      background-color: black;
+      display: flex;
+      flex-direction: column;
+      justify-content: center; /* 내부 요소를 수평으로 가운데 정렬 */
+    }
+    
+    .Title123 {
+      font-size: 60px;
+      font-weight: 600;
+      color: white;
+      padding-left: 10%;
+    }
+    
+    .VRGame123 {
+      font-size: 30px;
+      font-weight: 600;
+      color: white;
+      padding-left: 10%;
+      margin-top: 5%;
+    }
+    
+    .Intro123 {
+      font-size: 15px;
+      font-weight: 600;
+      color: white;
+      padding-left: 10%;
+      margin-top: 5%;
+      margin-bottom: 10%;
+    }
+  }
+  
+  @media (min-width: 768px) {
+    .upperSpace123 {
+      height: 12%;
+      display: flex;
+      align-items: center;
+    }
+  
+    .upperHome123 {
+      font-size: 26px;
+      font-weight: bold;
+      color: white;
+      padding-left: 10%;
+    }
+    
+    .upperNotice123  {
+      font-size: 26px;
+      font-weight: bold;
+      color: white;
+      padding-right: 5%; /* 각 요소마다 오른쪽에 5% padding 추가 */
+      margin-left: auto;
+    }
+    
+    .upperGuide123,
+    .upperCommunity123 {
+      font-size: 26px;
+      font-weight: bold;
+      color: white;
+      padding-right: 5%; /* 각 요소마다 오른쪽에 5% padding 추가 */
+    }
+    
+    .upperLogin123 {
+      font-size: 26px;
+      font-weight: bold;
+      color: white;
+      padding-right: 10%;
+    }
+    
+    .contentWrap123 {
+      flex: 1;
+      background-color: black;
+      display: flex;
+      flex-direction: column;
+      justify-content: center; /* 내부 요소를 수평으로 가운데 정렬 */
+    }
+    
+    .Title123 {
+      font-size: 120px;
+      font-weight: 600;
+      color: white;
+      padding-left: 10%;
+    }
+    
+    .VRGame123 {
+      font-size: 100px;
+      font-weight: 600;
+      color: white;
+      padding-left: 10%;
+    }
+    
+    .Intro123 {
+      font-size: 60px;
+      font-weight: 600;
+      color: white;
+      padding-left: 10%;
+      margin-bottom: 5%;
+    }
+  }
+  
+  .page123 {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    background-color: #000000;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }

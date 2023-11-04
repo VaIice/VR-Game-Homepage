@@ -1,0 +1,54 @@
+.titleLogin {
+  left: 920px;
+  top: 290px;
+  position: absolute;
+  color: white;
+  font-size: 30px;
+  font-family: 'Libre Bodoni';
+  font-weight: 500;
+}
+
+.bottomLoginButton {
+    width: 440px;
+    height: 70px;
+    left: 740px;
+    top: 600px;
+    position: absolute;
+    background: #171A23;
+    border-radius: 10px;
+    border: 0.50px white solid;
+    cursor: pointer;
+    font-family: 'Libre Bodoni';
+    font-size: 22px;
+    font-weight: 400;
+    color: white;
+}
+
+.bottomLoginButton:disabled {
+  background-color: #919191;
+  color:white;
+}
+
+.signUp {
+  left: 1080px;
+  top: 700px;
+  position: absolute;
+  color: white;
+  font-size: 20px;
+  font-family: 'Libre Bodoni';
+  font-weight: 400;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.searchPassword {
+  left: 750px;
+  top: 695px;
+  position: absolute;
+  color: white;
+  font-size: 20px;
+  font-family: 'Libre Bodoni';
+  font-weight: 400;
+  text-decoration: underline;
+  cursor: pointer;  
+}

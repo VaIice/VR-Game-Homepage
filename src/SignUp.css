@@ -1,0 +1,110 @@
+  .page {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: black;
+  }
+  
+  .titleSignUp {
+    left: 890px;
+    top: 125px;
+    position: absolute;
+    color: white;
+    font-size: 30px;
+    font-family: 'Libre Bodoni';
+    font-weight: 500;
+  }
+  
+  .bottomSignUpButton {
+      width: 440px;
+      height: 70px;
+      left: 740px;
+      top: 650px;
+      position: absolute;
+      background: #171A23;
+      border-radius: 10px;
+      border: 0.50px white solid;
+      cursor: pointer;
+      font-family: 'Libre Bodoni';
+      font-size: 22px;
+      font-weight: 400;
+      color: white;
+  }
+  
+  .bottomSignUpButton:disabled {
+    background-color: #919191;
+    color:white;
+  }
+  
+  .inputWrap {
+    width: 440px;
+    height: 60px;
+    position: absolute;
+    background: white;
+    border: 1px solid #e2e0e0;
+    left: 740px;
+  }
+  
+  .emailCheck {
+    width: 100px;
+    height: 40px;
+    left: 1215px;
+    top: 210px;
+    position: absolute;
+    background: #171A23;
+    border-radius: 10px;
+    border: 0.50px white solid;  
+    cursor: pointer;
+    font-size: 15.5px;
+    font-weight: 500;
+    color:white;
+  }
+
+  .emailCheck:disabled {
+    background-color: #919191;
+    color: white;
+  }
+
+  .inputWrap:focus-within {
+    border: 1px solid #9e30f4;
+  }
+  
+  .input {
+    width: 90%;
+    height: 17px;
+    outline: none;
+    border: none;
+    padding-top: 23px;
+    padding-bottom: 21px;
+    padding-left: 15px;
+    font-size: 18px;
+    font-weight: 400;
+  }
+  
+  .input::placeholder {
+    color: #dadada;
+  }
+  
+  .errorMessage{
+    color: rgba(255, 0, 64, 0.70);
+    font-size: 12px;
+    left: 740px;
+    position: absolute;
+  }
+
+  .withdrawalButton{
+    left: 1075px;
+    top: 735px;
+    position: absolute;
+    color: white;
+    font-size: 20px;
+    font-family: 'Libre Bodoni';
+    font-weight: 400;
+    text-decoration: underline;
+    cursor: pointer; 
+  }
