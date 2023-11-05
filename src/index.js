@@ -5,6 +5,7 @@ import './SignUp.css';
 import './Home.css';
 import './Board.css';
 import './example.css';
+import './exampleBoard.css';
 
 import App from './App';
 import {CookiesProvider} from 'react-cookie';

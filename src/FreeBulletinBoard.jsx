@@ -22,19 +22,19 @@ export default function FreeBulletinBoard() {
                 const response = await axios.get(SERVER_URL_FREE_LIST);
                 setPosts(response.data);
                 FreeBulletinBoardList = response.data;
-                console.log(456, response.data);
+                console.log(`${process.env.REACT_APP_SERVER_URL}/boards/FREE/list?page=1`);
                 setPostsLoaded(true);
             } catch (error) {
                 alert('Error fetching data: FreeBulletinBoard', error);
+                console.log(SERVER_URL_FREE_LIST);
             }
 
         };
         fetchData();
     }, []);
 
-    const SERVER_URL_FREE_LIST_PAGE = `${process.env.REACT_APP_SERVER_URL}/boards/FREE/list?page=${page}`
-
     const handlePage = async (page) => {
+        const SERVER_URL_FREE_LIST_PAGE = `${process.env.REACT_APP_SERVER_URL}/boards/FREE/list?page=${page}`
         const fetchData = async () => {
             if (searchFlag === false) {
             const response = await axios.get(SERVER_URL_FREE_LIST_PAGE, {
@@ -261,7 +261,7 @@ export default function FreeBulletinBoard() {
             {/* <div className="pageNumber">1</div> */}
             <div className="writeButton" onClick={goToFreeBulletinBoardPageWriting}/>
             <div className='writeWord' onClick={goToFreeBulletinBoardPageWriting}>글쓰기</div>
-            <Posts posts={posts}></Posts>
+            {/* <Posts posts={posts}></Posts> */}
             <Pagination className="pagination"
                 activePage={posts.page}
                 itemsCountPerPage={posts.size}

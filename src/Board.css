@@ -554,10 +554,10 @@
   align-items: center; /* 요소를 수직 가운데 정렬 */
 }
 
-.pagination {
+.pagination123 {
   position: absolute;
   justify-content: center;
-  left: 800px;
+  left: 750px;
   top: 860px;
   margin-top: 15px;
   display: flex; /* 수평으로 정렬하기 위해 flex를 사용합니다. */
@@ -572,7 +572,7 @@ ul.pagination li {
   display: inline-block;
   width: 30px;
   height: 30px;
-  border: 1px solid #e2e2e2;
+  border: 1px solid white;
   display: flex;
   justify-content: center;
   align-items: center;

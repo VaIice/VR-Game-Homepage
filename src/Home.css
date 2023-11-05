@@ -188,3 +188,30 @@
     padding: 10px;
     cursor: pointer;
   }
+
+  .dropdownMenu123 {
+    /* 드롭다운 메뉴의 스타일 설정 */
+    position: absolute;
+    top: 80%;
+    width: 95%;
+    height: 175%;
+    border-radius: 10px;
+    padding: 10%;
+    cursor: pointer;
+    left: 50%;
+    transform: translate(-50%, 0);
+    background-color: black;
+    border: 1px solid rgba(255, 255,255, 1); /* border 스타일 추가 */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+
+  .dropdownWord {
+    font-size: 20px;
+    list-style-type: none; 
+  }
+
+  .upperCommunity123:hover + .dropdownMenu123 {
+    display: block;
+  }

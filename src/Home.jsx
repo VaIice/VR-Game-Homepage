@@ -1,19 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from "react-router-dom";
 import { Cookies } from 'react-cookie';
 
 const cookies = new Cookies()
 
-export default function Home() {
-
-
-    const [accessToken, setAccessToken] = useState('');
-    // refreshToken
-    const [refreshToken, setRefreshToken] = useState('');
-    // accessTokenExpiresln
-    const [accessTokenExpiresln, setAccessTokenExpiresln] = useState('');
-      
-
+export default function NoticeBoard() {
     const navigate = useNavigate();
     
     const goToHome = () => {
@@ -47,52 +38,47 @@ export default function Home() {
       };
     
     return (
-        <div className="page">
-        <img src="assets/image/555.png" alt="background" className='wallPaper'/>
-            {/* <div className="upper"/> */}
-            {/* <hr style={{display: 'white', marginTop: 97}}/> */}
-            <div>{
-                cookies.get('accessToken') ? (
-                    <div className="topLoginButton" onClick={goToInfo}></div>        
-                ) : (
-                    <div className="topLoginButton" onClick={goToLogin}></div>
-                )
-            }</div>
-            <div>{
-                cookies.get('accessToken') ? (
-                    <div className="topLogin" onClick={goToInfo}>내 정보</div>        
-                ) : (
-                    <div className="topLogin" onClick={goToLogin}>Login</div>
-                )
-            }</div>
-            <div className="topNotice" onClick={goToNoticeBoard}>News</div>
-            <div className="topGuide" onClick={goToInfo}>Guide</div>
-            <div
-                className="topCommunity"
-                onMouseEnter={toggleDropdown}
-                onMouseLeave={toggleDropdown}
-                >
-                Community
+        <div className="page123">
+            <img src="assets/image/555.png" alt="background" className='wallPaper123'/>
+            <div className="upperSpace123">
+                <div className="upperHomeWrap">
+                    <button class="upperHome123" onClick={goToHome}>Home</button>
+                </div>
+
+                <div className="upperNoticeWrap">
+                    <button className="upperNotice123" onClick={goToNoticeBoard}>Notice</button>
+                </div>
+
+                <div className="upperGuideWrap">
+                    <button className="upperGuide123" onClick={goToInfo}>Guide</button>
+                </div>
+
+                <div className="upperCommunityWrap">
+                    <button className="upperCommunity123"  onMouseEnter={toggleDropdown} onMouseLeave={toggleDropdown}>
+                        Community
+                        {isDropdownVisible && (
+                            <div className="dropdownMenu123">
+                                <li onClick={goToFreeBulletinBoard} className="dropdownWord">자유 게시판</li>
+                                <li onClick={goToReportBulletinBoard} className="dropdownWord">신고 게시판</li>
+                            </div>
+                        )}
+                    </button>
+                </div>
+
+                <div className="upperLoginWrap">
+                    { cookies.get('accessToken') ? (
+                        <button className="upperLogin123" onClick={goToInfo}>Info</button>        
+                    ) : (
+                        <button className="upperLogin123" onClick={goToLogin}>Login</button>
+                    )}
+                </div>
+
             </div>
 
-            <div className={`dropdownContent ${isDropdownVisible ? 'active' : ''}`}>
-                {/* <li className="dropdownMenu" onClick={goToFreeBulletinBoard}>자유 게시판</li> */}
-                <li className="dropdownMenu" onClick={goToFreeBulletinBoard}>자유 게시판</li>
-                <li className="dropdownMenu" onClick={goToReportBulletinBoard}>신고 게시판</li>
+            <div className="contentWrap123">
+                <div className="Title123">Darkest Planet</div>
+                <div className="VRGame123">VRGame</div>
+                <div className="Intro123">Intro</div>
             </div>
-
-            <div className="topHome" onClick={goToHome}>Home</div>
-            <div>
-                <img src={"/assets/image/home1.svg"} alt="home" className="topHomeButton" onClick={goToHome}/>
-            </div>
-            
-            <div className="darkestPlanet">Darkest Planet</div>
-            <div className="VRGame">VR Game</div>
-            <div className="Intro">인간과 좀비의 생존을 건 전투가 치열한 세상, 망가지기 시작한 사회 속 생존자들은 결국 더욱 흉포한 위협과 마주하게 되게 된다. </div>
-            <div className="DownloadButton" />
-            <div className="Download">Download</div>
         </div>
-
-        
-    )
-}
+    )}

@@ -1,0 +1,190 @@
+.BulletinBoardUpper {
+        flex: 1;
+        display: flex;
+        align-items: flex-end; /* 요소를 수직 중앙에 정렬 */
+}
+
+.BulletinBoardUpperLeft {
+        flex: 1;
+        padding-left: 15%;
+}
+
+.BulletinBoardUpperRight {
+        flex: 1;
+        padding-right: 15%;
+}
+
+.BulletinBoardTitle123 {
+        font-size: 40px;
+        font-weight: 600;
+        color: white;
+}
+
+.searchLineOuter123 {
+        width: 400px;
+        height: 45px;
+        background: rgba(81, 81, 81, 0.15);
+        border-radius: 10px;
+        border: 1.20px rgba(255, 255, 255, 0.69) solid;   
+        margin-left: auto;
+        flex: 1;
+        display: flex;
+        /* background-color: bisque; */
+}
+
+.searchLineLeft123 {
+        flex: 3;
+        display: flex;
+        flex-direction: row;
+}
+
+.searchWord123 {
+        color: white;
+        font-size: 17px;
+        font-family: 'Libre Bodoni';
+        font-weight: 300;
+        word-wrap: break-word;
+        text-align: center;
+        margin-left: 19%;
+        margin-top: 10%;
+        position: relative;
+        width: 35px;
+        /* background-color: aquamarine; */
+}
+
+.searchDropdownIcon123 {
+        cursor: pointer;
+        position: relative;
+        margin-top: 5%;
+        margin-left: auto;
+        /* background-color: aqua; */
+}
+
+.searchLineInner123 {
+        height: 95%;
+        border: 1.20px rgba(255, 255, 255, 0.69) solid;    
+        margin-left: auto;
+}
+
+.searchLineRight123 {
+        flex: 9.2;
+        display: flex;
+}
+
+.searchLineInput {
+        flex: 1;
+        border: none;
+        outline: none;
+        font-size: 16px;
+        font-weight: 400;
+        background-color: rgba(255, 255, 255, 0.0);
+        color: white;
+        margin: 4%;
+        margin-right: 3%;
+}
+
+.searchIcon123 {
+        margin-left: auto;
+        width: 28px;
+        height: 28px;
+        margin-top: 7px;
+        margin-right: 12px;
+        cursor: pointer;
+}
+
+.BulletinBoardLongLineUpper {
+        width: 70%;
+        height: 0.10px;
+        border: 1.5px rgba(255, 255, 255, 0.5) solid;    
+        margin-top: 1.5%;
+        margin-left: auto;
+        margin-right: auto;
+}
+
+.BulletinBoardLongLineBottom {
+        width: 70%;
+        height: 0.01px;
+        border: 1.5px rgba(255, 255, 255, 0.5) solid;    
+        margin-bottom: 0.5%;
+        margin-left: auto;
+        margin-right: auto;
+}
+
+.BulletinBoardMiddle {
+        flex: 6;
+        display: flex;
+}
+
+.BulletinBoardBottom {
+        flex: 1;
+        /* background-color: antiquewhite; */
+        display: flex;
+}
+
+.BulletinBoardWriteButton {
+        width: 105px;
+        height: 40px;
+        background: black;
+        border-radius: 10px;
+        border: 0.50px white solid;  
+        cursor: pointer;
+        color: white;
+        font-size: 20px;
+        font-family: 'Inter';
+        font-weight: 300;
+        margin-right: 15%;
+        margin-top: 0.8%;
+        padding-bottom: 0.15%;
+}
+
+.pagination {
+        justify-content: center;
+        margin-top: 15px;
+        display: flex;
+        margin-left: auto;
+        margin-right: auto;
+        margin-right: 25%;
+}
+      
+ul {
+list-style: none;
+padding: 0;
+}
+
+ul.pagination li {
+display: inline-block;
+width: 30px;
+height: 30px;
+border: 1px solid white;
+display: flex;
+justify-content: center;
+align-items: center;
+font-size: 1rem;
+}
+
+ul.pagination li:first-child{
+border-radius: 5px 0 0 5px;
+}
+
+ul.pagination li:last-child{
+border-radius: 0 5px 5px 0;
+}
+
+ul.pagination li a {
+text-decoration: none;
+color: #337ab7;
+font-size: 1rem;
+}
+
+ul.pagination li.active a {
+color: white;
+}
+
+ul.pagination li.active {
+background-color: #337ab7;
+}
+
+ul.pagination li a:hover,
+ul.pagination li a.active {
+color: blue;
+}
