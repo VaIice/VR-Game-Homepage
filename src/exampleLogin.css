@@ -33,7 +33,7 @@
 
 .input123 {
     width: 94%;
-    height: 98%;
+    height: 95%;
     margin-left: 2%;
     outline: none;
 	border: none;
@@ -80,4 +80,32 @@
 .bottomLoginButton123:disabled {
     background-color: #919191;
     color:white;
+  }
+
+  .signInBottom {
+    width: 99%;
+    height: 12%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5%;
+    display: flex;
+    /* background-color: antiquewhite; */
+  }
+
+  .searchPassword123 {
+    color: white;
+    text-decoration: underline;
+    cursor: pointer; 
+    margin-left: 0.5%;
+    font-size: 18px;
+	font-weight: 400;
+  }
+
+  .signUp123 {
+    color: white;
+    text-decoration: underline;
+    cursor: pointer; 
+    margin-left: auto;
+    font-size: 18px;
+	font-weight: 400;
   }

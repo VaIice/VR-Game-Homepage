@@ -6,10 +6,9 @@ import Swal from "sweetalert2";
 
 
 const SERVER_URL = `${process.env.REACT_APP_SERVER_URL}/auth/login`
-
 const cookies = new Cookies()
 
-export default function Login() {
+export default function NoticeBoard() {
         // const [cookies, setCookie, removeCookie] = useCookies(['Token']);
         // 사용자가 적고 있는 이메일 
         const [email, setEmail] = useState('');
@@ -193,69 +192,90 @@ export default function Login() {
       };
 
     return (
-        <div className="page">
-        <img src="assets/image/wallpaper.jpg" alt="background" className='wallPaper'/>
-            <div className="upper"/>
-            <hr style={{display: 'white', marginTop: 96}}/>
-            <div className="topLoginButton" onClick={goToLogin}/>
-            <div className="topLogin" onClick={goToLogin}>Login</div>
-            <div className="topNotice" onClick={goToNoticeBoard}>News</div>
-            <div className="topGuide">Guide</div>
-            <div className="topCommunity" onMouseEnter={toggleDropdown} onMouseLeave={toggleDropdown}>Community</div>
+        <div className="page123">
+            <img src="assets/image/555.png" alt="background" className='wallPaper123'/>
+            <div className="upperSpace123">
+                <div className="upperHomeWrap">
+                    <button class="upperHome123" onClick={goToHome}>Home</button>
+                </div>
 
-            <div className={`dropdownContent ${isDropdownVisible ? 'active' : ''}`}>
-                <li className="dropdownMenu" onClick={goToFreeBulletinBoard}>자유 게시판</li>
-                <li className="dropdownMenu" onClick={goToReportBulletinBoard}>신고 게시판</li>
+                <div className="upperNoticeWrap">
+                    <button className="upperNotice123" onClick={goToNoticeBoard}>Notice</button>
+                </div>
+
+                <div className="upperGuideWrap">
+                    <button className="upperGuide123">Guide</button>
+                </div>
+
+                <div className="upperCommunityWrap">
+                    <button className="upperCommunity123"  onMouseEnter={toggleDropdown} onMouseLeave={toggleDropdown}>
+                        Community
+                        {isDropdownVisible && (
+                            <div className="dropdownMenu123">
+                                <li onClick={goToFreeBulletinBoard} className="dropdownWord">자유 게시판</li>
+                                <li onClick={goToReportBulletinBoard} className="dropdownWord">신고 게시판</li>
+                            </div>
+                        )}
+                    </button>
+                </div>
+
+                <div className="upperLoginWrap">
+                    { cookies.get('accessToken') ? (
+                        <button className="upperLogin123">Info</button>        
+                    ) : (
+                        <button className="upperLogin123" onClick={goToLogin}>Sign In</button>
+                    )}
+                </div>
+
             </div>
 
-            <div className="topHome" onClick={goToHome}>Home</div>
-            <div className="topHomeButton" onClick={goToHome}/>
+            <div className="contentWrap123">
+                <div className="SignInWrap">
+                    <div className="titleLogin123">Sign In</div>
+                    <div className="inputWrapEmail123"> 
+                        <input
+                            type = 'text'
+                            className="input123"
+                            placeholder="이메일"
+                            value={email}
+                            onChange={handleEmail}
+                        />
+                    </div>
+                    <div className="errorMessage123">
+                        {
+                            email.length > 0 && !emailValid && (
+                                <span>올바른 이메일 형식을 입력해주세요.</span>
+                            )
+                        }
+                    </div>
+                    <div className="inputWrapPassword123"> 
+                        <input
+                            type = 'password'
+                            className="input123"
+                            placeholder="비밀번호"
+                            value={pw}
+                            onChange={handlePw}/>
+                    </div>
+                    <div className="errorMessage123">
+                    {
+                        pw.length > 0 && !pwValid && (
+                            <span>8~20자의 영문, 숫자를 입력해주세요.</span>
+                        )
+                    }
+                    </div>
 
-            <div className="titleLogin">Login</div>
+                    <button onClick={onClickConfirmButton} disabled={notAllow} className="bottomLoginButton123">Sign In</button>
 
-            <div className="inputWrap" style={{top: 370}}> 
-                <input
-                    type = 'text'
-                    className="input"
-                    placeholder="이메일"
-                    value={email}
-                    onChange={handleEmail}
-                />
-            </div>
-            <div>
-                {
-                    email.length > 0 && !emailValid && (
-                        <div className="errorMessage" style={{top: 442}}>올바른 이메일 형식을 입력해주세요.</div>
-                    )
-                }
-            </div>
+                    <div className="signInBottom">
+                        <div className="searchPassword123" onClick={goToSearchPassword}>
+                            비밀번호 찾기
+                        </div>
 
-            <div className="inputWrap" style={{top: 480}}>
-                <input
-                    type = 'password'
-                    className="input"
-                    placeholder="비밀번호"
-                    value={pw}
-                    onChange={handlePw}/>
-            </div>
-            <div>
-                {
-                    pw.length > 0 && !pwValid && (
-                        <div className="errorMessage" style={{top: 552}}>8~20자의 영문, 숫자를 입력해주세요.</div>
-                    )
-                }
-            </div>
-            
-            <div>
-                <button onClick={onClickConfirmButton} disabled={notAllow} className="bottomLoginButton">Login</button>
-            </div>
-
-            <div className="searchPassword" onClick={goToSearchPassword}>
-                비밀번호 찾기
-            </div>
-
-            <div className="signUp" onClick={goToSignUp}>
-                Sign Up
+                        <div className="signUp123" onClick={goToSignUp}>
+                            Sign Up
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     )}

@@ -266,14 +266,15 @@ export default function NoticeBoard() {
 
                     <button onClick={onClickConfirmButton} disabled={notAllow} className="bottomLoginButton123">Sign In</button>
 
-{/* 
-                    <div className="searchPassword" onClick={goToSearchPassword}>
-                        비밀번호 찾기
-                    </div>
+                    <div className="signInBottom">
+                        <div className="searchPassword123" onClick={goToSearchPassword}>
+                            비밀번호 찾기
+                        </div>
 
-                    <div className="signUp" onClick={goToSignUp}>
-                        Sign Up
-                    </div> */}
+                        <div className="signUp123" onClick={goToSignUp}>
+                            Sign Up
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

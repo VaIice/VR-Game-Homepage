@@ -69,7 +69,7 @@ export default function NoticeBoard() {
                     { cookies.get('accessToken') ? (
                         <button className="upperLogin123" onClick={goToInfo}>Info</button>        
                     ) : (
-                        <button className="upperLogin123" onClick={goToLogin}>Login</button>
+                        <button className="upperLogin123" onClick={goToLogin}>Sign In</button>
                     )}
                 </div>
 
