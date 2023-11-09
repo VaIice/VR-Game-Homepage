@@ -133,6 +133,7 @@
 .postListTitle123 {
         margin-left: 0.5%;
         padding: 1.5%;
+        display: flex;
 }
 
 .postListUser123 {

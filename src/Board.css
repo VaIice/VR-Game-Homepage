@@ -112,6 +112,7 @@
   color: white;
   font-size: 17px;
   font-family: 'Libre Bodoni';
+  white-space: pre-wrap;
 }
 
 .commentsNumber {

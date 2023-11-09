@@ -1,3 +1,18 @@
+.page12345 {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    background-color: #000000;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    max-height: 200%;
+}
+
 .BulletinBoardSecretButton,
 .BulletinBoardImageButton {
     display: flex;
@@ -33,4 +48,115 @@
 .BulletinBoardWritingUpperRight {
     padding-right: 15%;
     display: flex;
+}
+
+.BulletinBoardWritingMiddle {
+    flex: 5;
+    display: flex;
+    flex-direction: column;
+    padding-right: 15%;
+    padding-left: 15%;
+}
+
+.BulletinBoardWritingTitleWrap {
+    /* display: flex; */
+    flex: 1;
+    background-color: white;
+    margin-top: 0.5%;
+    margin-bottom: 0.5%;
+}
+
+.BulletinBoardWritingImage {
+    justify-content: center;
+    align-items: center;
+}
+
+.BulletinBoardWritingImage img{
+    width: 150px;
+    height: 150px;
+    padding: 0.3%;
+    padding-right: 0.5%;
+    margin-top: 0.3%;
+    object-fit: cover;
+}
+
+.BulletinBoardWritingContentsWrap {
+    display: flex;
+    flex: 8;
+    background-color: white;
+    justify-content: center;
+    margin-top: 0.5%;
+    margin-bottom: 0.5%;
+}
+
+.BulletinBoardShortLine {
+    width: 99.5%;
+    height: 0.01px;
+    border: 1.5px rgba(255, 255, 255, 0.5) solid;    
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.inputWritingContents {
+    width: 98%;
+    height: 90%;
+    outline: none;
+   border: none;
+    font-size: 16px;
+   font-weight: 400;
+    margin-top: 1%;
+    margin-left: 1.5%;
+    font-family: 'Inter';
+}
+
+.BulletinBoardWritingButton {
+    width: 105px;
+    height: 40px;
+    background: black;
+    border-radius: 10px;
+    border: 0.50px white solid;  
+    cursor: pointer;
+    color: white;
+    font-size: 20px;
+    font-family: 'Inter';
+    font-weight: 300;
+    margin-left: auto;
+    padding-bottom: 0.15%;
+}
+
+.lockIcon {
+    margin-right: 2.5px;
+}
+
+.BulletinBoardWritingCancelButton {
+    width: 105px;
+    height: 40px;
+    background-color: #919191;
+    border-radius: 10px;
+    border: 0.50px white solid;  
+    cursor: pointer;
+    color: white;
+    font-size: 20px;
+    font-family: 'Inter';
+    font-weight: 300;
+    padding-bottom: 0.15%;
+    margin-right: auto;
+    margin-left: 1.5%;
+}
+
+.BulletinBoardWritingBottom {
+    flex: 1;
+    display: flex;
+    margin-top: 0.5%;
+}
+
+.BulletinBoardWritingTitleInput {
+    width: 96%;
+    height: 95%;
+    margin-left: 1.5%;
+    outline: none;
+   border: none;
+    font-size: 16px;
+   font-weight: 400;
+    /* background-color: aqua; */
 }

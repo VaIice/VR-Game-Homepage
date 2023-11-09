@@ -109,7 +109,7 @@ export default function FreeBulletinBoardPageWriting() {
     }
 
     const onClickCancelButton = async () => {
-        alert('취소 버튼 클릭');
+        goToFreeBulletinBoard();
     }
 
 
@@ -131,10 +131,10 @@ export default function FreeBulletinBoardPageWriting() {
 
     const onFileSelect = (e) => {
         if (e.target.files[0]) {
-            const selectedFile = e.target.files[0];
-            setFile(selectedFile);
+            const selectedFiles = Array.from(e.target.files);
+            setFile(selectedFiles);
             setFileExist(true);
-            console.log('선택한 파일:', selectedFile.name);
+            console.log('선택한 파일:', selectedFiles.map(file => selectedFiles.name));
         }
         else {
           console.log('파일이 선택되지 않았습니다.');
@@ -143,107 +143,117 @@ export default function FreeBulletinBoardPageWriting() {
     };
 
     return (
-        <div className="page">
-        <img src="assets/image/wallpaper.jpg" alt="background" className='wallPaper'/>
-            <div className="upper"/>
-            <hr style={{display: 'white', marginTop: 97}}/>
-            <div className="topLoginButton" onClick={goToLogin}/>
-            <div className="topLogin" onClick={goToLogin}>Login</div>
-            <div className="topNotice" onClick={goToNoticeBoard}>News</div>
-            <div className="topGuide">Guide</div>
-            <div
-                className="topCommunity"
-                onMouseEnter={toggleDropdown}
-                onMouseLeave={toggleDropdown}
-                >
-                Community
-            </div>
-
-            <div className={`dropdownContent ${isDropdownVisible ? 'active' : ''}`}>
-                <li className="dropdownMenu" onClick={goToFreeBulletinBoard}>자유 게시판</li>
-                <li className="dropdownMenu" onClick={goToReportBulletinBoard}>신고 게시판</li>
-            </div>
-
-            <div className="topHome" onClick={goToHome}>Home</div>
-            <div className="topHomeButton" onClick={goToHome}/>
-
-            <div className='titleBoard'>자유 게시판</div>
-            <div className="titleLine"/>
-
-            <div>
-                
-                <div className="bulletinWritingFileButton" onClick={onClickImageUpload}/>
-                <input
-                    type="file"
-                    ref={imageInput}
-                    accept="image/*"
-                    style={{display:'none'}}
-                    onChange={onFileSelect}
-                />
-                <div className="bulletinWritingFileText" onClick={onClickImageUpload}>
-                    이미지
+        <div className="page12345">
+            <img src="assets/image/555.png" alt="background" className='wallPaper123'/>
+            <div className="upperSpace123">
+                <div className="upperHomeWrap">
+                    <button class="upperHome123" onClick={goToHome}>Home</button>
                 </div>
 
-                <div>
-                {fileExist && (
-                    <div>
-                    <img
-                        src={URL.createObjectURL(file)} // 파일 미리보기를 위해 사용
-                        alt="Selected"
-                        style={{ maxWidth: '20%', position: 'absolute' }}
-                    />
+                <div className="upperNoticeWrap">
+                    <button className="upperNotice123" onClick={goToNoticeBoard}>Notice</button>
+                </div>
+
+                <div className="upperGuideWrap">
+                    <button className="upperGuide123">Guide</button>
+                </div>
+
+                <div className="upperCommunityWrap">
+                    <button className="upperCommunity123"  onMouseEnter={toggleDropdown} onMouseLeave={toggleDropdown}>
+                        Community
+                        {isDropdownVisible && (
+                            <div className="dropdownMenu123">
+                                <li onClick={goToFreeBulletinBoard} className="dropdownWord">자유 게시판</li>
+                                <li onClick={goToReportBulletinBoard} className="dropdownWord">신고 게시판</li>
+                            </div>
+                        )}
+                    </button>
+                </div>
+
+                <div className="upperLoginWrap">
+                    { cookies.get('accessToken') ? (
+                        <button className="upperLogin123">Info</button>        
+                    ) : (
+                        <button className="upperLogin123" onClick={goToLogin}>Sign In</button>
+                    )}
+                </div>
+
+            </div>
+
+            <div className="contentWrap123">
+                <div className = "BulletinBoardUpper">
+                    <div className="BulletinBoardUpperLeft">
+                        <div className="BulletinBoardTitle123">자유 게시판</div>
                     </div>
-                )}
+                    <div className="BulletinBoardWritingUpperRight">
+                        <button className="BulletinBoardSecretButton" onClick={onClickSecretButton}>
+                            <span className='BulletinBoardImageWord'>비밀글</span>
+                            <input
+                                type="checkbox"
+                                className='BulletinBoardImageCheckbox'
+                                onChange={onClickSecretButton}
+                                />
+                        </button>
+
+                        <button className="BulletinBoardImageButton" onClick={onClickImageUpload}>
+                            <input
+                                type="file"
+                                ref={imageInput}
+                                accept="image/*"
+                                style={{display:'none'}}
+                                onChange={onFileSelect}
+                                multiple
+                            />
+                            <span className='BulletinBoardImageWord'>이미지</span>
+                            <input
+                                type="checkbox"
+                                className='BulletinBoardImageCheckbox'
+                                checked={fileExist}
+                            />
+                        </button>
+                    </div>
                 </div>
-
-                <input
-                    type="checkbox"
-                    className='checkboxImage'
-                    checked={fileExist}
-                />
+                <div className="BulletinBoardLongLineUpper"/>
+                <div className = "BulletinBoardWritingMiddle">
+                        <div className = "BulletinBoardWritingTitleWrap">
+                            <input
+                                type = 'text'
+                                className="BulletinBoardWritingTitleInput"
+                                placeholder="제목"
+                                value={title}
+                                onChange={handleTitle}/>
+                        </div>
+                        <div className="BulletinBoardShortLine"/>
+                        <div className = "BulletinBoardWritingContentsWrap">
+                            <textarea
+                                    type = 'text'
+                                    className="inputWritingContents"
+                                    placeholder="내용"
+                                    value={contents}
+                                    onChange={handleContents}
+                                    style={{ resize: 'none' }}
+                                    />
+                        </div>
+                        {fileExist && (
+                            <div className = "BulletinBoardWritingImage">
+                                <div className="BulletinBoardShortLine"/>
+                                {file.map((file, index) => (
+                                    <img
+                                        key={index}
+                                        src={URL.createObjectURL(file)}
+                                        alt={`file-${index}`}
+                                        className="BulletinBoardImage"
+                                    />
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                <div className="BulletinBoardLongLineBottom"/>
+                <div className = "BulletinBoardWritingBottom">
+                    <button className='BulletinBoardWritingButton' onClick={onClickWritingButton}>글쓰기</button>  
+                    <button className='BulletinBoardWritingCancelButton' onClick={onClickCancelButton}>취소</button> 
+                </div>
             </div>
-
-            <div className="bulletinWritingSecretButton"/>
-            <div className='bulletinWritingSecretText'>비밀글</div>
-            <div>
-                <input
-                    type="checkbox"
-                    className='checkboxSecret'
-                    onChange={onClickSecretButton}
-                    />
-            </div>
-
-            <div className="bulletinTitleBottomLine"/>
-
-            <div className="bulletinCommentsWritingButton"/>
-            <div className='bulletinCommentsWritingText' onClick={onClickWritingButton}>글쓰기</div>
-
-            <div className="bulletinCommentsWritingCancelButton"/>
-            <div className='bulletinCommentsWritingCancelText' onClick={onClickCancelButton}>취소</div>
-
             
-            <div className="bulletinTitleRectangle">
-            <input
-                type = 'text'
-                className="bulletinTitleWord"
-                placeholder="제목을 입력해주세요."
-                value={title}
-                onChange={handleTitle}
-            />
-            </div>
-            
-            <div className="bulletinSecretBottomLine"/>
-
-            <div className="bulletinContentRectangle">
-            <input
-                type = 'text'
-                className="bulletinContentWord"
-                placeholder="내용을 입력해주세요."
-                value={contents}
-                onChange={handleContents}
-            />
-            </div>
-
         </div>
-    )
-}
+    )}

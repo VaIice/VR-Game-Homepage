@@ -18,7 +18,7 @@ export default function FreeBulletinBoard() {
             try {
                 const response = await axios.get(SERVER_URL_FREE_LIST);
                 setPosts(response.data);
-                console.log(`${process.env.REACT_APP_SERVER_URL}/boards/FREE/list?page=1`);
+                console.log(response.data);
                 setPostsLoaded(true);
             } catch (error) {
                 alert('Error fetching data: FreeBulletinBoard', error);
@@ -142,9 +142,16 @@ export default function FreeBulletinBoard() {
                 {postsLoaded ? (
                 posts.dtoList.map((post) => (
                     <div key={post.bno} className="postListItem123" onClick={() => goToFreeBulletinBoardPage(post.bno)}>
-                            <div className="postListTitle123">
-                                {post.title}
-                            </div>
+                            {/* <div className="postListTitle123"> */}
+                            {post.secret === '0' ? (
+                                    <div className="postListTitle123">{post.title}</div>
+                                ) : (
+                                    <div className="postListTitle123">
+                                        <img src="assets/image/lock.svg" alt="lock" className='lockIcon'/>
+                                        비밀글입니다.
+                                    </div>
+                                )}
+                            {/* </div> */}
                             <div className="postListUser123">{post.writer}</div>
                             <div className="postListDate">{post.regDate[0]}-{post.regDate[1]}-{post.regDate[2]}</div>
                     </div>

@@ -156,7 +156,7 @@
   left: 50%;
   transform: translate(-50%, 0);
   background-color: #000000;
-  overflow: hidden;
+  overflow: auto;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
