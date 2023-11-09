@@ -1,195 +1,146 @@
 import React, { useEffect, useState } from 'react'
-import axios from 'axios';
 import { useNavigate } from "react-router-dom";
-import {Cookies} from 'react-cookie';
-import Swal from "sweetalert2";
+import axios from 'axios';
+import { Cookies } from 'react-cookie';
+import { useRef } from "react";
 
-
-const SERVER_URL = `${process.env.REACT_APP_SERVER_URL}/auth/login`
 const cookies = new Cookies()
 
-export default function NoticeBoard() {
-        // const [cookies, setCookie, removeCookie] = useCookies(['Token']);
-        // 사용자가 적고 있는 이메일 
-        const [email, setEmail] = useState('');
-        // 사용자가 적고 있는 비밀번호
-        const [pw, setPw] = useState('');
-        // 이메일이 유효한지 확인
-        const [emailValid, setEmailValid] = useState(false);
-        // 비밀번호가 유효한지 확인
-        const [pwValid, setPwValid] = useState(false);
-        // 이메일, 비밀번호가 유효하다면 활성화
-        const [notAllow, setNotAllow] = useState(true);
-        // grantType
-        const [grantType, setGrantType] = useState('');
-        // flagAccessToken
-        const [flagAccessToken, setFlagAccessToken] = useState(false);
-        // accessToken
-        const [accessToken, setAccessToken] = useState('');
-        // refreshToken
-        const [refreshToken, setRefreshToken] = useState('');
-        // accessTokenExpiresln
-        const [accessTokenExpiresln, setAccessTokenExpiresln] = useState('');
+const SERVER_URL = `${process.env.REACT_APP_SERVER_URL}/boards/register`;
+const SERVER_URL_IMAGE = `${process.env.REACT_APP_SERVER_URL}/boards/api/upload`;
+
+export default function FreeBulletinBoardPageWriting() {
+    const navigate = useNavigate();
+
+    const goToHome = () => {
+        navigate("/");
+        console.log(1, cookies.get('refreshToken'))
+        console.log(2, cookies.get('accessToken'))
+    }
+
+    const goToNoticeBoard = () => {
+        navigate("/NoticeBoard");
+    }
+
     
-        // 서버에 보낼 이메일, 비밀번호
-        const dataToSend = {
-            email: email,
-            password: pw
-        };
+    const goToLogin = () => {
+        navigate("/Login");
+    }
 
-        const checkToken = async () => {
-            Swal.fire({
-                icon: "info",
-                title: "세션 만료",
-                text: '로그인을 연장할까요?',
-                showCancelButton: true,
-                confirmButtonText: "예",
-                cancelButtonText: "아니요",
-            }).then(async (res) => {
-                if (res.isConfirmed) {
-                    try {
-                        if (cookies.get('accessToken') && cookies.get('refreshToken')) {
-                            const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/auth/reissue`, { accessToken: cookies.get('accessToken'), refreshToken: cookies.get('refreshToken') });
-                            console.log('response', response);
+    const goToFreeBulletinBoard = () => {
+        navigate("/FreeBulletinBoard");
+    }
 
-                            // cookies.set('accessToken', response.data.accessToken, { maxAge: response.data.accessTokenExpiresln});
-                            cookies.set('accessToken', response.data.accessToken, { maxAge: 60*30});
-                            cookies.set('refreshToken', response.data.refreshToken, { maxAge: 10000000 });
-    
-                            console.log('재발행 response :', response);
-                            setTimeout(checkToken, 60*25*1000); // 10초 후에 checkTokenInterval 함수를 다시 호출
-                        }
-                        else {
-                            alert('세션 만료');
-                            cookies.remove('accessToken');
-                            cookies.remove('refreshToken');
-                            console.log('쿠키 삭제');
-                            goToLogin();
-                        }
-                    } catch (error) {
-                        alert('Error fetching data: 재발행 실패', error);
-                    }
-                } else {
-                    alert('연장 취소');
-                    cookies.remove('accessToken');
-                    cookies.remove('refreshToken');
-                    console.log('연장 취소 버튼 쿠키 삭제')
-                    goToLogin();
-                }
-            });
-    };
-    
-        // 이메일, 비밀번호가 유효한 형식이라면 버튼 활성화
-        useEffect(() => {
-            if (emailValid && pwValid) {
-                setNotAllow(false);
-                return;
-            } else {
-                setNotAllow(true);
-            }
-        }, [emailValid, pwValid]);
-
-
-        // 이메일이 유효한 형식인지 확인
-        const handleEmail = (e) => {
-            setEmail(e.target.value);
-            const regex =
-                /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
-            if (regex.test(e.target.value)) {
-                setEmailValid(true);
-            } else {
-                setEmailValid(false);
-            }
-        }
-    
-        // 비밀번호가 유효한 형식인지 확인
-        const handlePw = (e) => {
-            e.target.value = e.target.value.slice(0,16);
-            setPw(e.target.value);
-            const regex =
-                /^(?=.*[a-zA-z])(?=.*[0-9]).{8,20}$/;
-            if (regex.test(e.target.value) && e.target.value.length >= 8)  {
-                setPwValid(true);
-            } else {
-                setPwValid(false);
-            }
-        }
-
-        const navigate = useNavigate();
-        const goToHome = () => {
-            navigate("/");
-        }
-
-        const goToNoticeBoard = () => {
-            navigate("/NoticeBoard");
-        }
-
-        const goToFreeBulletinBoard = () => {
-            navigate("/FreeBulletinBoard");
-        }
-
-        const goToReportBulletinBoard = () => {
-            navigate("/ReportBulletinBoard");
-        }
-
-        const goToLogin = () => {
-            navigate("/Login");
-        }
-
-        const goToSignUp = () => {
-            navigate("/SignUp");
-        }
-
-        const goToSearchPassword = () => {
-            navigate("/SearchPassword");
-        }
-
-        // 확인 버튼을 클릭했을 시 토큰 비교 (수정 필요)
-        const onClickConfirmButton = async () => {
-            const fetchData = async () => {
-            try {
-                console.log(dataToSend);
-                const response = await axios.post(SERVER_URL, dataToSend);
-                console.log('response: ', response);
-                console.log('response.data: ', response.data);
-                console.log('response.data.accessToken: ', response.data.accessToken);
-                // const newAccessToken = response.data.accessToken;
-                // const newRefreshToken = response.data.refreshToken;
-                // const newExpireIn = response.data.accessTokenExpiresln;
-
-                // setGrantType(response.data.grantType);
-                // setAccessToken(newAccessToken);
-                // setRefreshToken(newRefreshToken);
-                // setAccessTokenExpiresln(newExpireIn);
-
-                // cookies.set('accessToken', response.data.accessToken, {maxAge: response.data.accessTokenExpiresln})
-                cookies.set('accessToken', response.data.accessToken, {maxAge: 60*30})
-                cookies.set('refreshToken', response.data.refreshToken, {maxAge: 10000000});
-                console.log('accessToken: ', response.data.accessToken);
-                console.log('refreshToken: ', response.data.refreshToken);
-                loginSuccess();
-            } catch (error) {
-                alert('등록되지 않은 정보입니다.', error);
-            }
-            };
-        
-            const loginSuccess = () => {
-                axios.defaults.headers.common['Authorization'] = `${grantType} ${accessToken}`;
-                // cookies.set('accessToken', accessToken, {maxAge: accessTokenExpiresln})
-                // cookies.set('refreshToken', refreshToken, {maxAge: 60});
-                alert('로그인에 성공했습니다.');
-                goToHome();
-                setTimeout(checkToken, 60*25*1000); // 10초 후에 checkTokenInterval 함수를 다시 호출
-            };
-
-            fetchData();
+    const goToReportBulletinBoard = () => {
+        navigate("/ReportBulletinBoard");
     }
 
     const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
     const toggleDropdown = () => {
         setIsDropdownVisible(!isDropdownVisible);
-      };
+    };
+
+    // 사용자가 적고 있는 이메일 
+    const [title, setTitle] = useState('');
+    // // 사용자가 적고 있는 비밀번호
+    const [contents, setContents] = useState('');
+
+    const [secret, setSecret] = useState('0');
+
+    const handleTitle = (e) => {
+        setTitle(e.target.value);
+    }
+
+    const handleContents = (e) => {
+        setContents(e.target.value);
+    }
+
+    const dataToSend = {
+        title: title,
+        content: contents,
+        boardType: "FREE",
+        secret: secret
+    };
+
+    const [bno, setBno] = useState(-1);
+
+    const onClickSecretButton = async () => {
+        if (secret==='1') {
+            setSecret('0');
+            console.log('공개 전환');
+        }
+        else {
+            setSecret('1');
+            console.log('비공개 전환');
+        }
+    }
+
+    const onClickWritingButton = async () => {
+        const fetchData = async () => {
+        try {
+            console.log('dataToSend :', dataToSend);
+            const response = await axios.post(SERVER_URL, dataToSend, {
+                headers: {
+                    'Authorization': `Bearer ${cookies.get('accessToken')}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (fileExist) {
+                dataToSendImage.bno = response.data;
+                const responseImage = await axios.post(SERVER_URL_IMAGE, dataToSendImage, {
+                    headers: {
+                        'Authorization': `Bearer ${cookies.get('accessToken')}`,
+                        'Content-Type': 'multipart/form-data', // 파일 업로드에 필요한 Content-Type
+                    }
+                });
+            }
+            console.log('게시글 등록이 완료되었습니다.')
+            navigate(`/FreeBulletinBoardPage/${response.data}`);
+        } catch (error) {
+            alert('Error fetching data: Free Writing Button', error);
+        }
+        };
+
+        fetchData();
+        // console.log('파일명 :', dataToSendImage);
+        console.log('글쓰기 버튼 클릭');
+    }
+
+    const onClickCancelButton = async () => {
+        alert('취소 버튼 클릭');
+    }
+
+
+    const imageInput = useRef(null);
+
+    const [fileExist, setFileExist] = useState(false);
+
+    const [file, setFile] = useState('');
+
+    const dataToSendImage = {
+        file: file,
+        boardType: "FREE",
+        bno: bno
+    };
+    
+    const onClickImageUpload = () => {
+        imageInput.current.click();
+    };
+
+    const onFileSelect = (e) => {
+        if (e.target.files[0]) {
+            const selectedFile = e.target.files[0];
+            setFile(selectedFile);
+            setFileExist(true);
+            console.log('선택한 파일:', selectedFile.name);
+        }
+        else {
+          console.log('파일이 선택되지 않았습니다.');
+          setFileExist(false); // checkbox 선택 상태로 변경
+        }
+    };
 
     return (
         <div className="page123">
@@ -230,51 +181,64 @@ export default function NoticeBoard() {
             </div>
 
             <div className="contentWrap123">
-                <div className="SignInWrap">
-                    <div className="titleLogin123">Sign In</div>
-                    <div className="inputWrapEmail123"> 
-                        <input
-                            type = 'text'
-                            className="input123"
-                            placeholder="이메일"
-                            value={email}
-                            onChange={handleEmail}
-                        />
+                <div className = "BulletinBoardUpper">
+                    <div className="BulletinBoardUpperLeft">
+                        <div className="BulletinBoardTitle123">자유 게시판</div>
                     </div>
-                    <div className="errorMessage123">
-                        {
-                            email.length > 0 && !emailValid && (
-                                <span>올바른 이메일 형식을 입력해주세요.</span>
-                            )
-                        }
-                    </div>
-                    <div className="inputWrapPassword123"> 
-                        <input
-                            type = 'password'
-                            className="input123"
-                            placeholder="비밀번호"
-                            value={pw}
-                            onChange={handlePw}/>
-                    </div>
-                    <div className="errorMessage123">
-                    {
-                        pw.length > 0 && !pwValid && (
-                            <span>8~20자의 영문, 숫자를 입력해주세요.</span>
-                        )
-                    }
-                    </div>
+                    <div className="BulletinBoardWritingUpperRight">
+                        <button className="BulletinBoardSecretButton" onClick={onClickSecretButton}>
+                            <span className='BulletinBoardImageWord'>비밀글</span>
+                            <input
+                                type="checkbox"
+                                className='BulletinBoardImageCheckbox'
+                                onChange={onClickSecretButton}
+                                />
+                        </button>
 
-                    <button onClick={onClickConfirmButton} disabled={notAllow} className="bottomLoginButton123">Sign In</button>
+                        <button className="BulletinBoardImageButton" onClick={onClickImageUpload}>
+                            <input
+                                type="file"
+                                ref={imageInput}
+                                accept="image/*"
+                                style={{display:'none'}}
+                                onChange={onFileSelect}
+                            />
+                            <span className='BulletinBoardImageWord'>이미지</span>
+                            <input
+                                type="checkbox"
+                                className='BulletinBoardImageCheckbox'
+                                checked={fileExist}
+                            />
+                        </button>
 
-                    <div className="signInBottom">
-                        <div className="searchPassword123" onClick={goToSearchPassword}>
-                            비밀번호 찾기
-                        </div>
 
-                        <div className="signUp123" onClick={goToSignUp}>
-                            Sign Up
-                        </div>
+                        {/* <div>
+                            <div>
+                            {fileExist && (
+                                <div>
+                                <img
+                                    src={URL.createObjectURL(file)}
+                                    alt="Selected"
+                                    style={{ maxWidth: '20%', position: 'absolute' }}
+                                />
+                                </div>
+                            )}
+                            </div>
+                        </div> */}
+
+
+
+
+
                     </div>
+                </div>
+                <div className="BulletinBoardLongLineUpper"/>
+                <div className = "BulletinBoardMiddle">
+                    {/* <Posts posts={posts}></Posts> */}
+                </div>
+                <div className="BulletinBoardLongLineBottom"/>
+                <div className = "BulletinBoardBottom">
+                    {/* <button className='BulletinBoardWriteButton' onClick={goToFreeBulletinBoardPageWriting}>글쓰기</button>   */}
                 </div>
             </div>
         </div>

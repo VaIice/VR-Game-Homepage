@@ -3,16 +3,16 @@ import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import {Cookies} from 'react-cookie';
 
-const SERVER_URL = `${process.env.REACT_APP_SERVER_URL}/send-mail/password`
+const SERVER_URL = `${process.env.REACT_APP_SERVER_URL}/api/member/reset-password`
 
 const cookies = new Cookies()
 
-export default function NoticeBoard() {
+export default function InformationPassword() {
         // const [cookies, setCookie, removeCookie] = useCookies(['Token']);
-        // 사용자가 적고 있는 이메일 
-        const [email, setEmail] = useState('');
-        // 이메일이 유효한지 확인
-        const [emailValid, setEmailValid] = useState(false);
+        // 사용자가 적고 있는 비밀번호
+        const [pw, setPw] = useState('');
+        // 비밀번호가 유효한 형식인지 확인
+        const [pwValid, setPwValid] = useState(false);
         // 이메일, 비밀번호가 유효하다면 활성화
         const [notAllow, setNotAllow] = useState(true);
         // grantType
@@ -22,21 +22,8 @@ export default function NoticeBoard() {
     
         // 서버에 보낼 이메일, 비밀번호
         const dataToSend = {
-            email: email
+            newPassword: pw
         };
-
-        const handleEmail = (e) => {
-            setEmail(e.target.value);
-            const regex =
-                /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
-            if (regex.test(e.target.value)) {
-                setEmailValid(true);
-                setNotAllow(false);
-            } else {
-                setEmailValid(false);
-                setNotAllow(true);
-            }
-        }
 
 
         const navigate = useNavigate();
@@ -65,18 +52,20 @@ export default function NoticeBoard() {
         }
 
         // 확인 버튼을 클릭했을 시 토큰 비교 (수정 필요)
-        const onClickSendEmailButton = async () => {
+        const onClickModifyPasswordButton = async () => {
             const fetchData = async () => {
             try {
                 console.log(dataToSend);
-                const response = await axios.post(SERVER_URL, dataToSend);
-                alert('이메일을 발송하였습니다.')
+                const response = await axios.post(SERVER_URL, dataToSend, {
+                    headers: {
+                    'Authorization': `Bearer ${cookies.get('accessToken')}`,
+                }});
+                alert('비밀번호가 변경되었습니다.')
                 goToHome();
             } catch (error) {
-                alert("Error fetching data: Fail send an email", error);
+                alert("Error fetching data: Fail modify password", error);
             }
             };
-
             fetchData();
     }
 
@@ -85,6 +74,20 @@ export default function NoticeBoard() {
     const toggleDropdown = () => {
         setIsDropdownVisible(!isDropdownVisible);
       };
+
+      const handlePw = (e) => {
+        e.target.value = e.target.value.slice(0,16);
+        setPw(e.target.value);
+        const regex =
+            /^(?=.*[a-zA-z])(?=.*[0-9]).{8,20}$/;
+        if (regex.test(e.target.value) && e.target.value.length >= 8)  {
+            setPwValid(true);
+            setNotAllow(false);
+        } else {
+            setPwValid(false);
+            setNotAllow(true);
+        }
+    }
 
     return (
         <div className="page123">
@@ -126,25 +129,24 @@ export default function NoticeBoard() {
 
             <div className="contentWrap123">
                 <div className="passwordSearchWrap">
-                    <div className="titleSignUp123">비밀번호 찾기</div>
+                    <div className="titleSignUp123">비밀번호 수정</div>
                     <div className="inputWrapEmailPasswordSearchWrap123">
-                            <input
-                                type = 'text'
-                                className="inputEmail123"
-                                placeholder="이메일"
-                                value={email}
-                                onChange={handleEmail}
-                            />
+                        <input
+                                type = 'password'
+                                className="input123"
+                                placeholder="비밀번호"
+                                value={pw}
+                                onChange={handlePw}/>
                     </div>
                     <div className="errorMessage123">
-                        {
-                            email.length > 0 && !emailValid && (
-                                <span>올바른 이메일 형식을 입력해주세요.</span>
-                            )
-                        }
+                    {
+                        pw.length > 0 && !pwValid && (
+                            <span>8~20자의 영문, 숫자를 입력해주세요.</span>
+                        )
+                    }
                     </div>
 
-                    <button onClick={onClickSendEmailButton} disabled={notAllow} className="bottomPasswordSearchButton123">이메일 보내기</button>
+                    <button onClick={onClickModifyPasswordButton} disabled={notAllow} className="bottomPasswordSearchButton123">비밀번호 수정</button>
 
                 </div>
             </div>

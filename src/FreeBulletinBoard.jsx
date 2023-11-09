@@ -8,7 +8,7 @@ import Pagination from "react-js-pagination";
 const cookies = new Cookies()
 const SERVER_URL_FREE_LIST = `${process.env.REACT_APP_SERVER_URL}/boards/FREE/list?page=1`;
 
-export default function NoticeBoard() {
+export default function FreeBulletinBoard() {
     const navigate = useNavigate();
 
     const [postsLoaded, setPostsLoaded] = useState(false);
@@ -221,7 +221,7 @@ export default function NoticeBoard() {
                     { cookies.get('accessToken') ? (
                         <button className="upperLogin123">Info</button>        
                     ) : (
-                        <button className="upperLogin123" onClick={goToLogin}>Login</button>
+                        <button className="upperLogin123" onClick={goToLogin}>Sign In</button>
                     )}
                 </div>
 

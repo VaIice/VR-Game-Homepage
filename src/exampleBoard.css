@@ -1,5 +1,5 @@
 .BulletinBoardUpper {
-        flex: 1;
+        flex: 0.9;
         display: flex;
         align-items: flex-end; /* 요소를 수직 중앙에 정렬 */
 }
@@ -110,7 +110,7 @@
 }
 
 .BulletinBoardMiddle {
-        flex: 6;
+        flex: 5;
         display: flex;
 }
 
@@ -171,13 +171,13 @@
         font-family: 'Inter';
         font-weight: 300;
         margin-right: 15%;
-        margin-top: 0.8%;
+        margin-top: 1.2%;
         padding-bottom: 0.15%;
 }
 
 .pagination {
         justify-content: center;
-        margin-top: 15px;
+        margin-top: 1.2%;
         display: flex;
         margin-left: auto;
         margin-right: auto;

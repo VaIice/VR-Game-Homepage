@@ -4,21 +4,19 @@ import { useNavigate } from "react-router-dom";
 import { Cookies } from 'react-cookie';
 import Swal from "sweetalert2";
 
-const SERVER_URL = `${process.env.REACT_APP_SERVER_URL}/api/member/me`
-
 const cookies = new Cookies()
 
-export default function SignUp() {
+const SERVER_URL = `${process.env.REACT_APP_SERVER_URL}/api/member/me`
+
+export default function NoticeBoard() {
     // 사용자가 적고 있는 이메일 
     const [email, setEmail] = useState('');
-    // 사용자가 적고 있는 비밀번호
-    const [pw, setPw] = useState('');
     // 사용자가 적고 있는 핸드폰 번호
     const [phoneNumber, setPhoneNumber] = useState('');
     // 사용자가 적고 있는 이름
     const [name, setName] = useState('');
-    // 비밀번호가 유효한 형식인지 확인
-    const [pwValid, setPwValid] = useState(false);
+    // 이메일이 유효한 형식인지 확인
+    const [emailValid, setEmailValid] = useState(false);
     // 핸드폰 번호가 유효한 형식인지 확인
     const [phoneNumberValid, setPhoneNumberValid] = useState(false);
     // 이름이 유효한 형식인지 확인
@@ -28,7 +26,6 @@ export default function SignUp() {
 
     // 서버에 보낼 정보
     const dataToSend = {
-        password: pw,
         phoneNumber: phoneNumber,
         name: name
     };
@@ -44,8 +41,10 @@ export default function SignUp() {
                 setEmail(response.data.email);
                 setName(response.data.name);
                 setPhoneNumber(response.data.phoneNumber);
+                setEmailValid(true);
                 setPhoneNumberValid(true);
                 setNameValid(true);
+                setNotAllow(true);
             } catch (error) {
                 alert('오엥', error);
             }
@@ -57,23 +56,22 @@ export default function SignUp() {
 
     // 이메일, 비밀번호가 유효한 형식이라면 버튼 활성화
     useEffect(() => {
-        if (pwValid && phoneNumberValid && nameValid) {
+        if (phoneNumberValid && nameValid) {
             setNotAllow(false);
             return;
         } else {
             setNotAllow(true);
         }
-    }, [pwValid, phoneNumberValid, nameValid]);
+    }, [phoneNumberValid, nameValid]);
 
-    const handlePw = (e) => {
-        e.target.value = e.target.value.slice(0,16);
-        setPw(e.target.value);
+    const handleEmail = (e) => {
+        setEmail(e.target.value);
         const regex =
-            /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+])(?!.*[^a-zA-z0-9$`~!@$!%*#^?&\\(\\)\-_=+]).{8,20}$/;
-        if (regex.test(e.target.value) && e.target.value.length >= 8)  {
-            setPwValid(true);
+            /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
+        if (regex.test(e.target.value)) {
+            setEmailValid(true);
         } else {
-            setPwValid(false);
+            setEmailValid(false);
         }
     }
 
@@ -115,12 +113,24 @@ export default function SignUp() {
         navigate("/NoticeBoard");
     }
 
-    const goToCommunity = () => {
-        navigate("/Community");
+    const goToInfo = () => {
+        navigate("/Information");
+    }
+
+    const goToFreeBulletinBoard = () => {
+        navigate("/FreeBulletinBoard");
+    }
+
+    const goToReportBulletinBoard = () => {
+        navigate("/ReportBulletinBoard");
     }
 
     const goToLogin = () => {
         navigate("/Login");
+    }
+
+    const goToInformationPassword = () => {
+        navigate("/InformationPassword")
     }
 
     const onClickConfirmButton = async() => {
@@ -178,85 +188,105 @@ export default function SignUp() {
         });
     }
 
+    const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+
+    const toggleDropdown = () => {
+        setIsDropdownVisible(!isDropdownVisible);
+      };
+
     return (
-        <div className="page">
-        <img src="assets/image/wallpaper.jpg" alt="background" className='wallPaper'/>
-            <div className="upper"/>
-            <hr style={{display: 'white', marginTop: 96}}/>
-            <div className="topLoginButton" onClick={goToLogin}/>
-            <div className="topLogin" onClick={goToLogin}>Login</div>
-            <div className="topNotice" onClick={goToNoticeBoard}>News</div>
-            <div className="topGuide">Guide</div>
-            <div className="topCommunity" onClick={goToCommunity}>Community</div>
-            <div className="topHome" onClick={goToHome}>Home</div>
-            <div className="topHomeButton" onClick={goToHome}/>
+        <div className="page123">
+            <img src="assets/image/555.png" alt="background" className='wallPaper123'/>
+            <div className="upperSpace123">
+                <div className="upperHomeWrap">
+                    <button class="upperHome123" onClick={goToHome}>Home</button>
+                </div>
 
-            <div className="titleSignUp">내 정보 수정</div>
-            <div className="inputWrap" style={{top: 200}}> 
-                <input
-                    type = 'text'
-                    className="input"
-                    placeholder="이메일"
-                    value={email}
-                    />
-            </div>
+                <div className="upperNoticeWrap">
+                    <button className="upperNotice123" onClick={goToNoticeBoard}>Notice</button>
+                </div>
 
-            <div className="inputWrap" style={{top: 310}}>
-                <input
-                    type = 'password'
-                    className="input"
-                    placeholder="비밀번호"
-                    value={pw}
-                    onChange={handlePw}/>
-            </div>
-            <div>
-                {
-                    pw.length > 0 && !pwValid && (
-                        <div className="errorMessage" style={{top: 382}}>8~16자의 영문, 숫자, 특수문자를 입력해주세요.</div>
-                    )
-                }
-            </div>
+                <div className="upperGuideWrap">
+                    <button className="upperGuide123">Guide</button>
+                </div>
 
-            <div className="inputWrap" style={{top: 420}}>
-                <input
-                    type = 'text'
-                    className="input"
-                    placeholder="핸드폰 번호"
-                    value={phoneNumber}
-                    onChange={handlePhoneNumber}/>
-            </div>
-            <div>
-                {
-                    !phoneNumberValid && phoneNumber.length > 0 && (
-                        <div className="errorMessage" style={{top: 492}}>10~11자의 숫자만 입력해주세요.</div>
-                    )
-                }
+                <div className="upperCommunityWrap">
+                    <button className="upperCommunity123"  onMouseEnter={toggleDropdown} onMouseLeave={toggleDropdown}>
+                        Community
+                        {isDropdownVisible && (
+                            <div className="dropdownMenu123">
+                                <li onClick={goToFreeBulletinBoard} className="dropdownWord">자유 게시판</li>
+                                <li onClick={goToReportBulletinBoard} className="dropdownWord">신고 게시판</li>
+                            </div>
+                        )}
+                    </button>
+                </div>
+
+                <div className="upperLoginWrap">
+                    { cookies.get('accessToken') ? (
+                        <button className="upperLogin123">Info</button>        
+                    ) : (
+                        <button className="upperLogin123" onClick={goToLogin}>Sign In</button>
+                    )}
+                </div>
+
             </div>
 
-            <div className="inputWrap" style={{top: 530}}>
-                <input
-                    type = 'text'
-                    className="input"
-                    placeholder="이름"
-                    value={name}
-                    onChange={handleName}/>
-            </div>
-            <div>
-                {
-                    !nameValid && name.length !== 0 && (
-                        <div className="errorMessage" style={{top: 602}}>2자 이상의 한글, 영문만 입력해주세요.</div>
-                    )
-                }
-            </div>
+            <div className="contentWrap123">
+                <div className="SignUpWrap">
+                    <div className="titleSignUp123">Information</div>
+                    <div className="inputWrapEmailInfo123">
+                        <div className="inputEmailInfo123">
+                            {email}
+                        </div>
+                    </div>
+                    <div className="errorMessage123"/>
 
-            <div>
-                <button onClick={onClickConfirmButton} disabled={notAllow} className="bottomSignUpButton">정보 수정</button>
-            </div>
+                    <div className="inputWrapNameSignUp123"> 
+                        <input
+                            type = 'text'
+                            className="input123"
+                            placeholder="이름"
+                            value={name}
+                            onChange={handleName}/>
+                    </div>
+                    <div className="errorMessage123">
+                    {
+                        !nameValid && name.length !== 0 && (
+                            <span>2자 이상의 한글, 영문만 입력해주세요.</span>
+                        )
+                    }
+                    </div>
 
-            <div className="withdrawalButton" onClick={onClickWithdrawalButton}>
-                회원 탈퇴
-            </div>
+                    <div className="inputWrapNamePhoneNumber123">
+                        <input
+                            type = 'text'
+                            className="input123"
+                            placeholder="핸드폰 번호"
+                            value={phoneNumber}
+                            onChange={handlePhoneNumber}/>
+                    </div>
+                    <div className="errorMessage123">
+                        {
+                            !phoneNumberValid && phoneNumber.length > 0 && (
+                                <span>10~11자의 숫자만 입력해주세요.</span>
+                            )
+                        }
+                    </div>
 
+                    <button onClick={onClickConfirmButton} disabled={notAllow} className="bottomSignUpButton123">내 정보 수정</button>
+
+                    <div className="signInBottom">
+                        <div className="modifyPassword123" onClick={goToInformationPassword}>
+                            비밀번호 수정
+                        </div>
+
+                        <div className="withdrawalButton123" onClick={onClickWithdrawalButton}>
+                            회원 탈퇴
+                        </div>
+                    </div>
+
+                </div>
+            </div>
         </div>
-    )
-}
+    )}

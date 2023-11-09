@@ -4,7 +4,7 @@ import { Cookies } from 'react-cookie';
 
 const cookies = new Cookies()
 
-export default function NoticeBoard() {
+export default function Home() {
     const navigate = useNavigate();
     
     const goToHome = () => {

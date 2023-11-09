@@ -1,0 +1,105 @@
+.SignUpWrap {
+    height: 70%;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 5%;
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    /* background-color: aqua; */
+    justify-content: center;
+}
+
+.titleSignUp123 {
+    color: white;
+    font-size: 26px;
+    font-weight: bold;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.inputWrapEmailSignUp123,
+.inputWrapPasswordSignUp123,
+.inputWrapNameSignUp123,
+.inputWrapNamePhoneNumber123 {
+    width: 99%;
+    height: 8%;
+    margin-left: auto;
+    margin-right: auto;
+    background: white;
+    border: 1px solid #e2e0e0;
+    margin-top: 2%;
+    display: flex;
+    background-color: white;
+}
+
+.inputEmail123 {
+    width: 94%;
+    height: 95%;
+    margin-left: 2%;
+    outline: none;
+	border: none;
+    font-size: 16px;
+	font-weight: 400;
+    /* background-color: aqua; */
+}
+
+.inputWrapEmailSignUp123 {
+    margin-top: 8%;
+    width: 130%;
+    background-color: transparent;
+    border: none;
+}
+
+.inputWrapEmailSignUpLeft123 {
+    width: 150%;
+    border: 1px solid #e2e0e0;
+    background-color: white;
+}
+
+.inputWrapEmailSignUpRight123 {
+    width: 45%;
+}
+
+.emailCheckButton {
+    width: 85%;
+    height: 75%;
+    background: black;
+    border-radius: 10px;
+    border: 0.50px white solid;  
+    cursor: pointer;
+    color: white;
+    font-size: 16px;
+    font-weight: 300;
+    margin-left: 25%;
+    margin-top: 5%;
+}
+
+.emailCheckButton:disabled {
+    background-color: #919191;
+    color: white;
+}
+
+.bottomSignUpButton123 {
+    width: 99%;
+    height: 10%;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    background: black;
+    border-radius: 10px;
+    border: 0.50px white solid;  
+    cursor: pointer;
+    color: white;
+    font-size: 20px;
+    font-weight: 300;
+    margin-top: 5%;
+    justify-content: center;
+    align-items: center;
+}
+
+.bottomSignUpButton123:disabled {
+    background-color: #919191;
+    color:white;
+}

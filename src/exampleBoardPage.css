@@ -1,0 +1,27 @@
+.GoToBulletinBoardButton {
+    display: flex;
+    width: 128px;
+    height: 43px;
+    background: black;
+    border-radius: 10px;
+    border: 0.50px white solid;  
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+}
+
+.menuIcon {
+    width: 20px;
+    height: 20px;
+    margin-right: 2%;
+    margin-bottom: 0.5%;
+}
+
+.GoToBulletinBoardWord {
+    color: white;
+    font-size: 18px;
+    font-weight: 300;
+    padding-bottom: 0.15%;
+    margin-left: 2%;
+}

@@ -8,7 +8,7 @@ import Swal from "sweetalert2";
 const SERVER_URL = `${process.env.REACT_APP_SERVER_URL}/auth/login`
 const cookies = new Cookies()
 
-export default function NoticeBoard() {
+export default function Login() {
         // const [cookies, setCookie, removeCookie] = useCookies(['Token']);
         // 사용자가 적고 있는 이메일 
         const [email, setEmail] = useState('');

@@ -1,0 +1,36 @@
+.BulletinBoardSecretButton,
+.BulletinBoardImageButton {
+    display: flex;
+    width: 120px;
+    height: 43px;
+    background: black;
+    border-radius: 10px;
+    border: 0.50px white solid;  
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+}
+
+.BulletinBoardSecretButton {
+    margin-right: 10%;
+}
+
+.BulletinBoardImageWord {
+    color: white;
+    font-size: 17px;
+    font-weight: 400;
+    width:55px;
+    margin-bottom: 3%;
+}
+
+.BulletinBoardImageCheckbox {
+    width: 20px;
+    height: 20px;
+    margin-bottom: 4%;
+}
+
+.BulletinBoardWritingUpperRight {
+    padding-right: 15%;
+    display: flex;
+}

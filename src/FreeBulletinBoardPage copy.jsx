@@ -16,19 +16,9 @@ export default function FreeBulletinBoardPage(bno) {
 
     useEffect(() => {    
         const fetchData = async () => {
-            const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/boards/FREE/${bno.bno}/withImages`,
-             {
-                headers: {
-                    'Authorization': `Bearer ${cookies.get('accessToken')}`,
-                }
-            }
+            const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/boards/FREE/${bno.bno}/withImages`
             );
-            const responseComment = await axios.get(`${process.env.REACT_APP_SERVER_URL}/replies/FREE/list/${bno.bno}`,
-            {
-               headers: {
-                   'Authorization': `Bearer ${cookies.get('accessToken')}`,
-               }
-           }
+            const responseComment = await axios.get(`${process.env.REACT_APP_SERVER_URL}/replies/FREE/list/${bno.bno}`
            );
             setTitle(response.data.title);
             setContent(response.data.content);
@@ -40,7 +30,7 @@ export default function FreeBulletinBoardPage(bno) {
             setRegDate(response.data.regDate);
             setPostsComment(responseComment.data);
             setPostsCommentLoaded(true);
-            console.log(123, response);
+            console.log(123, responseComment);
         };
         fetchData();
     }, []);
@@ -148,10 +138,12 @@ export default function FreeBulletinBoardPage(bno) {
                         headers: {
                             'Authorization': `Bearer ${cookies.get('accessToken')}`}
                     });
-                    console.log(response);
+                    console.log('RESPONSE :', response);
+                    console.log('bnum :', bnum);
+                    console.log('url : ', `${process.env.REACT_APP_SERVER_URL}/boards/remove/FREE/${bnum}`)
                     goToFreeBulletinBoard();
                 } catch (error) {
-                    alert('Error remove data: 삭제 실패', error);
+                    alert('관리자와 해당 글의 작성자만 게시글을 삭제할 수 있습니다.', error);
                 }
             }
         });
@@ -199,7 +191,7 @@ export default function FreeBulletinBoardPage(bno) {
             <div className='titleBoard'>자유 게시판</div>
             <div className="titleLine"/>
 
-            <div className="bulletinLineInner"/>
+            {/* <div className="bulletinLineInner"/> */}
             <div className="bulletinLineOuter"/>
             <div className="bulletinWord">{title}
             </div>

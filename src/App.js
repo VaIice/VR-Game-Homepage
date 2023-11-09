@@ -11,6 +11,7 @@ import ReportBulletinBoardPage from "./ReportBulletinBoardPage";
 import NoticeBulletinBoardPage from "./NoticeBulletinBoardPage";
 import FreeBulletinBoardPageWriting from "./FreeBulletinBoardPageWriting";
 import Information from "./Information";
+import InformationPassword from "./InformationPassword";
 import SearchPassword from "./SearchPassword";
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
         <Route path="/SignUp" element={<SignUp />} />
         <Route path="/Login" element={<Login />} />
         <Route path="/Information" element={<Information />} />
+        <Route path="/InformationPassword" element={<InformationPassword />} />
         <Route path="/NoticeBoard" element={<NoticeBoard />} />
         <Route path="/FreeBulletinBoard" element={<FreeBulletinBoard />} />
         <Route path="/ReportBulletinBoard" element={<ReportBulletinBoard />} />
