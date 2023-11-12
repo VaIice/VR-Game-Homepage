@@ -7,10 +7,25 @@
     transform: translate(-50%, 0);
     background-color: #000000;
     overflow: auto;
-    display: flex;
     flex-direction: column;
     justify-content: flex-start;
     max-height: 200%;
+}
+
+.BulletinBoardWritingUpper {
+    display: flex;
+    min-height: 11vh;
+    align-items: flex-end; /* 요소를 수직 중앙에 정렬 */
+}
+
+.BulletinBoardWritingUpperLeft {
+    flex: 1;
+    padding-left: 15%;
+}
+
+.BulletinBoardWritingUpperRight {
+    padding-right: 15%;
+    margin-right: auto;
 }
 
 .BulletinBoardSecretButton,
@@ -51,62 +66,111 @@
 }
 
 .BulletinBoardWritingMiddle {
-    flex: 5;
-    display: flex;
-    flex-direction: column;
     padding-right: 15%;
     padding-left: 15%;
+    flex-direction: column;
 }
 
-.BulletinBoardWritingTitleWrap {
-    /* display: flex; */
-    flex: 1;
-    background-color: white;
+.BulletinBoardWritingBottom {
+    display: flex;
     margin-top: 0.5%;
-    margin-bottom: 0.5%;
+    margin-bottom: 8vh;
+    flex-direction: column;
 }
 
 .BulletinBoardWritingImage {
     justify-content: center;
     align-items: center;
+    margin-left: 15%;
+    background-color: white;
+    width: 70%;
+    display: flex;
 }
 
 .BulletinBoardWritingImage img{
-    width: 150px;
-    height: 150px;
-    padding: 0.3%;
-    padding-right: 0.5%;
-    margin-top: 0.3%;
+    width: 10%;
+    height: 20vh;
     object-fit: cover;
+    flex : 1;
+    margin: 1%;
 }
 
-.BulletinBoardWritingContentsWrap {
-    display: flex;
-    flex: 8;
+.BulletinBoardWritingImage123 {
     background-color: white;
-    justify-content: center;
+    display: flex;
     margin-top: 0.5%;
     margin-bottom: 0.5%;
 }
 
+.BulletinBoardWritingImage123 img{
+    width: 10%;
+    height: 20vh;
+    object-fit: cover;
+    flex : 1;
+    margin: 1%;
+}
+
+.BulletinBoardWritingContentsWrap {
+    background-color: white;
+    margin-top: 0.5%;
+    margin-bottom: 0.5%;
+}
+
+.inputWritingContents {
+    display: block;
+    width: 96.5%;
+    min-height: 52vh;
+    outline: none;
+    border: none;
+    font-size: 16px;
+    font-weight: 400;
+    margin-left: 1.5%;
+    padding-top: 1%;
+    font-family: 'Inter';
+    border: 'none';
+    outline: 'none';
+    box-shadow: 'none';
+    resize: none;
+}
+
+.BulletinBoardWritingFileBottomLine {
+    width: 70%;
+    height: 0.01px;
+    border: 1.5px rgba(255, 255, 255, 0.5) solid;    
+    margin-top: 0.5%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 0.6%;
+}
+
+.BulletinBoardWritingTitleWrap {
+    background-color: white;
+    margin-top: 0.5%;
+    margin-bottom: 0.5%;
+}
+
+.BulletinBoardWritingTitleInput {
+    width: 96%;
+    height: 5vh;
+    margin-left: 1.5%;
+    outline: none;
+   border: none;
+    font-size: 16px;
+   font-weight: 400;
+    /* background-color: aqua; */
+}
 .BulletinBoardShortLine {
     width: 99.5%;
     height: 0.01px;
     border: 1.5px rgba(255, 255, 255, 0.5) solid;    
     margin-left: auto;
+
+
     margin-right: auto;
 }
 
-.inputWritingContents {
-    width: 98%;
-    height: 90%;
-    outline: none;
-   border: none;
-    font-size: 16px;
-   font-weight: 400;
-    margin-top: 1%;
-    margin-left: 1.5%;
-    font-family: 'Inter';
+.lockIcon {
+    margin-right: 2.5px;
 }
 
 .BulletinBoardWritingButton {
@@ -120,12 +184,8 @@
     font-size: 20px;
     font-family: 'Inter';
     font-weight: 300;
-    margin-left: auto;
     padding-bottom: 0.15%;
-}
-
-.lockIcon {
-    margin-right: 2.5px;
+    margin-left: auto;
 }
 
 .BulletinBoardWritingCancelButton {
@@ -141,22 +201,9 @@
     font-weight: 300;
     padding-bottom: 0.15%;
     margin-right: auto;
-    margin-left: 1.5%;
+    margin-left: 2%;
 }
 
-.BulletinBoardWritingBottom {
-    flex: 1;
+.BulletinBoardWritingButtonWrap {
     display: flex;
-    margin-top: 0.5%;
-}
-
-.BulletinBoardWritingTitleInput {
-    width: 96%;
-    height: 95%;
-    margin-left: 1.5%;
-    outline: none;
-   border: none;
-    font-size: 16px;
-   font-weight: 400;
-    /* background-color: aqua; */
 }

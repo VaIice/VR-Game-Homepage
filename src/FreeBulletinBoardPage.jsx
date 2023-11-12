@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { Cookies } from 'react-cookie';
 import Swal from "sweetalert2";
-import {FreeBulletinBoardList} from "./FreeBulletinBoard";
+import { useRef } from "react";
+import Pagination from "react-js-pagination";
 
 const cookies = new Cookies()
 
@@ -16,21 +17,25 @@ export default function FreeBulletinBoardPage(bno) {
 
     useEffect(() => {    
         const fetchData = async () => {
-            const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/boards/FREE/${bno.bno}/withImages`
+            try {
+                const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/boards/FREE/${bno.bno}/withImages`);
+                const responseComment = await axios.get(`${process.env.REACT_APP_SERVER_URL}/replies/FREE/list/${bno.bno}`
             );
-            const responseComment = await axios.get(`${process.env.REACT_APP_SERVER_URL}/replies/FREE/list/${bno.bno}`
-           );
-            setTitle(response.data.title);
-            setContent(response.data.content);
-            setWriter(response.data.writer);
-            setSecret(response.data.secret);
-            setFileName(response.data.fileNames[0]);
-            setBnum(response.data.bno);
-            setModDate(response.data.modDate);
-            setRegDate(response.data.regDate);
-            setPostsComment(responseComment.data);
-            setPostsCommentLoaded(true);
-            console.log(123, responseComment);
+                setTitle(response.data.title);
+                setContent(response.data.content);
+                setWriter(response.data.writer);
+                setSecret(response.data.secret);
+                setFileName(response.data.fileNames[0]);
+                setBnum(response.data.bno);
+                setModDate(response.data.modDate);
+                setRegDate(response.data.regDate);
+                setPostsComment(responseComment.data);
+                setPostsCommentLoaded(true);
+                console.log(responseComment.data);
+            } catch (error) {
+                alert('해당 게시글은 관리자와 작성자만 확인가능합니다.');
+                goToFreeBulletinBoard();
+            }
         };
         fetchData();
     }, []);
@@ -67,30 +72,6 @@ export default function FreeBulletinBoardPage(bno) {
             }
         });
     }
-
-    const PostsComment = ({ postsComment }) => {
-        if (postsComment.total !== 0) {
-            return (
-                <div className='postCommentList'>
-                { postsCommentLoaded ? (
-                postsComment.dtoList.map((postsComment) => (
-                    <div key={postsComment.rno} className='postCommentListItem'>
-                    <li className='postCommentListWriter'>
-                        {postsComment.replyer}
-                    </li>
-                    <li className='postCommentListComment'>{postsComment.replyText}</li>
-                    <li>수정</li>
-                    {/* <div className="postCommentsModifyRemoveSpace"/> */}
-                    <li onClick={() => onClickCommentRemoveButton(postsComment.rno)}>삭제</li>
-                    </div>
-                ))
-                ) : (
-                <div></div>
-                )
-                }  </div>
-            );
-        }
-    };
 
     const goToHome = () => {
         navigate("/");
@@ -152,8 +133,11 @@ export default function FreeBulletinBoardPage(bno) {
     const [comment, setComment] = useState('');
 
     const handleComment = (e) => {
-        setComment(e.target.value);
-    }
+        const newComment = e.target.value;
+        setComment(newComment);
+        textarea.current.style.height = 'auto';
+        textarea.current.style.height = textarea.current.scrollHeight + 'px';
+    };
 
     const onClickCommentEnrollButton = async () => {
         const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/replies/FREE/register`, {bno: bnum, replyText: comment}, {
@@ -163,81 +147,154 @@ export default function FreeBulletinBoardPage(bno) {
         console.log(response);
     }
 
+    const textarea = useRef();
+
+    const PostComments = ({ postComments }) => {
+        if (postComments.total !== 0) {
+            return (
+                <div className="BulletinBoardPagePostCommentList">
+                    {postsCommentLoaded ? (
+                    postComments.dtoList.map((postComment) => (
+                        <div key={postComment.rno} className="BulletinBoardPagePostCommentListItem">
+                                <div className="BulletinBoardPagePostCommentListItemUpper">
+                                    <div className="BulletinBoardPagePostCommentListWriter">{postComment.replyer}</div>
+                                    <div className="BulletinBoardPagePostCommentListRegDate">({postComment.regDate})</div>
+                                    <button className="BulletinBoardPagePostCommentListModify">
+                                        수정
+                                    </button>
+                                    <button className="BulletinBoardPagePostCommentListRemove" onClick={() => onClickCommentRemoveButton(postsComment.rno)}>
+                                        삭제
+                                    </button>
+                                </div>
+                                <div className="BulletinBoardPagePostCommentListReplyText">{postComment.replyText}</div>
+                        </div>
+                    ))
+                    ) : (
+                    <div>Loading...</div>
+                    )}
+                </div>
+            );
+        }
+    };
+
+    const [page, setPage] = useState(1);
+
+    const handlePage = async (page) => {
+        const SERVER_URL_COMMENT_PAGE = `${process.env.REACT_APP_SERVER_URL}/replies/FREE/list/${bnum}?page=${page}`;
+        console.log(`${process.env.REACT_APP_SERVER_URL}/replies/FREE/list/2`);
+        const fetchData = async () => {
+            const response = await axios.get(SERVER_URL_COMMENT_PAGE);
+            setPostsComment(response.data);
+            setPostsCommentLoaded(true);
+            console.log(response.data);
+        };
+        fetchData();
+        setPage(page);
+        console.log(page);
+    }
+
     return (
-        <div className="page">
-            <img src="../assets/image/wallpaper.jpg" alt="background" className='wallPaper'/>
-            <div className="upper"/>
-            <hr style={{display: 'white', marginTop: 97}}/>
-            <div className="topLoginButton" onClick={goToLogin}/>
-            <div className="topLogin" onClick={goToLogin}>Login</div>
-            <div className="topNotice" onClick={goToNoticeBoard}>News</div>
-            <div className="topGuide">Guide</div>
-            <div
-                className="topCommunity"
-                onMouseEnter={toggleDropdown}
-                onMouseLeave={toggleDropdown}
-                >
-                Community
+        <div className="page12345">
+            <img src="/assets/image/555.png" alt="background" className='wallPaper123'/>
+            <div className="upperSpace123">
+                <div className="upperHomeWrap">
+                    <button class="upperHome123" onClick={goToHome}>Home</button>
+                </div>
+
+                <div className="upperNoticeWrap">
+                    <button className="upperNotice123" onClick={goToNoticeBoard}>Notice</button>
+                </div>
+
+                <div className="upperGuideWrap">
+                    <button className="upperGuide123">Guide</button>
+                </div>
+
+                <div className="upperCommunityWrap">
+                    <button className="upperCommunity123"  onMouseEnter={toggleDropdown} onMouseLeave={toggleDropdown}>
+                        Community
+                        {isDropdownVisible && (
+                            <div className="dropdownMenu123">
+                                <li onClick={goToFreeBulletinBoard} className="dropdownWord">자유 게시판</li>
+                                <li onClick={goToReportBulletinBoard} className="dropdownWord">신고 게시판</li>
+                            </div>
+                        )}
+                    </button>
+                </div>
+
+                <div className="upperLoginWrap">
+                    { cookies.get('accessToken') ? (
+                        <button className="upperLogin123">Info</button>        
+                    ) : (
+                        <button className="upperLogin123" onClick={goToLogin}>Sign In</button>
+                    )}
+                </div>
+
             </div>
-
-            <div className={`dropdownContent ${isDropdownVisible ? 'active' : ''}`}>
-                <li className="dropdownMenu" onClick={goToFreeBulletinBoard}>자유 게시판</li>
-                <li className="dropdownMenu" onClick={goToReportBulletinBoard}>신고 게시판</li>
+            <div className="contentWrap123">
+                <div className = "BulletinBoardWritingUpper">
+                    <div className="BulletinBoardWritingUpperLeft">
+                        <div className="BulletinBoardTitle123">자유 게시판</div>
+                    </div>
+                </div>
+                <div className="BulletinBoardLongLineUpper"/>
+                <div className = "BulletinBoardWritingMiddle">
+                    <div className = "BulletinBoardPageTitleWrap">
+                        <div className="BulletinBoardPageTitle">{title}</div>
+                        <div className="BulletinBoardPageUser">{writer}</div>
+                        <div className="BulletinBoardPageDate">{regDate[0]}-{regDate[1]}-{regDate[2]} {regDate[3]}:{regDate[4]}</div>
+                    </div>
+                    <div className="BulletinBoardShortLine"/>
+                    <div className = "BulletinBoardPageContentsWrap">
+                        <div className="BulletinBoardPageContents">
+                            {content}
+                        </div>
+                        <div className="BulletinBoardPageContentsBottom">
+                            <button className="BulletinBoardPageModifyButton">
+                                수정
+                            </button>
+                            <button className="BulletinBoardPageRemoveButton" onClick={onClickRemoveButton}>
+                                삭제
+                            </button>
+                        </div>
+                    </div>
+                    <div className="BulletinBoardShortLine"/>
+                </div>
+                <div className = "BulletinBoardPageBottom">
+                    <div className = "BulletinBoardPageCommentWrap">
+                        <div className = "BulletinBoardPageComment">
+                            댓글 {postsComment.total}
+                        </div>
+                    </div>
+                    <div className="BulletinBoardShortLine"/>
+                    <div className = "BulletinBoardWritingCommentWrap">
+                        <textarea
+                                ref={textarea}            
+                                type = 'text'
+                                className="inputWritingComment"
+                                placeholder="댓글을 작성해주세요."
+                                value={comment}
+                                onChange={handleComment}
+                                />
+                        <div className="BulletinBoardPageCommentButtonWrap">
+                            <button className='BulletinBoardPageCommentButton' onClick={onClickCommentEnrollButton}>등록</button>
+                        </div>
+                    </div>
+                    <div className="BulletinBoardShortLine"/>
+                    <div className = "BulletinBoardWritingCommentWrap">
+                        <PostComments postComments={postsComment}></PostComments>
+                    </div>
+                    <div className="BulletinBoardPageCommentDesignWrap">
+                        <Pagination className="BulletinBoardPageCommentDesign"
+                            activePage={postsComment.page}
+                            itemsCountPerPage={postsComment.size}
+                            totalItemsCount={postsComment.total}
+                            pageRangeDisplayed={10}
+                            prevPageText={"‹"}
+                            nextPageText={"›"}
+                            onChange={handlePage}
+                        />
+                    </div>
+                </div>
             </div>
-
-            <div className="topHome" onClick={goToHome}>Home</div>
-            <div className="topHomeButton" onClick={goToHome}/>
-
-            <div className='titleBoard'>자유 게시판</div>
-            <div className="titleLine"/>
-
-            {/* <div className="bulletinLineInner"/> */}
-            <div className="bulletinLineOuter"/>
-            <div className="bulletinWord">{title}
-            </div>
-            <div className="userName">{writer}</div>
-            <div className="date"></div>
-
-            <div className="bulletinContents">{content}</div>
-            <div className="bulletinContentsLine"/>
-
-            {
-                fileName? 
-            <div>
-                <img src={fileName} alt="이미지"/>
-            </div> : <div></div>
-            }
-            <div className='bulletinModifyButton' onClick={goToFreeBulletinBoardPageWriting}>수정</div>
-            <div className='bulletinModifyRemoveSpace'/>
-            <div className='bulletinRemoveButton' onClick={onClickRemoveButton}>삭제</div>
-
-            <div className="bulletinCommentsNumber">댓글</div>
-            <div className="bulletinCommentsLine"/>
-
-            <div className='bulletinCommentsRectangle'>
-                <input
-                    type = 'text'
-                    className="bulletinCommentWord"
-                    placeholder="댓글을 입력해주세요."
-                    value={comment}
-                    onChange={handleComment}
-                />
-            </div>
-            <div className='bulletinCommentsRectangleLine'/>
-            
-            <div className="bulletinCommentsWordNumber">0 / 100</div>
-
-            <div className="bulletinCommentsEnrollButton"/>
-            <div className='bulletinCommentsEnrollText' onClick={onClickCommentEnrollButton}>등록</div>
-
-            <PostsComment postsComment={postsComment}></PostsComment>
-
-            <div className="commentsUserName">user123</div>
-            {/* <div className="commentsUserNameDateSpace"/> */}
-            <div className="commentsDate">1시간 전</div>
-            <div className="commentsContent">신고합니다</div>
-
-            <div className="bulletinCommentsBottomLine"/>
         </div>
-    )
-}
+    )}

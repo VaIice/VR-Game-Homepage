@@ -129,6 +129,7 @@
         cursor: pointer;
         height: 10%;
         border-bottom: 1px rgba(255, 255, 255, 0.5) solid;
+        border-bottom-width: 50%;
 }
 
 .postListTitle123 {
@@ -212,19 +213,20 @@ border-radius: 0 5px 5px 0;
 
 ul.pagination li a {
 text-decoration: none;
-color: #337ab7;
+color: white;
 font-size: 1rem;
+margin-bottom: 1px;
 }
 
 ul.pagination li.active a {
-color: white;
+color: black;
 }
 
 ul.pagination li.active {
-background-color: #337ab7;
+background-color: white;
 }
 
 ul.pagination li a:hover,
 ul.pagination li a.active {
-color: blue;
+color: rgb(148, 148, 148);
 }
