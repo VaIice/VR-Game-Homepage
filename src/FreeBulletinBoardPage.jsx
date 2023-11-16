@@ -5,15 +5,13 @@ import { Cookies } from 'react-cookie';
 import Swal from "sweetalert2";
 import { useRef } from "react";
 import Pagination from "react-js-pagination";
-import { secretPage } from './FreeBulletinBoard';
+import { secretPage, pageNumber } from './FreeBulletinBoard';
 
 const cookies = new Cookies()
 
 export default function FreeBulletinBoardPage(bno) {
     const navigate = useNavigate();
-
     const [postsCommentLoaded, setPostsCommentLoaded] = useState(false);
-
     const [postsComment, setPostsComment] = useState([]);
 
     useEffect(() => {    
@@ -93,6 +91,7 @@ export default function FreeBulletinBoardPage(bno) {
                             'Authorization': `Bearer ${cookies.get('accessToken')}`}
                     });
                     console.log(response);
+                    // window.location.reload();
                 } catch (error) {
                     alert('Error remove data: 삭제 실패', error);
                 }
@@ -172,6 +171,7 @@ export default function FreeBulletinBoardPage(bno) {
                 'Authorization': `Bearer ${cookies.get('accessToken')}`}
         });
         console.log(response);
+        // window.location.reload();
     }
 
     const textarea = useRef();
@@ -189,7 +189,7 @@ export default function FreeBulletinBoardPage(bno) {
                                     <button className="BulletinBoardPagePostCommentListModify">
                                         수정
                                     </button>
-                                    <button className="BulletinBoardPagePostCommentListRemove" onClick={() => onClickCommentRemoveButton(postsComment.rno)}>
+                                    <button className="BulletinBoardPagePostCommentListRemove" onClick={() => onClickCommentRemoveButton(postComment.rno)}>
                                         삭제
                                     </button>
                                 </div>

@@ -8,6 +8,7 @@ import Pagination from "react-js-pagination";
 const cookies = new Cookies()
 const SERVER_URL_FREE_LIST = `${process.env.REACT_APP_SERVER_URL}/boards/FREE/list?page=1`;
 export let secretPage = '0';
+export let pageNumber = 0;
 
 export default function FreeBulletinBoard() {
     const navigate = useNavigate();
@@ -92,6 +93,7 @@ export default function FreeBulletinBoard() {
                 console.log(`${process.env.REACT_APP_SERVER_URL}/boards/FREE/${bno}/withImages`);
             }
             secretPage = secret;
+            pageNumber = bno;
             navigate(`/FreeBulletinBoardPage/${bno}`);
         } catch (error) {
             alert('해당 게시글은 관리자와 작성자만 확인가능합니다.');

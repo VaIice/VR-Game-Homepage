@@ -76,12 +76,12 @@ export default function Home() {
                                 <button className="upperLogin1" onClick={goToInfo}>Info</button> 
                             </div>
                             <div className="upperSignOutWrap">
-                                <button className="upperLogin1" onClick={onClickSignOutButton}>Sign Out</button> 
+                                <button className="upperLogin1" onClick={onClickSignOutButton}>Logout</button> 
                             </div>
                         </div>
                     ) : (
                         <div className="upperLoginWrap">
-                            <button className="upperLogin123" onClick={goToLogin}>Sign In</button>
+                            <button className="upperLogin123" onClick={goToLogin}>Login</button>
                         </div>
                 )}
             </div>
