@@ -15,6 +15,7 @@ import NoticeBulletinBoardPageWriting from "./NoticeBulletinBoardPageWriting";
 import ReportBulletinBoardPageWriting from "./ReportBulletinBoardPageWriting";
 import Information from "./Information";
 import InformationPassword from "./InformationPassword";
+import SearchPassword from "./SearchPassword";
 
 function App() {
   const routes = Array.from({ length: 1000 }, (_, index) => (
@@ -92,6 +93,7 @@ function App() {
         {/* <Route path="/FreeBulletinBoardPageModifyWriting" element={<FreeBulletinBoardPageModifyWriting />} /> */}
         <Route path="/NoticeBulletinBoardPageWriting" element={<NoticeBulletinBoardPageWriting />} />
         <Route path="/ReportBulletinBoardPageWriting" element={<ReportBulletinBoardPageWriting />} />
+        <Route path="/SearchPassword" element={<SearchPassword/>} />
         <Route>
           {routes}
         </Route>

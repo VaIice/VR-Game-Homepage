@@ -29,6 +29,8 @@
 .FreeBulletinBoardPageImage {
     padding-bottom: 0.5%;
     margin-left: 1.5%;
+    max-width: 50%;
+    height: auto;
 }
 
 .BulletinBoardPageTitleWrap {

@@ -188,7 +188,11 @@
   overflow: auto;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  /* background-image: url(333.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed; */
 }
 
 .wallPaper123 {
