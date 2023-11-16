@@ -238,7 +238,6 @@ export default function FreeBulletinBoardPageWriting() {
                                 placeholder="내용"
                                 value={contents}
                                 onChange={handleContents}
-                                style={{ border: 'none', outline: 'none',  boxShadow: 'none'}}
                                 />
                     </div>
                     <div className="BulletinBoardShortLine"/>

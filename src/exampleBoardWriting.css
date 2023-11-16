@@ -117,7 +117,7 @@
 }
 
 .inputWritingContents {
-    display: block;
+    /* display: block;
     width: 96.5%;
     min-height: 52vh;
     outline: none;
@@ -127,10 +127,28 @@
     margin-left: 1.5%;
     padding-top: 1%;
     font-family: 'Inter';
-    /* border: 'none';
+    border: 'none';
     outline: 'none';
-    box-shadow: 'none'; */
+    box-shadow: 'none';
     resize: none;
+    background-color: aqua; */
+
+    margin-top: 1%;
+    display: block;
+    width: 87%;
+    min-height: 7vh;
+    outline: none;
+    border: none;
+    font-size: 16px;
+    font-weight: 400;
+    margin-left: 1.5%;
+    padding-top: 1%;
+    font-family: 'Inter';
+    border: 'none';
+    outline: 'none';
+    box-shadow: 'none';
+    resize: none;
+    padding-left: 1%;
 }
 
 .BulletinBoardWritingFileBottomLine {
