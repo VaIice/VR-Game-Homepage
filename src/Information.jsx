@@ -45,6 +45,7 @@ export default function NoticeBoard() {
                 setPhoneNumberValid(true);
                 setNameValid(true);
                 setNotAllow(true);
+                console.log(notAllow);
             } catch (error) {
                 alert('오엥', error);
             }
