@@ -59,7 +59,7 @@ export default function NoticeBoard() {
     useEffect(() => {
         if (phoneNumberValid && nameValid) {
             setNotAllow(false);
-            console.log('설마 여기?');
+            console.log('설마 여기?', notAllow);
             return;
         } else {
             setNotAllow(true);
