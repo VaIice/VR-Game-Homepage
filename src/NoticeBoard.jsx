@@ -2,105 +2,79 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { Cookies } from 'react-cookie';
-import Swal from "sweetalert2";
-import {FreeBulletinBoardList} from "./FreeBulletinBoard";
+import styled from "styled-components";
+import Pagination from "react-js-pagination";
+
+export let FreeBulletinBoardList = [];
 
 const cookies = new Cookies()
 
-export default function FreeBulletinBoardPage(bno) {
+const SERVER_URL_FREE_LIST = `${process.env.REACT_APP_SERVER_URL}/boards/FREE/list?page=1`;
+
+export default function FreeBulletinBoard() {
     const navigate = useNavigate();
 
-    const [postsCommentLoaded, setPostsCommentLoaded] = useState(false);
-
-    const [postsComment, setPostsComment] = useState([]);
+    const [postsLoaded, setPostsLoaded] = useState(false);
 
     useEffect(() => {    
         const fetchData = async () => {
-            const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/boards/FREE/${bno.bno}/withImages`
-            );
-            const responseComment = await axios.get(`${process.env.REACT_APP_SERVER_URL}/replies/FREE/list/${bno.bno}`
-           );
-            setTitle(response.data.title);
-            setContent(response.data.content);
-            setWriter(response.data.writer);
-            setSecret(response.data.secret);
-            setFileName(response.data.fileNames[0]);
-            setBnum(response.data.bno);
-            setModDate(response.data.modDate);
-            setRegDate(response.data.regDate);
-            setPostsComment(responseComment.data);
-            setPostsCommentLoaded(true);
-            console.log(123, responseComment);
+            try {
+                const response = await axios.get(SERVER_URL_FREE_LIST);
+                setPosts(response.data);
+                FreeBulletinBoardList = response.data;
+                console.log(`${process.env.REACT_APP_SERVER_URL}/boards/FREE/list?page=1`);
+                setPostsLoaded(true);
+            } catch (error) {
+                alert('Error fetching data: FreeBulletinBoard', error);
+                console.log(SERVER_URL_FREE_LIST);
+            }
+
         };
         fetchData();
     }, []);
 
-    const [title, setTitle] = useState('');
-    const [content, setContent] = useState('');
-    const [writer, setWriter] = useState('');
-    const [secret, setSecret] = useState('');
-    const [fileName, setFileName] = useState([]);
-    const [bnum, setBnum] = useState('');
-    const [modDate, setModDate] = useState([]);
-    const [regDate, setRegDate] = useState([]);
-
-    const onClickCommentRemoveButton = (rno) => {
-        Swal.fire({
-            icon: "warning",
-            // title: "게시글 삭제",
-            text: '댓글을 삭제할까요?',
-            showCancelButton: true,
-            confirmButtonText: "예",
-            cancelButtonText: "아니요",
-        })
-        .then(async (res) => {
-            if (res.isConfirmed) {
-                try {
-                    const response = await axios.delete(`${process.env.REACT_APP_SERVER_URL}/replies/FREE/${rno}`, {
-                        headers: {
-                            'Authorization': `Bearer ${cookies.get('accessToken')}`}
-                    });
-                    console.log(response);
-                } catch (error) {
-                    alert('Error remove data: 삭제 실패', error);
+    const handlePage = async (page) => {
+        const SERVER_URL_FREE_LIST_PAGE = `${process.env.REACT_APP_SERVER_URL}/boards/FREE/list?page=${page}`
+        const fetchData = async () => {
+            if (searchFlag === false) {
+            const response = await axios.get(SERVER_URL_FREE_LIST_PAGE, {
+                headers: {
+                    'Authorization': `Bearer ${cookies.get('accessToken')}`,
                 }
-            }
-        });
-    }
-
-    const PostsComment = ({ postsComment }) => {
-        if (postsComment.total !== 0) {
-            return (
-                <div className='postCommentList'>
-                { postsCommentLoaded ? (
-                postsComment.dtoList.map((postsComment) => (
-                    <div key={postsComment.rno} className='postCommentListItem'>
-                    <li className='postCommentListWriter'>
-                        {postsComment.replyer}
-                    </li>
-                    <li className='postCommentListComment'>{postsComment.replyText}</li>
-                    <li>수정</li>
-                    {/* <div className="postCommentsModifyRemoveSpace"/> */}
-                    <li onClick={() => onClickCommentRemoveButton(postsComment.rno)}>삭제</li>
-                    </div>
-                ))
-                ) : (
-                <div></div>
-                )
-                }  </div>
-            );
+            });
+            setPosts(response.data);
+            setPostsLoaded(true);
+            FreeBulletinBoardList = response.data;
+            console.log(response.data);
         }
-    };
+            else {
+                const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/boards/FREE/search?type=${searchWord}&keyword=${searchKeyword}&page=${page}`, {
+                    headers: {
+                        'Authorization': `Bearer ${cookies.get('accessToken')}`,
+                    }
+                });
+                console.log(response);
+                setPosts(response.data);
+                setPostsLoaded(true);
+                FreeBulletinBoardList = response.data;
+                console.log(response.data);
+            }
+        };
+        fetchData();
+        setPage(page);
+        console.log(page);
+    }
 
     const goToHome = () => {
         navigate("/");
+        console.log(1, cookies.get('refreshToken'))
+        console.log(2, cookies.get('accessToken'))
     }
 
     const goToNoticeBoard = () => {
         navigate("/NoticeBoard");
     }
 
-    
     const goToLogin = () => {
         navigate("/Login");
     }
@@ -113,60 +87,117 @@ export default function FreeBulletinBoardPage(bno) {
         navigate("/ReportBulletinBoard");
     }
 
+    const goToFreeBulletinBoardPage = (bno) => {
+        navigate(`/FreeBulletinBoardPage/${bno}`);
+    }
+
+    const goToFreeBulletinBoardPageWriting = () => {
+        // if (cookies.get('accessToken') && cookies.get('refreshToken')) {
+        //     navigate("/FreeBulletinBoardPageWriting");
+        // }
+        // else {
+        //     alert('로그인을 해주세요.')
+        //     goToLogin();
+        // }
+        navigate("/FreeBulletinBoardPageWriting");
+        console.log(cookies.get('accessToken')&&cookies.get('refreshToken'));
+        console.log('cookies :', cookies.get('accessToken'));
+        console.log('refresh: ', cookies.get('refreshToken'));
+    }
+    const [searchKeyword, setSearchKeyword] = useState('');
+
+    const handleSearch = async (e) => {
+        setSearchKeyword(e.target.value);
+    }
+
     const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
     const toggleDropdown = () => {
         setIsDropdownVisible(!isDropdownVisible);
     };
-    const goToFreeBulletinBoardPageWriting = () => {
-        navigate("/FreeBulletinBoardPageWriting");
-    }
-    
-    const onClickRemoveButton = async () => {
-        Swal.fire({
-            icon: "warning",
-            // title: "게시글 삭제",
-            text: '게시글을 삭제할까요?',
-            showCancelButton: true,
-            confirmButtonText: "예",
-            cancelButtonText: "아니요",
-        })
-        .then(async (res) => {
-            if (res.isConfirmed) {
-                try {
-                    const response = await axios.delete(`${process.env.REACT_APP_SERVER_URL}/boards/remove/FREE/${bnum}`, {
-                        headers: {
-                            'Authorization': `Bearer ${cookies.get('accessToken')}`}
-                    });
-                    console.log('RESPONSE :', response);
-                    console.log('bnum :', bnum);
-                    console.log('url : ', `${process.env.REACT_APP_SERVER_URL}/boards/remove/FREE/${bnum}`)
-                    goToFreeBulletinBoard();
-                } catch (error) {
-                    alert('관리자와 해당 글의 작성자만 게시글을 삭제할 수 있습니다.', error);
-                }
+
+    const onClickSearchButton = async () => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/boards/FREE/search?type=${searchWord}&keyword=${searchKeyword}&page=1`);
+                console.log(`${process.env.REACT_APP_SERVER_URL}/boards/FREE/search?type=${searchWord}&keyword=${searchKeyword}`);
+                console.log(response);
+                setPosts(response.data);
+                setPostsLoaded(true);
+                FreeBulletinBoardList = response.data;
+                console.log(response.data);
+                setPage(1);
+                setSearchFlag(true);
+                console.log(page);
+            } catch (error) {
+                alert('Error fetching data: Free Search Button', error);
             }
-        });
+        };
+
+        fetchData();
+    }
+
+    const [searchWordKorean, setSearchWordKorean] = useState('제목');
+    const [posts, setPosts] = useState([]);
+    const [page, setPage] = useState(1);
+    const [postsPerPage, setPostsPerPage] = useState(10);
+    const [searchFlag, setSearchFlag] = useState(false);
+
+    const Posts = ({ posts }) => {
+        if (posts.total !== 0) {
+            return (
+                <div className="postList">
+                {postsLoaded ? (
+                posts.dtoList.map((post) => (
+                    <div key={post.bno} className="postListItem">
+                    <li className="postListTitle" onClick={() => goToFreeBulletinBoardPage(post.bno)}>
+                        {post.title}
+                    </li>
+                    <li className="postListUser">{post.writer}</li>
+                    </div>
+                ))
+                ) : (
+                <div>Loading...</div>
+                )}
+            </div>
+            );
+        }
     };
 
-    const [comment, setComment] = useState('');
+    const onClickSearchDropdownButton = async () => {
+        searchDropdown();
+    }
+    
+    const [searchWord, setSearchWord] = useState('t');
 
-    const handleComment = (e) => {
-        setComment(e.target.value);
+    const onClickSearchWordTitle = async () => {
+        searchDropdown();
+        setSearchWord('t');
+        setSearchWordKorean('제목');
     }
 
-    const onClickCommentEnrollButton = async () => {
-        const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/replies/FREE/register`, {bno: bnum, replyText: comment}, {
-            headers: {
-                'Authorization': `Bearer ${cookies.get('accessToken')}`}
-        });
-        console.log(response);
+    const onClickSearchWordContent = async () => {
+        searchDropdown();
+        setSearchWord('c');
+        setSearchWordKorean('내용');
     }
+
+    const onClickSearchWordWriter = async () => {
+        searchDropdown();
+        setSearchWord('w');
+        setSearchWordKorean('글쓴이');
+    }
+
+    const searchDropdown = () => {
+        setSearchDropdownVisible(!searchDropdownVisible);
+    };
+
+    const [searchDropdownVisible, setSearchDropdownVisible] = useState(false);
 
     return (
         <div className="page">
-            <img src="../assets/image/wallpaper.jpg" alt="background" className='wallPaper'/>
-            <div className="upper"/>
+        <img src="assets/image/wallpaper.jpg" alt="background" className='wallPaper'/>
+        <div className="upper"/>
             <hr style={{display: 'white', marginTop: 97}}/>
             <div className="topLoginButton" onClick={goToLogin}/>
             <div className="topLogin" onClick={goToLogin}>Login</div>
@@ -179,7 +210,6 @@ export default function FreeBulletinBoardPage(bno) {
                 >
                 Community
             </div>
-
             <div className={`dropdownContent ${isDropdownVisible ? 'active' : ''}`}>
                 <li className="dropdownMenu" onClick={goToFreeBulletinBoard}>자유 게시판</li>
                 <li className="dropdownMenu" onClick={goToReportBulletinBoard}>신고 게시판</li>
@@ -191,53 +221,57 @@ export default function FreeBulletinBoardPage(bno) {
             <div className='titleBoard'>자유 게시판</div>
             <div className="titleLine"/>
 
-            {/* <div className="bulletinLineInner"/> */}
-            <div className="bulletinLineOuter"/>
-            <div className="bulletinWord">{title}
+            <div className='searchWord' >
+                {searchWordKorean}
             </div>
-            <div className="userName">{writer}</div>
-            <div className="date"></div>
 
-            <div className="bulletinContents">{content}</div>
-            <div className="bulletinContentsLine"/>
-
-            {
-                fileName? 
-            <div>
-                <img src={fileName} alt="이미지"/>
-            </div> : <div></div>
-            }
-            <div className='bulletinModifyButton' onClick={goToFreeBulletinBoardPageWriting}>수정</div>
-            <div className='bulletinModifyRemoveSpace'/>
-            <div className='bulletinRemoveButton' onClick={onClickRemoveButton}>삭제</div>
-
-            <div className="bulletinCommentsNumber">댓글</div>
-            <div className="bulletinCommentsLine"/>
-
-            <div className='bulletinCommentsRectangle'>
+            <div className="searchLineInner"/>
+            <div className="searchLineOuter">
                 <input
                     type = 'text'
-                    className="bulletinCommentWord"
-                    placeholder="댓글을 입력해주세요."
-                    value={comment}
-                    onChange={handleComment}
+                    className="inputSearch"
+                    placeholder="검색어를 입력해주세요."
+                    value={searchKeyword}
+                    onChange={handleSearch}
                 />
             </div>
-            <div className='bulletinCommentsRectangleLine'/>
+
+
+            <div>
+                <img src={"/assets/image/dropdown.svg"} alt="dropdown" className='dropdownIcon' onClick={onClickSearchDropdownButton}/>
+            </div>
+
+            <div className={`searchDropdownContent ${searchDropdownVisible ? 'active' : ''}`}>
+                <li className="searchDropdownMenu" onClick={onClickSearchWordTitle}>제목</li>
+                <li className="searchDropdownMenu" onClick={onClickSearchWordContent}>내용</li>
+                <li className="searchDropdownMenu" onClick={onClickSearchWordWriter}>글쓴이</li>
+            </div>
             
-            <div className="bulletinCommentsWordNumber">0 / 100</div>
+            <div>
+                <img src={"/assets/image/search.svg"} alt="search" className='searchIcon' onClick={onClickSearchButton}/>
+            </div>
 
-            <div className="bulletinCommentsEnrollButton"/>
-            <div className='bulletinCommentsEnrollText' onClick={onClickCommentEnrollButton}>등록</div>
+            {/* <div className="bulletinLineInner"/> */}
+            {/* <div className="bulletinWord" onClick={goToFreeBulletinBoardPage}>신고합니다</div> */}
+            {/* <div className="commentsNumber">(1)</div> */}
+            {/* <div className="userName">user123</div>
+            <div className="date">1시간 전</div> */}
+            <div className='BottomLine'/>
 
-            <PostsComment postsComment={postsComment}></PostsComment>
+            {/* <div className="pageNumber">1</div> */}
+            <div className="writeButton" onClick={goToFreeBulletinBoardPageWriting}/>
+            <div className='writeWord' onClick={goToFreeBulletinBoardPageWriting}>글쓰기</div>
+            <Posts posts={posts}></Posts>
+            <Pagination className="pagination"
+                activePage={posts.page}
+                itemsCountPerPage={posts.size}
+                totalItemsCount={posts.total}
+                pageRangeDisplayed={10}
+                prevPageText={"‹"}
+                nextPageText={"›"}
+                onChange={handlePage}
 
-            <div className="commentsUserName">user123</div>
-            {/* <div className="commentsUserNameDateSpace"/> */}
-            <div className="commentsDate">1시간 전</div>
-            <div className="commentsContent">신고합니다</div>
-
-            <div className="bulletinCommentsBottomLine"/>
+            />
         </div>
     )
 }

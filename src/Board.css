@@ -492,7 +492,7 @@
   cursor: pointer;
 }
 
-.searchDropdownContent {
+/* .searchDropdownContent {
   display: none;
   position: absolute;
   background-color: #171A23;
@@ -503,7 +503,7 @@
   padding-bottom: 12px;
   text-align: center;
   z-index: 1;
-  list-style-type: none; /* 리스트 마커 제거 */
+  list-style-type: none;
   left: 1210px;
   top: 204px;
   border: 1px solid rgba(255, 255, 255, 0.69);
@@ -513,14 +513,14 @@
 .searchDropdownContent.active,
 .searchDropdownContent:hover {
   display: block;
-}
+} */
 
-.searchDropdownMenu {
+/* .searchDropdownMenu {
   font-size: 17px;
   background-color: #171A23;
   padding: 10px;
   cursor: pointer;
-}
+} */
 
 .postList {
   color: white;

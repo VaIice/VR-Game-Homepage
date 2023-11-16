@@ -5,6 +5,7 @@ import { Cookies } from 'react-cookie';
 import Swal from "sweetalert2";
 import { useRef } from "react";
 import Pagination from "react-js-pagination";
+import { secretPage } from './FreeBulletinBoard';
 
 const cookies = new Cookies()
 
@@ -17,24 +18,50 @@ export default function FreeBulletinBoardPage(bno) {
 
     useEffect(() => {    
         const fetchData = async () => {
-            try {
-                const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/boards/FREE/${bno.bno}/withImages`);
-                const responseComment = await axios.get(`${process.env.REACT_APP_SERVER_URL}/replies/FREE/list/${bno.bno}`
-            );
-                setTitle(response.data.title);
-                setContent(response.data.content);
-                setWriter(response.data.writer);
-                setSecret(response.data.secret);
-                setFileName(response.data.fileNames[0]);
-                setBnum(response.data.bno);
-                setModDate(response.data.modDate);
-                setRegDate(response.data.regDate);
-                setPostsComment(responseComment.data);
-                setPostsCommentLoaded(true);
-                console.log(responseComment.data);
-            } catch (error) {
-                alert('해당 게시글은 관리자와 작성자만 확인가능합니다.');
-                goToFreeBulletinBoard();
+            if (secretPage === '1') {
+                try {
+                    const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/boards/FREE/${bno.bno}/withImages`, {
+                        headers: {
+                            'Authorization': `Bearer ${cookies.get('accessToken')}`,
+                        }
+                    });
+                    const responseComment = await axios.get(`${process.env.REACT_APP_SERVER_URL}/replies/FREE/list/${bno.bno}`);
+                    setTitle(response.data.title);
+                    setContent(response.data.content);
+                    setWriter(response.data.writer);
+                    setSecret(response.data.secret);
+                    setFileName(response.data.fileNames[0]);
+                    setBnum(response.data.bno);
+                    setModDate(response.data.modDate);
+                    setRegDate(response.data.regDate);
+                    setPostsComment(responseComment.data);
+                    setPostsCommentLoaded(true);
+                    console.log(responseComment.data);
+                } catch (error) {
+                    alert('해당 게시글은 관리자와 작성자만 확인가능합니다.');
+                    goToFreeBulletinBoard();
+                }
+            }
+
+            else {
+                try {
+                    const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/boards/FREE/${bno.bno}/withImages`);
+                    const responseComment = await axios.get(`${process.env.REACT_APP_SERVER_URL}/replies/FREE/list/${bno.bno}`);
+                    setTitle(response.data.title);
+                    setContent(response.data.content);
+                    setWriter(response.data.writer);
+                    setSecret(response.data.secret);
+                    setFileName(response.data.fileNames[0]);
+                    setBnum(response.data.bno);
+                    setModDate(response.data.modDate);
+                    setRegDate(response.data.regDate);
+                    setPostsComment(responseComment.data);
+                    setPostsCommentLoaded(true);
+                    console.log(responseComment.data);
+                } catch (error) {
+                    alert('해당 게시글은 관리자와 작성자만 확인가능합니다.');
+                    goToFreeBulletinBoard();
+                }
             }
         };
         fetchData();

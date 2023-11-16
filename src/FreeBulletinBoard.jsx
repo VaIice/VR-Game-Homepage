@@ -7,6 +7,7 @@ import Pagination from "react-js-pagination";
 
 const cookies = new Cookies()
 const SERVER_URL_FREE_LIST = `${process.env.REACT_APP_SERVER_URL}/boards/FREE/list?page=1`;
+export let secretPage = '0';
 
 export default function FreeBulletinBoard() {
     const navigate = useNavigate();
@@ -80,8 +81,21 @@ export default function FreeBulletinBoard() {
         navigate("/ReportBulletinBoard");
     }
 
-    const goToFreeBulletinBoardPage = (bno) => {
-        navigate(`/FreeBulletinBoardPage/${bno}`);
+    const onClickFreeBulletinBoardPageButton = async (bno, secret) => {
+        try {
+            if (secret === '1') {
+                const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/boards/FREE/${bno}/withImages`, {
+                    headers: {
+                        'Authorization': `Bearer ${cookies.get('accessToken')}`,
+                    }
+                });
+                console.log(`${process.env.REACT_APP_SERVER_URL}/boards/FREE/${bno}/withImages`);
+            }
+            secretPage = secret;
+            navigate(`/FreeBulletinBoardPage/${bno}`);
+        } catch (error) {
+            alert('해당 게시글은 관리자와 작성자만 확인가능합니다.');
+        }
     }
 
     const goToFreeBulletinBoardPageWriting = () => {
@@ -141,8 +155,7 @@ export default function FreeBulletinBoard() {
                 <div className="postList123">
                 {postsLoaded ? (
                 posts.dtoList.map((post) => (
-                    <div key={post.bno} className="postListItem123" onClick={() => goToFreeBulletinBoardPage(post.bno)}>
-                            {/* <div className="postListTitle123"> */}
+                    <div key={post.bno} className="postListItem123" onClick={() => onClickFreeBulletinBoardPageButton(post.bno, post.secret)}>
                             {post.secret === '0' ? (
                                     <div className="postListTitle123">{post.title}</div>
                                 ) : (
@@ -188,13 +201,17 @@ export default function FreeBulletinBoard() {
         setSearchWordKorean('글쓴이');
     }
 
+    const onClickSearchWordTitleAndContent = async () => {
+        searchDropdown();
+        setSearchWord('tc');
+        setSearchWordKorean('제목+내용');
+    }
+
     const searchDropdown = () => {
         setSearchDropdownVisible(!searchDropdownVisible);
     };
 
     const [searchDropdownVisible, setSearchDropdownVisible] = useState(false);
-
-
 
     return (
         <div className="page123">
@@ -242,15 +259,23 @@ export default function FreeBulletinBoard() {
                     <div className="BulletinBoardUpperRight">
                         <div className="searchLineOuter123">
                             <div className="searchLineLeft123">
-                                <div className='searchWord123' >
-                                    {searchWordKorean}
+                                <div className="searchLineLeftUpper">
+                                    <div className='searchWord123' >
+                                        {searchWordKorean}
+                                    </div>
+                                    <div>
+                                        <img src={"/assets/image/dropdown.svg"} alt="dropdown" className='searchDropdownIcon123' onClick={onClickSearchDropdownButton}/>
+                                    </div>
                                 </div>
-                                <div>
-                                    <img src={"/assets/image/dropdown.svg"} alt="dropdown" className='searchDropdownIcon123' onClick={onClickSearchDropdownButton}/>
+                                <div className={`searchDropdownContent ${searchDropdownVisible ? 'active' : ''}`}>
+                                    <li className="searchDropdownMenu" onClick={onClickSearchWordTitle}>제목</li>
+                                    <li className="searchDropdownMenu" onClick={onClickSearchWordContent}>내용</li>
+                                    <li className="searchDropdownMenu" onClick={onClickSearchWordWriter}>글쓴이</li>
+                                    <li className="searchDropdownMenu" onClick={onClickSearchWordTitleAndContent}>제목+내용</li>
                                 </div>
-                                <div className="searchLineInner123"/>
                             </div>
                             <div className="searchLineRight123">
+                                <div className="searchLineInner123"/>
                                 <input
                                     type = 'text'
                                     className="searchLineInput"
@@ -262,12 +287,6 @@ export default function FreeBulletinBoard() {
                             </div>
                         </div>
                     </div>
-{/* 
-                    <div className={`searchDropdownContent ${searchDropdownVisible ? 'active' : ''}`}>
-                        <li className="searchDropdownMenu" onClick={onClickSearchWordTitle}>제목</li>
-                        <li className="searchDropdownMenu" onClick={onClickSearchWordContent}>내용</li>
-                        <li className="searchDropdownMenu" onClick={onClickSearchWordWriter}>글쓴이</li>
-                    </div> */}
                 </div>
                 <div className="BulletinBoardLongLineUpper"/>
                 <div className = "BulletinBoardMiddle">

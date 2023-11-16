@@ -31,6 +31,12 @@ export default function Home() {
         navigate("/Login");
     }
 
+    const onClickSignOutButton = () => {
+        cookies.remove('accessToken');
+        alert('로그아웃이 완료되었습니다.');
+        window.location.reload(); // Reload the page after logging out
+    }
+
     const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
     const toggleDropdown = () => {
@@ -64,15 +70,20 @@ export default function Home() {
                         )}
                     </button>
                 </div>
-
-                <div className="upperLoginWrap">
-                    { cookies.get('accessToken') ? (
-                        <button className="upperLogin123" onClick={goToInfo}>Info</button>        
+                { cookies.get('accessToken') ? (
+                        <div className="upperLoginAndSignOutWrap">
+                            <div className="upperInfoWrap123">
+                                <button className="upperLogin1" onClick={goToInfo}>Info</button> 
+                            </div>
+                            <div className="upperSignOutWrap">
+                                <button className="upperLogin1" onClick={onClickSignOutButton}>Sign Out</button> 
+                            </div>
+                        </div>
                     ) : (
-                        <button className="upperLogin123" onClick={goToLogin}>Sign In</button>
-                    )}
-                </div>
-
+                        <div className="upperLoginWrap">
+                            <button className="upperLogin123" onClick={goToLogin}>Sign In</button>
+                        </div>
+                )}
             </div>
 
             <div className="contentWrap123">

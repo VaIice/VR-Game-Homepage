@@ -93,8 +93,17 @@
     margin-left: 4%;
   }
 
+  .LoginAndSignOut {
+    background-color: aliceblue;
+    /* margin-right: 10%; */
+  }
+
   .upperHomeWrap {
     margin-left: 10%;
+  }
+
+  .upperInfoWrap123 {
+    padding-right: 15%
   }
 
   .upperHome123 {
@@ -109,7 +118,8 @@
   .upperNotice123,
   .upperGuide123,
   .upperCommunity123,
-  .upperLogin123 {
+  .upperLogin123,
+  .upperSignOut123 {
     font-size: 26px;
     font-weight: bold;
     color: white;
@@ -119,8 +129,27 @@
     position: relative;
   }
 
+  .upperLogin1 {
+    font-size: 26px;
+    font-weight: bold;
+    color: white;
+    border: none;
+    cursor: pointer;
+    background-color: transparent;
+    position: relative;
+  }
+
+.upperSignOutWrap {
+  white-space: nowrap;
+}
+
+.upperLoginAndSignOutWrap {
+  width: 25%;
+  display: flex;
+  padding-left: 4%;
+}
+
   .upperCommunity123 {
-    /* background-color: aqua; */
     margin-top: 20%;
     padding-bottom: 20%;
   }
