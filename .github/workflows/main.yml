@@ -18,6 +18,10 @@ jobs:                                # Job 설정
       - name: Checkout source code.   # Repo checkout
         uses: actions/checkout@v3
         
+      - name: .env setting
+        run: |
+          echo "REACT_APP_SERVER_URL=${{ secrets.REACT_APP_SERVER_URL }}" >> .env
+          
       - name: Install dependencies    # 의존 파일 설치
         run: npm install
         
