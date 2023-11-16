@@ -24,7 +24,7 @@ export default function NoticeBoard() {
     // 정보들이 유효한 형식이면 활성화
     const [notAllow, setNotAllow] = useState(true);
 
-    let flag = true;
+    const [flag, setFlag] = useState(false);
 
     // 서버에 보낼 정보
     const dataToSend = {
@@ -46,7 +46,7 @@ export default function NoticeBoard() {
                 setEmailValid(true);
                 setPhoneNumberValid(true);
                 setNameValid(true);
-                setNotAllow(true);
+                // setNotAllow(true);
             } catch (error) {
                 alert('오엥', error);
             }
@@ -58,13 +58,13 @@ export default function NoticeBoard() {
 
     // 이메일, 비밀번호가 유효한 형식이라면 버튼 활성화
     useEffect(() => {
-        if (phoneNumberValid && nameValid && flag === false) {
+        if (phoneNumberValid && nameValid && flag === true) {
             setNotAllow(false);
             return;
         } else {
             setNotAllow(true);
         }
-    }, [phoneNumberValid, nameValid]);
+    }, [phoneNumberValid, nameValid, phoneNumber, name]);
 
     const handlePhoneNumber = async (e) => {
         if (e.target.value.length === 10 || e.target.value.length === 12) {
@@ -73,7 +73,7 @@ export default function NoticeBoard() {
             e.target.value = e.target.value.replace(/-/g, '').replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
         }
         e.target.value = e.target.value.slice(0,13);
-        flag = false;
+        setFlag(true);
         setPhoneNumber(e.target.value);
         console.log(notAllow);
 
@@ -88,7 +88,7 @@ export default function NoticeBoard() {
     const handleName = async (e) => {
         const regex = /^[ㄱ-ㅎ가-힣a-zA-Z]+$/;
         setName(e.target.value);
-        flag = false;
+        setFlag(true);
         if (regex.test(e.target.value) && e.target.value.length >= 2) {
             setNameValid(true);
         } else {
