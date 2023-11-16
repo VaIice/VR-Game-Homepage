@@ -59,6 +59,7 @@ export default function NoticeBoard() {
     useEffect(() => {
         if (phoneNumberValid && nameValid) {
             setNotAllow(false);
+            console.log('설마 여기?');
             return;
         } else {
             setNotAllow(true);
@@ -85,7 +86,8 @@ export default function NoticeBoard() {
         e.target.value = e.target.value.slice(0,13);
 
         setPhoneNumber(e.target.value);
-        
+        console.log(notAllow);
+
         const regex = /[0-9]+$/;
         if (regex.test(e.target.value) && (e.target.value.length === 12 || e.target.value.length === 13)) {
             setPhoneNumberValid(true);
