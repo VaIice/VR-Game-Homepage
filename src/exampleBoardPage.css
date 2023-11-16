@@ -26,6 +26,11 @@
     margin-left: 2%;
 } */
 
+.FreeBulletinBoardPageImage {
+    padding-bottom: 0.5%;
+    margin-left: 1.5%;
+}
+
 .BulletinBoardPageTitleWrap {
     margin-top: 0.5%;
     margin-bottom: 0.5%;
@@ -161,6 +166,11 @@
     margin-top: auto;
     margin-bottom: 3%;
     color: white;
+}
+
+.BulletinBoardPageCommentButton:disabled {
+    background-color: #919191;
+    color:white;
 }
 
 .BulletinBoardPageCommentButtonWrap {

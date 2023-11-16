@@ -89,6 +89,16 @@ export default function InformationPassword() {
         }
     }
 
+    const onClickSignOutButton = () => {
+        cookies.remove('accessToken');
+        alert('로그아웃이 완료되었습니다.');
+        goToHome();
+    }
+
+    const goToInfo = () => {
+        navigate("/Information");
+    }
+
     return (
         <div className="page123">
             <img src="assets/image/555.png" alt="background" className='wallPaper123'/>
@@ -102,7 +112,7 @@ export default function InformationPassword() {
                 </div>
 
                 <div className="upperGuideWrap">
-                    <button className="upperGuide123">Guide</button>
+                    <button className="upperGuide123" onClick={goToInfo}>Guide</button>
                 </div>
 
                 <div className="upperCommunityWrap">
@@ -116,15 +126,20 @@ export default function InformationPassword() {
                         )}
                     </button>
                 </div>
-
-                <div className="upperLoginWrap">
-                    { cookies.get('accessToken') ? (
-                        <button className="upperLogin123">Info</button>        
+                { cookies.get('accessToken') ? (
+                        <div className="upperLoginAndSignOutWrap">
+                            <div className="upperInfoWrap123">
+                                <button className="upperLogin1" onClick={goToInfo}>Info</button> 
+                            </div>
+                            <div className="upperSignOutWrap">
+                                <button className="upperLogin1" onClick={onClickSignOutButton}>Logout</button> 
+                            </div>
+                        </div>
                     ) : (
-                        <button className="upperLogin123" onClick={goToLogin}>Sign In</button>
-                    )}
-                </div>
-
+                        <div className="upperLoginWrap">
+                            <button className="upperLogin123" onClick={goToLogin}>Login</button>
+                        </div>
+                )}
             </div>
 
             <div className="contentWrap123">

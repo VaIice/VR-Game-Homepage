@@ -5,13 +5,12 @@ import { Cookies } from 'react-cookie';
 import styled from "styled-components";
 import Pagination from "react-js-pagination";
 
-export let FreeBulletinBoardList = [];
-
 const cookies = new Cookies()
+const SERVER_URL_NOTICE_LIST = `${process.env.REACT_APP_SERVER_URL}/boards/NOTICE/list?page=1`;
+export let secretPage = '0';
+export let pageNumber = 0;
 
-const SERVER_URL_FREE_LIST = `${process.env.REACT_APP_SERVER_URL}/boards/FREE/list?page=1`;
-
-export default function FreeBulletinBoard() {
+export default function NoticeBulletinBoard() {
     const navigate = useNavigate();
 
     const [postsLoaded, setPostsLoaded] = useState(false);
@@ -19,36 +18,33 @@ export default function FreeBulletinBoard() {
     useEffect(() => {    
         const fetchData = async () => {
             try {
-                const response = await axios.get(SERVER_URL_FREE_LIST);
+                const response = await axios.get(SERVER_URL_NOTICE_LIST);
                 setPosts(response.data);
-                FreeBulletinBoardList = response.data;
-                console.log(`${process.env.REACT_APP_SERVER_URL}/boards/FREE/list?page=1`);
+                console.log(response.data);
                 setPostsLoaded(true);
             } catch (error) {
-                alert('Error fetching data: FreeBulletinBoard', error);
-                console.log(SERVER_URL_FREE_LIST);
+                alert('Error fetching data: NoticeBulletinBoard', error);
+                console.log(SERVER_URL_NOTICE_LIST);
             }
-
         };
         fetchData();
     }, []);
 
     const handlePage = async (page) => {
-        const SERVER_URL_FREE_LIST_PAGE = `${process.env.REACT_APP_SERVER_URL}/boards/FREE/list?page=${page}`
+        const SERVER_URL_NOTICE_LIST_PAGE = `${process.env.REACT_APP_SERVER_URL}/boards/NOTICE/list?page=${page}`
         const fetchData = async () => {
             if (searchFlag === false) {
-            const response = await axios.get(SERVER_URL_FREE_LIST_PAGE, {
+            const response = await axios.get(SERVER_URL_NOTICE_LIST_PAGE, {
                 headers: {
                     'Authorization': `Bearer ${cookies.get('accessToken')}`,
                 }
             });
             setPosts(response.data);
             setPostsLoaded(true);
-            FreeBulletinBoardList = response.data;
             console.log(response.data);
         }
             else {
-                const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/boards/FREE/search?type=${searchWord}&keyword=${searchKeyword}&page=${page}`, {
+                const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/boards/NOTICE/search?type=${searchWord}&keyword=${searchKeyword}&page=${page}`, {
                     headers: {
                         'Authorization': `Bearer ${cookies.get('accessToken')}`,
                     }
@@ -56,7 +52,6 @@ export default function FreeBulletinBoard() {
                 console.log(response);
                 setPosts(response.data);
                 setPostsLoaded(true);
-                FreeBulletinBoardList = response.data;
                 console.log(response.data);
             }
         };
@@ -87,22 +82,32 @@ export default function FreeBulletinBoard() {
         navigate("/ReportBulletinBoard");
     }
 
-    const goToFreeBulletinBoardPage = (bno) => {
-        navigate(`/FreeBulletinBoardPage/${bno}`);
+    const onClickNoticeBulletinBoardPageButton = async (bno, secret) => {
+        try {
+            if (secret === '1') {
+                const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/boards/NOTICE/${bno}/withImages`, {
+                    headers: {
+                        'Authorization': `Bearer ${cookies.get('accessToken')}`,
+                    }
+                });
+                console.log(`${process.env.REACT_APP_SERVER_URL}/boards/NOTICE/${bno}/withImages`);
+            }
+            secretPage = secret;
+            pageNumber = bno;
+            navigate(`/NoticeBulletinBoardPage/${bno}`);
+        } catch (error) {
+            alert('해당 게시글은 관리자와 작성자만 확인가능합니다.');
+        }
     }
 
-    const goToFreeBulletinBoardPageWriting = () => {
-        // if (cookies.get('accessToken') && cookies.get('refreshToken')) {
-        //     navigate("/FreeBulletinBoardPageWriting");
-        // }
-        // else {
-        //     alert('로그인을 해주세요.')
-        //     goToLogin();
-        // }
-        navigate("/FreeBulletinBoardPageWriting");
-        console.log(cookies.get('accessToken')&&cookies.get('refreshToken'));
-        console.log('cookies :', cookies.get('accessToken'));
-        console.log('refresh: ', cookies.get('refreshToken'));
+    const goToNoticeBulletinBoardPageWriting = () => {
+        if (cookies.get('accessToken') && cookies.get('refreshToken')) {
+            navigate("/NoticeBulletinBoardPageWriting");
+        }
+        else {
+            alert('로그인을 해주세요.')
+            goToLogin();
+        }
     }
     const [searchKeyword, setSearchKeyword] = useState('');
 
@@ -119,18 +124,17 @@ export default function FreeBulletinBoard() {
     const onClickSearchButton = async () => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/boards/FREE/search?type=${searchWord}&keyword=${searchKeyword}&page=1`);
-                console.log(`${process.env.REACT_APP_SERVER_URL}/boards/FREE/search?type=${searchWord}&keyword=${searchKeyword}`);
+                const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/boards/NOTICE/search?type=${searchWord}&keyword=${searchKeyword}&page=1`);
+                console.log(`${process.env.REACT_APP_SERVER_URL}/boards/NOTICE/search?type=${searchWord}&keyword=${searchKeyword}`);
                 console.log(response);
                 setPosts(response.data);
                 setPostsLoaded(true);
-                FreeBulletinBoardList = response.data;
                 console.log(response.data);
                 setPage(1);
                 setSearchFlag(true);
                 console.log(page);
             } catch (error) {
-                alert('Error fetching data: Free Search Button', error);
+                alert('Error fetching data: Notice Search Button', error);
             }
         };
 
@@ -146,14 +150,21 @@ export default function FreeBulletinBoard() {
     const Posts = ({ posts }) => {
         if (posts.total !== 0) {
             return (
-                <div className="postList">
+                <div className="postList123">
                 {postsLoaded ? (
                 posts.dtoList.map((post) => (
-                    <div key={post.bno} className="postListItem">
-                    <li className="postListTitle" onClick={() => goToFreeBulletinBoardPage(post.bno)}>
-                        {post.title}
-                    </li>
-                    <li className="postListUser">{post.writer}</li>
+                    <div key={post.bno} className="postListItem123" onClick={() => onClickNoticeBulletinBoardPageButton(post.bno, post.secret)}>
+                            {post.secret === '0' ? (
+                                    <div className="postListTitle123">{post.title}</div>
+                                ) : (
+                                    <div className="postListTitle123">
+                                        <img src="assets/image/lock.svg" alt="lock" className='lockIcon'/>
+                                        비밀글입니다.
+                                    </div>
+                                )}
+                            {/* </div> */}
+                            <div className="postListUser123">{post.writer}</div>
+                            <div className="postListDate">{post.regDate[0]}-{post.regDate[1]}-{post.regDate[2]}</div>
                     </div>
                 ))
                 ) : (
@@ -188,90 +199,123 @@ export default function FreeBulletinBoard() {
         setSearchWordKorean('글쓴이');
     }
 
+    const onClickSearchWordTitleAndContent = async () => {
+        searchDropdown();
+        setSearchWord('tc');
+        setSearchWordKorean('제목+내용');
+    }
+
     const searchDropdown = () => {
         setSearchDropdownVisible(!searchDropdownVisible);
     };
 
     const [searchDropdownVisible, setSearchDropdownVisible] = useState(false);
 
+    const goToInfo = () => {
+        navigate("/Information");
+    }
+
+    const onClickSignOutButton = () => {
+        cookies.remove('accessToken');
+        alert('로그아웃이 완료되었습니다.');
+        window.location.reload(); // Reload the page after logging out
+    }
+
     return (
-        <div className="page">
-        <img src="assets/image/wallpaper.jpg" alt="background" className='wallPaper'/>
-        <div className="upper"/>
-            <hr style={{display: 'white', marginTop: 97}}/>
-            <div className="topLoginButton" onClick={goToLogin}/>
-            <div className="topLogin" onClick={goToLogin}>Login</div>
-            <div className="topNotice" onClick={goToNoticeBoard}>News</div>
-            <div className="topGuide">Guide</div>
-            <div
-                className="topCommunity"
-                onMouseEnter={toggleDropdown}
-                onMouseLeave={toggleDropdown}
-                >
-                Community
-            </div>
-            <div className={`dropdownContent ${isDropdownVisible ? 'active' : ''}`}>
-                <li className="dropdownMenu" onClick={goToFreeBulletinBoard}>자유 게시판</li>
-                <li className="dropdownMenu" onClick={goToReportBulletinBoard}>신고 게시판</li>
-            </div>
+        <div className="page123">
+            <img src="assets/image/555.png" alt="background" className='wallPaper123'/>
+            <div className="upperSpace123">
+                <div className="upperHomeWrap">
+                    <button class="upperHome123" onClick={goToHome}>Home</button>
+                </div>
 
-            <div className="topHome" onClick={goToHome}>Home</div>
-            <div className="topHomeButton" onClick={goToHome}/>
+                <div className="upperNoticeWrap">
+                    <button className="upperNotice123" onClick={goToNoticeBoard}>Notice</button>
+                </div>
 
-            <div className='titleBoard'>자유 게시판</div>
-            <div className="titleLine"/>
+                <div className="upperGuideWrap">
+                    <button className="upperGuide123" onClick={goToInfo}>Guide</button>
+                </div>
 
-            <div className='searchWord' >
-                {searchWordKorean}
-            </div>
-
-            <div className="searchLineInner"/>
-            <div className="searchLineOuter">
-                <input
-                    type = 'text'
-                    className="inputSearch"
-                    placeholder="검색어를 입력해주세요."
-                    value={searchKeyword}
-                    onChange={handleSearch}
-                />
-            </div>
-
-
-            <div>
-                <img src={"/assets/image/dropdown.svg"} alt="dropdown" className='dropdownIcon' onClick={onClickSearchDropdownButton}/>
+                <div className="upperCommunityWrap">
+                    <button className="upperCommunity123"  onMouseEnter={toggleDropdown} onMouseLeave={toggleDropdown}>
+                        Community
+                        {isDropdownVisible && (
+                            <div className="dropdownMenu123">
+                                <li onClick={goToFreeBulletinBoard} className="dropdownWord">자유 게시판</li>
+                                <li onClick={goToReportBulletinBoard} className="dropdownWord">신고 게시판</li>
+                            </div>
+                        )}
+                    </button>
+                </div>
+                { cookies.get('accessToken') ? (
+                        <div className="upperLoginAndSignOutWrap">
+                            <div className="upperInfoWrap123">
+                                <button className="upperLogin1" onClick={goToInfo}>Info</button> 
+                            </div>
+                            <div className="upperSignOutWrap">
+                                <button className="upperLogin1" onClick={onClickSignOutButton}>Logout</button> 
+                            </div>
+                        </div>
+                    ) : (
+                        <div className="upperLoginWrap">
+                            <button className="upperLogin123" onClick={goToLogin}>Login</button>
+                        </div>
+                )}
             </div>
 
-            <div className={`searchDropdownContent ${searchDropdownVisible ? 'active' : ''}`}>
-                <li className="searchDropdownMenu" onClick={onClickSearchWordTitle}>제목</li>
-                <li className="searchDropdownMenu" onClick={onClickSearchWordContent}>내용</li>
-                <li className="searchDropdownMenu" onClick={onClickSearchWordWriter}>글쓴이</li>
+            <div className="contentWrap123">
+                <div className = "BulletinBoardUpper">
+                    <div className="BulletinBoardUpperLeft">
+                        <div className="BulletinBoardTitle123">공지 게시판</div>
+                    </div>
+                    <div className="BulletinBoardUpperRight">
+                        <div className="searchLineOuter123">
+                            <div className="searchLineLeft123">
+                                <div className="searchLineLeftUpper">
+                                    <div className='searchWord123' >
+                                        {searchWordKorean}
+                                    </div>
+                                    <img src={"/assets/image/dropdown.svg"} alt="dropdown" className='searchDropdownIcon123' onClick={onClickSearchDropdownButton}/>
+                                </div>
+                                <div className={`searchDropdownContent ${searchDropdownVisible ? 'active' : ''}`}>
+                                    <li className="searchDropdownMenu" onClick={onClickSearchWordTitle}>제목</li>
+                                    <li className="searchDropdownMenu" onClick={onClickSearchWordContent}>내용</li>
+                                    <li className="searchDropdownMenu" onClick={onClickSearchWordWriter}>글쓴이</li>
+                                    <li className="searchDropdownMenu" onClick={onClickSearchWordTitleAndContent}>제목+내용</li>
+                                </div>
+                            </div>
+                            <div className="searchLineRight123">
+                                <div className="searchLineInner123"/>
+                                <input
+                                    type = 'text'
+                                    className="searchLineInput"
+                                    placeholder="검색어를 입력해주세요."
+                                    value={searchKeyword}
+                                    onChange={handleSearch}
+                                />
+                                <img src={"/assets/image/search.svg"} alt="search" className='searchIcon123' onClick={onClickSearchButton}/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="BulletinBoardLongLineUpper"/>
+                <div className = "BulletinBoardMiddle">
+                    <Posts posts={posts}></Posts>
+                </div>
+                <div className="BulletinBoardLongLineBottom"/>
+                <div className = "BulletinBoardBottom">
+                    <Pagination className="pagination"
+                        activePage={posts.page}
+                        itemsCountPerPage={posts.size}
+                        totalItemsCount={posts.total}
+                        pageRangeDisplayed={10}
+                        prevPageText={"‹"}
+                        nextPageText={"›"}
+                        onChange={handlePage}
+                    />
+                    <button className='BulletinBoardWriteButton' onClick={goToNoticeBulletinBoardPageWriting}>글쓰기</button>  
+                </div>
             </div>
-            
-            <div>
-                <img src={"/assets/image/search.svg"} alt="search" className='searchIcon' onClick={onClickSearchButton}/>
-            </div>
-
-            {/* <div className="bulletinLineInner"/> */}
-            {/* <div className="bulletinWord" onClick={goToFreeBulletinBoardPage}>신고합니다</div> */}
-            {/* <div className="commentsNumber">(1)</div> */}
-            {/* <div className="userName">user123</div>
-            <div className="date">1시간 전</div> */}
-            <div className='BottomLine'/>
-
-            {/* <div className="pageNumber">1</div> */}
-            <div className="writeButton" onClick={goToFreeBulletinBoardPageWriting}/>
-            <div className='writeWord' onClick={goToFreeBulletinBoardPageWriting}>글쓰기</div>
-            <Posts posts={posts}></Posts>
-            <Pagination className="pagination"
-                activePage={posts.page}
-                itemsCountPerPage={posts.size}
-                totalItemsCount={posts.total}
-                pageRangeDisplayed={10}
-                prevPageText={"‹"}
-                nextPageText={"›"}
-                onChange={handlePage}
-
-            />
         </div>
-    )
-}
+    )}

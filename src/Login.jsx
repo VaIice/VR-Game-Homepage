@@ -223,7 +223,7 @@ export default function Login() {
                     { cookies.get('accessToken') ? (
                         <button className="upperLogin123">Info</button>        
                     ) : (
-                        <button className="upperLogin123" onClick={goToLogin}>Sign In</button>
+                        <button className="upperLogin123" onClick={goToLogin}>Login</button>
                     )}
                 </div>
 
@@ -231,7 +231,7 @@ export default function Login() {
 
             <div className="contentWrap123">
                 <div className="SignInWrap">
-                    <div className="titleLogin123">Sign In</div>
+                    <div className="titleLogin123">Login</div>
                     <div className="inputWrapEmail123"> 
                         <input
                             type = 'text'
@@ -264,7 +264,7 @@ export default function Login() {
                     }
                     </div>
 
-                    <button onClick={onClickConfirmButton} disabled={notAllow} className="bottomLoginButton123">Sign In</button>
+                    <button onClick={onClickConfirmButton} disabled={notAllow} className="bottomLoginButton123">Login</button>
 
                     <div className="signInBottom">
                         <div className="searchPassword123" onClick={goToSearchPassword}>

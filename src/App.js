@@ -10,9 +10,11 @@ import FreeBulletinBoardPage from "./FreeBulletinBoardPage";
 import ReportBulletinBoardPage from "./ReportBulletinBoardPage";
 import NoticeBulletinBoardPage from "./NoticeBulletinBoardPage";
 import FreeBulletinBoardPageWriting from "./FreeBulletinBoardPageWriting";
+import FreeBulletinBoardPageModifyWriting from "./FreeBulletinBoardPageModifyWriting";
+import NoticeBulletinBoardPageWriting from "./NoticeBulletinBoardPageWriting";
+import ReportBulletinBoardPageWriting from "./ReportBulletinBoardPageWriting";
 import Information from "./Information";
 import InformationPassword from "./InformationPassword";
-import SearchPassword from "./SearchPassword";
 
 function App() {
   const routes = Array.from({ length: 1000 }, (_, index) => (
@@ -31,6 +33,47 @@ function App() {
     />
   ));
 
+  
+  const routes2 = Array.from({ length: 1000 }, (_, index) => (
+    <Route
+      key={index}
+      path={`/NoticeBulletinBoardPage/${index}`}
+      element={<NoticeBulletinBoardPage bno={index} />}
+    />
+  ));
+
+  const routes3 = Array.from({ length: 1000 }, (_, index) => (
+    <Route
+      key={index}
+      path={`/NoticeBulletinBoardPageWriting/${index}`}
+      element={<NoticeBulletinBoardPageWriting bno={index} />}
+    />
+  ));
+
+  const routes4 = Array.from({ length: 1000 }, (_, index) => (
+    <Route
+      key={index}
+      path={`/ReportBulletinBoardPage/${index}`}
+      element={<ReportBulletinBoardPage bno={index} />}
+    />
+  ));
+
+  const routes5 = Array.from({ length: 1000 }, (_, index) => (
+    <Route
+      key={index}
+      path={`/ReportBulletinBoardPageWriting/${index}`}
+      element={<ReportBulletinBoardPageWriting bno={index} />}
+    />
+  ));
+
+  const routes6 = Array.from({ length: 1000 }, (_, index) => (
+    <Route
+      key={index}
+      path={`/FreeBulletinBoardPageModifyWriting/${index}`}
+      element={<FreeBulletinBoardPageModifyWriting bno={index} />}
+    />
+  ));
+
   return (
     <BrowserRouter>
       <Routes>
@@ -46,12 +89,29 @@ function App() {
         <Route path="/ReportBulletinBoardPage" element={<ReportBulletinBoardPage />} />
         <Route path="/NoticeBulletinBoardPage" element={<NoticeBulletinBoardPage />} />
         <Route path="/FreeBulletinBoardPageWriting" element={<FreeBulletinBoardPageWriting />} />
-        <Route path="/SearchPassword" element={<SearchPassword />} />
+        {/* <Route path="/FreeBulletinBoardPageModifyWriting" element={<FreeBulletinBoardPageModifyWriting />} /> */}
+        <Route path="/NoticeBulletinBoardPageWriting" element={<NoticeBulletinBoardPageWriting />} />
+        <Route path="/ReportBulletinBoardPageWriting" element={<ReportBulletinBoardPageWriting />} />
         <Route>
           {routes}
         </Route>
         <Route>
           {routes1}
+        </Route>
+        <Route>
+          {routes2}
+        </Route>
+        <Route>
+          {routes3}
+        </Route>
+        <Route>
+          {routes4}
+        </Route>
+        <Route>
+          {routes5}
+        </Route>
+        <Route>
+          {routes6}
         </Route>
       </Routes>
     </BrowserRouter> 

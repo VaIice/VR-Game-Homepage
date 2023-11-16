@@ -3,13 +3,76 @@ import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { Cookies } from 'react-cookie';
 import { useRef } from "react";
+import { secretPage, pageNumber } from './FreeBulletinBoard';
 
 const cookies = new Cookies()
 
-const SERVER_URL = `${process.env.REACT_APP_SERVER_URL}/boards/register`;
 const SERVER_URL_IMAGE = `${process.env.REACT_APP_SERVER_URL}/boards/api/upload`;
 
-export default function FreeBulletinBoardPageWriting() {
+export default function FreeBulletinBoardPageModifyWriting(bnum) {
+    // 사용자가 적고 있는 이메일 
+    const [title, setTitle] = useState('');
+    // // 사용자가 적고 있는 비밀번호
+    const [contents, setContents] = useState('');
+    // 이메일이 유효한 형식인지 확인
+    const [titleValid, setTitleValid] = useState(true);
+    // 핸드폰 번호가 유효한 형식인지 확인
+    const [contentsValid, setContentsValid] = useState(true);
+    const [flag, setFlag] = useState(false);
+    const [notAllow, setNotAllow] = useState(true);
+    useEffect(() => { 
+        const fetchData = async () => {
+            if (secretPage === '0') {
+                try {
+                    const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/boards/FREE/${bnum.bno}/withImages`);
+                    setTitle(response.data.title);
+                    setContents(response.data.content);
+                    setSecret(response.data.secret);
+                    setNotAllow(true);
+                    setFlag(false);
+                    setFileName(response.data.fileNames);
+                    setNotAllow(true);
+                    console.log(response.data);
+                } catch (error) {
+                    alert('해당 게시글은 관리자와 작성자만 확인가능합니다.');
+                    goToFreeBulletinBoard();
+                }
+            }
+            else {
+                try {
+                    const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/boards/FREE/${bnum.bno}/withImages`, {
+                        headers: {
+                            'Authorization': `Bearer ${cookies.get('accessToken')}`,
+                        }
+                    });
+                    setTitle(response.data.title);
+                    setContents(response.data.content);
+                    setSecret(secretPage);
+                    setNotAllow(true);
+                    setFlag(false);
+                    setFileName(response.data.fileNames);
+                    setNotAllow(true);
+                } catch (error) {
+                    alert('해당 게시글은 관리자와 작성자만 확인가능합니다.');
+                    goToFreeBulletinBoard();
+                }
+            }
+        };
+        fetchData();
+    }, []);
+
+    useEffect(() => {
+        if (titleValid && contentsValid && flag === true) {
+            setNotAllow(false);
+        } else {
+            setNotAllow(true);
+        }
+    }, [titleValid, contentsValid, title, contents]);
+
+    const [secret, setSecret] = useState('0');
+
+    const [fileName, setFileName] = useState([]);
+
     const navigate = useNavigate();
 
     const goToHome = () => {
@@ -41,25 +104,32 @@ export default function FreeBulletinBoardPageWriting() {
         setIsDropdownVisible(!isDropdownVisible);
     };
 
-    // 사용자가 적고 있는 이메일 
-    const [title, setTitle] = useState('');
-    // // 사용자가 적고 있는 비밀번호
-    const [contents, setContents] = useState('');
-
-    const [secret, setSecret] = useState('0');
-
     const handleTitle = (e) => {
-        setTitle(e.target.value);
+        const newTitle = e.target.value;
+        setTitle(newTitle);
+        setFlag(true);
+        if (newTitle.length >= 1) {
+            setTitleValid(true);
+        }
+        else {
+            setTitleValid(false);
+        }
     }
 
     const textarea = useRef();
 
-
     const handleContents = (e) => {
         const newContents = e.target.value;
         setContents(newContents);
+        setFlag(true);
         textarea.current.style.height = 'auto';
         textarea.current.style.height = textarea.current.scrollHeight + 'px';
+        if (newContents.length >= 1) {
+            setContentsValid(true);
+        }
+        else {
+            setContentsValid(false);
+        }
     };
 
     const dataToSend = {
@@ -86,7 +156,7 @@ export default function FreeBulletinBoardPageWriting() {
         const fetchData = async () => {
         try {
             console.log('dataToSend :', dataToSend);
-            const response = await axios.post(SERVER_URL, dataToSend, {
+            const response = await axios.put(`${process.env.REACT_APP_SERVER_URL}/boards/modify/FREE/${bnum.bno}`, dataToSend, {
                 headers: {
                     'Authorization': `Bearer ${cookies.get('accessToken')}`,
                     'Content-Type': 'application/json'
@@ -95,7 +165,7 @@ export default function FreeBulletinBoardPageWriting() {
 
             if (fileExist) {
                 dataToSendImage.bno = response.data;
-                const responseImage = await axios.post(SERVER_URL_IMAGE, dataToSendImage, {
+                const responseImage = await axios.put(SERVER_URL_IMAGE, dataToSendImage, {
                     headers: {
                         'Authorization': `Bearer ${cookies.get('accessToken')}`,
                         'Content-Type': 'multipart/form-data', // 파일 업로드에 필요한 Content-Type
@@ -103,7 +173,7 @@ export default function FreeBulletinBoardPageWriting() {
                 });
             }
             console.log('게시글 등록이 완료되었습니다.')
-            navigate(`/FreeBulletinBoardPage/${response.data}`);
+            navigate(`/FreeBulletinBoardPage/${bnum.bno}`);
         } catch (error) {
             alert('Error fetching data: Free Writing Button', error);
         }
@@ -137,10 +207,16 @@ export default function FreeBulletinBoardPageWriting() {
 
     const onFileSelect = (e) => {
         if (e.target.files[0]) {
-            const selectedFiles = Array.from(e.target.files);
-            setFile(selectedFiles);
-            setFileExist(true);
-            console.log('선택한 파일:', selectedFiles.map(file => selectedFiles.name));
+            if (e.target.files.length > 5) {
+                alert('이미지는 5개로 제한됩니다.');
+                e.target.value = null; // 파일 선택 창 초기화
+                setFileExist(false);
+            }
+            else {
+                const selectedFiles = Array.from(e.target.files);
+                setFile(selectedFiles);
+                setFileExist(true);
+            }
         }
         else {
           console.log('파일이 선택되지 않았습니다.');
@@ -148,9 +224,19 @@ export default function FreeBulletinBoardPageWriting() {
         }
     };
 
+    const onClickSignOutButton = () => {
+        cookies.remove('accessToken');
+        alert('로그아웃이 완료되었습니다.');
+        goToHome();
+    }
+
+    const goToInfo = () => {
+        navigate("/Information");
+    }
+    
     return (
         <div className="page12345">
-            <img src="assets/image/555.png" alt="background" className='wallPaper123'/>
+            <img src="/assets/image/555.png" alt="background" className='wallPaper123'/>
             <div className="upperSpace123">
                 <div className="upperHomeWrap">
                     <button class="upperHome123" onClick={goToHome}>Home</button>
@@ -161,7 +247,7 @@ export default function FreeBulletinBoardPageWriting() {
                 </div>
 
                 <div className="upperGuideWrap">
-                    <button className="upperGuide123">Guide</button>
+                    <button className="upperGuide123" onClick={goToInfo}>Guide</button>
                 </div>
 
                 <div className="upperCommunityWrap">
@@ -175,15 +261,20 @@ export default function FreeBulletinBoardPageWriting() {
                         )}
                     </button>
                 </div>
-
-                <div className="upperLoginWrap">
-                    { cookies.get('accessToken') ? (
-                        <button className="upperLogin123">Info</button>        
+                { cookies.get('accessToken') ? (
+                        <div className="upperLoginAndSignOutWrap">
+                            <div className="upperInfoWrap123">
+                                <button className="upperLogin1" onClick={goToInfo}>Info</button> 
+                            </div>
+                            <div className="upperSignOutWrap">
+                                <button className="upperLogin1" onClick={onClickSignOutButton}>Logout</button> 
+                            </div>
+                        </div>
                     ) : (
-                        <button className="upperLogin123" onClick={goToLogin}>Sign In</button>
-                    )}
-                </div>
-
+                        <div className="upperLoginWrap">
+                            <button className="upperLogin123" onClick={goToLogin}>Login</button>
+                        </div>
+                )}
             </div>
 
             <div className="contentWrap123">
@@ -259,7 +350,7 @@ export default function FreeBulletinBoardPageWriting() {
                         <div className="BulletinBoardWritingFileBottomLine"/>
                     )}
                     <div className = "BulletinBoardWritingButtonWrap">
-                        <button className='BulletinBoardWritingButton' onClick={onClickWritingButton}>글쓰기</button>  
+                        <button className='BulletinBoardWritingButton' disabled={notAllow} onClick={onClickWritingButton}>글쓰기</button>  
                         <button className='BulletinBoardWritingCancelButton' onClick={onClickCancelButton}>취소</button>
                     </div>
                 </div>

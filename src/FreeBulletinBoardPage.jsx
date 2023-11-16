@@ -13,6 +13,8 @@ export default function FreeBulletinBoardPage(bno) {
     const navigate = useNavigate();
     const [postsCommentLoaded, setPostsCommentLoaded] = useState(false);
     const [postsComment, setPostsComment] = useState([]);
+    // 이메일, 비밀번호가 유효하다면 활성화
+    const [notAllow, setNotAllow] = useState(true);
 
     useEffect(() => {    
         const fetchData = async () => {
@@ -28,13 +30,14 @@ export default function FreeBulletinBoardPage(bno) {
                     setContent(response.data.content);
                     setWriter(response.data.writer);
                     setSecret(response.data.secret);
-                    setFileName(response.data.fileNames[0]);
+                    setFileName(response.data.fileNames);
                     setBnum(response.data.bno);
                     setModDate(response.data.modDate);
                     setRegDate(response.data.regDate);
                     setPostsComment(responseComment.data);
                     setPostsCommentLoaded(true);
-                    console.log(responseComment.data);
+                    setNotAllow(true);
+                    console.log(response.data.fileNames);
                 } catch (error) {
                     alert('해당 게시글은 관리자와 작성자만 확인가능합니다.');
                     goToFreeBulletinBoard();
@@ -49,13 +52,12 @@ export default function FreeBulletinBoardPage(bno) {
                     setContent(response.data.content);
                     setWriter(response.data.writer);
                     setSecret(response.data.secret);
-                    setFileName(response.data.fileNames[0]);
+                    setFileName(response.data.fileNames);
                     setBnum(response.data.bno);
                     setModDate(response.data.modDate);
                     setRegDate(response.data.regDate);
                     setPostsComment(responseComment.data);
                     setPostsCommentLoaded(true);
-                    console.log(responseComment.data);
                 } catch (error) {
                     alert('해당 게시글은 관리자와 작성자만 확인가능합니다.');
                     goToFreeBulletinBoard();
@@ -161,6 +163,13 @@ export default function FreeBulletinBoardPage(bno) {
     const handleComment = (e) => {
         const newComment = e.target.value;
         setComment(newComment);
+
+        if (newComment.length >= 1) {
+            setNotAllow(false);
+        } else {
+            setNotAllow(true);
+        }
+
         textarea.current.style.height = 'auto';
         textarea.current.style.height = textarea.current.scrollHeight + 'px';
     };
@@ -220,6 +229,21 @@ export default function FreeBulletinBoardPage(bno) {
         console.log(page);
     }
 
+    
+    const onClickSignOutButton = () => {
+        cookies.remove('accessToken');
+        alert('로그아웃이 완료되었습니다.');
+        goToHome();
+    }
+
+    const goToInfo = () => {
+        navigate("/Information");
+    }
+
+    const goToFreeBulletinBoardPageModifyWriting = () => {
+        navigate(`/FreeBulletinBoardPageModifyWriting/${bno.bno}`)
+    }
+
     return (
         <div className="page12345">
             <img src="/assets/image/555.png" alt="background" className='wallPaper123'/>
@@ -233,7 +257,7 @@ export default function FreeBulletinBoardPage(bno) {
                 </div>
 
                 <div className="upperGuideWrap">
-                    <button className="upperGuide123">Guide</button>
+                    <button className="upperGuide123" onClick={goToInfo}>Guide</button>
                 </div>
 
                 <div className="upperCommunityWrap">
@@ -247,16 +271,22 @@ export default function FreeBulletinBoardPage(bno) {
                         )}
                     </button>
                 </div>
-
-                <div className="upperLoginWrap">
-                    { cookies.get('accessToken') ? (
-                        <button className="upperLogin123">Info</button>        
+                { cookies.get('accessToken') ? (
+                        <div className="upperLoginAndSignOutWrap">
+                            <div className="upperInfoWrap123">
+                                <button className="upperLogin1" onClick={goToInfo}>Info</button> 
+                            </div>
+                            <div className="upperSignOutWrap">
+                                <button className="upperLogin1" onClick={onClickSignOutButton}>Logout</button> 
+                            </div>
+                        </div>
                     ) : (
-                        <button className="upperLogin123" onClick={goToLogin}>Sign In</button>
-                    )}
-                </div>
-
+                        <div className="upperLoginWrap">
+                            <button className="upperLogin123" onClick={goToLogin}>Login</button>
+                        </div>
+                )}
             </div>
+
             <div className="contentWrap123">
                 <div className = "BulletinBoardWritingUpper">
                     <div className="BulletinBoardWritingUpperLeft">
@@ -272,11 +302,16 @@ export default function FreeBulletinBoardPage(bno) {
                     </div>
                     <div className="BulletinBoardShortLine"/>
                     <div className = "BulletinBoardPageContentsWrap">
+                        {fileName.map((fileName, index) => (
+                            <div>
+                                <img key={index} src={fileName} className="FreeBulletinBoardPageImage" alt={`Uploaded Image ${index + 1}`} />
+                            </div>
+                        ))}
                         <div className="BulletinBoardPageContents">
                             {content}
                         </div>
                         <div className="BulletinBoardPageContentsBottom">
-                            <button className="BulletinBoardPageModifyButton">
+                            <button className="BulletinBoardPageModifyButton" onClick={goToFreeBulletinBoardPageModifyWriting}>
                                 수정
                             </button>
                             <button className="BulletinBoardPageRemoveButton" onClick={onClickRemoveButton}>
@@ -303,24 +338,27 @@ export default function FreeBulletinBoardPage(bno) {
                                 onChange={handleComment}
                                 />
                         <div className="BulletinBoardPageCommentButtonWrap">
-                            <button className='BulletinBoardPageCommentButton' onClick={onClickCommentEnrollButton}>등록</button>
+                            <button className='BulletinBoardPageCommentButton' disabled={notAllow} onClick={onClickCommentEnrollButton}>등록</button>
                         </div>
                     </div>
                     <div className="BulletinBoardShortLine"/>
                     <div className = "BulletinBoardWritingCommentWrap">
                         <PostComments postComments={postsComment}></PostComments>
                     </div>
-                    <div className="BulletinBoardPageCommentDesignWrap">
-                        <Pagination className="BulletinBoardPageCommentDesign"
-                            activePage={postsComment.page}
-                            itemsCountPerPage={postsComment.size}
-                            totalItemsCount={postsComment.total}
-                            pageRangeDisplayed={10}
-                            prevPageText={"‹"}
-                            nextPageText={"›"}
-                            onChange={handlePage}
-                        />
-                    </div>
+                    {postsComment.total !== 0 && (
+                        <div className="BulletinBoardPageCommentDesignWrap">
+                            <Pagination
+                                className="BulletinBoardPageCommentDesign"
+                                activePage={postsComment.page}
+                                itemsCountPerPage={postsComment.size}
+                                totalItemsCount={postsComment.total}
+                                pageRangeDisplayed={10}
+                                prevPageText={"‹"}
+                                nextPageText={"›"}
+                                onChange={handlePage}
+                            />
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

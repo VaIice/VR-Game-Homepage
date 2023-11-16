@@ -84,26 +84,10 @@
     margin-left: 15%;
     background-color: white;
     width: 70%;
-    display: flex;
 }
 
 .BulletinBoardWritingImage img{
-    width: 10%;
-    height: 20vh;
-    object-fit: cover;
-    flex : 1;
-    margin: 1%;
-}
-
-.BulletinBoardWritingImage123 {
-    background-color: white;
-    display: flex;
-    margin-top: 0.5%;
-    margin-bottom: 0.5%;
-}
-
-.BulletinBoardWritingImage123 img{
-    width: 10%;
+    width: 18%;
     height: 20vh;
     object-fit: cover;
     flex : 1;
@@ -147,7 +131,7 @@
     padding-top: 1%;
     font-family: 'Inter';
     resize: none;
-    padding-left: 1%;
+    padding-left: 1.7%;
 }
 
 .BulletinBoardWritingFileBottomLine {
@@ -204,6 +188,11 @@
     padding-bottom: 0.15%;
     margin-left: auto;
 }
+
+.BulletinBoardWritingButton:disabled {
+    background-color: #919191;
+    color: white;
+  }
 
 .BulletinBoardWritingCancelButton {
     width: 105px;

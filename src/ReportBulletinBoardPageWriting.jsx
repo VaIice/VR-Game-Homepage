@@ -9,7 +9,7 @@ const cookies = new Cookies()
 const SERVER_URL = `${process.env.REACT_APP_SERVER_URL}/boards/register`;
 const SERVER_URL_IMAGE = `${process.env.REACT_APP_SERVER_URL}/boards/api/upload`;
 
-export default function FreeBulletinBoardPageWriting() {
+export default function ReportBulletinBoardPageWriting() {
     const navigate = useNavigate();
 
     // 이메일이 유효한지 확인
@@ -24,6 +24,10 @@ export default function FreeBulletinBoardPageWriting() {
         console.log(2, cookies.get('accessToken'))
     }
 
+    const goToNoticeBoard = () => {
+        navigate("/NoticeBoard");
+    }
+
     useEffect(() => {
         if (titleValid && contentValid) {
             setNotAllow(false);
@@ -33,11 +37,6 @@ export default function FreeBulletinBoardPageWriting() {
         }
     }, [titleValid, contentValid]);
 
-    const goToNoticeBoard = () => {
-        navigate("/NoticeBoard");
-    }
-
-    
     const goToLogin = () => {
         navigate("/Login");
     }
@@ -93,7 +92,7 @@ export default function FreeBulletinBoardPageWriting() {
     const dataToSend = {
         title: title,
         content: contents,
-        boardType: "FREE",
+        boardType: "REPORT",
         secret: secret
     };
 
@@ -122,27 +121,18 @@ export default function FreeBulletinBoardPageWriting() {
             });
 
             if (fileExist) {
-                for (let i = 0; i < file.length; i++) {
-                    const responseImage = await axios.post(SERVER_URL_IMAGE, 
-                        {
-                            file: file[i],
-                            boardType: "FREE",
-                            bno: response.data
-                        },
-                        {
-                            headers: {
-                                'Authorization': `Bearer ${cookies.get('accessToken')}`,
-                                'Content-Type': 'multipart/form-data'
-                            }
-                    });
-                }
+                dataToSendImage.bno = response.data;
+                const responseImage = await axios.post(SERVER_URL_IMAGE, dataToSendImage, {
+                    headers: {
+                        'Authorization': `Bearer ${cookies.get('accessToken')}`,
+                        'Content-Type': 'multipart/form-data', // 파일 업로드에 필요한 Content-Type
+                    }
+                });
             }
-
             console.log('게시글 등록이 완료되었습니다.')
-            navigate(`/FreeBulletinBoardPage/${response.data}`);
-
+            navigate(`/ReportBulletinBoardPage/${response.data}`);
         } catch (error) {
-            alert('Error fetching data: Free Writing Button', error);
+            alert('Error fetching data: Report Writing Button', error);
         }
         };
 
@@ -152,7 +142,7 @@ export default function FreeBulletinBoardPageWriting() {
     }
 
     const onClickCancelButton = async () => {
-        goToFreeBulletinBoard();
+        goToReportBulletinBoard();
     }
 
 
@@ -161,25 +151,23 @@ export default function FreeBulletinBoardPageWriting() {
     const [fileExist, setFileExist] = useState(false);
 
     const [file, setFile] = useState('');
+
+    const dataToSendImage = {
+        file: file,
+        boardType: "REPORT",
+        bno: bno
+    };
     
     const onClickImageUpload = () => {
         imageInput.current.click();
     };
 
-    const formData = new FormData();
-
     const onFileSelect = (e) => {
         if (e.target.files[0]) {
-            if (e.target.files.length > 5) {
-                alert('이미지는 5개로 제한됩니다.');
-                e.target.value = null; // 파일 선택 창 초기화
-                setFileExist(false);
-            }
-            else {
-                const selectedFiles = Array.from(e.target.files);
-                setFile(selectedFiles);
-                setFileExist(true);
-            }
+            const selectedFiles = Array.from(e.target.files);
+            setFile(selectedFiles);
+            setFileExist(true);
+            console.log('선택한 파일:', selectedFiles.map(file => selectedFiles.name));
         }
         else {
           console.log('파일이 선택되지 않았습니다.');
@@ -243,7 +231,7 @@ export default function FreeBulletinBoardPageWriting() {
             <div className="contentWrap123">
                 <div className = "BulletinBoardWritingUpper">
                     <div className="BulletinBoardWritingUpperLeft">
-                        <div className="BulletinBoardTitle123">자유 게시판</div>
+                        <div className="BulletinBoardTitle123">신고 게시판</div>
                     </div>
                     <div className="BulletinBoardWritingUpperRight">
                         <button className="BulletinBoardSecretButton" onClick={onClickSecretButton}>
