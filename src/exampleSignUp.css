@@ -99,7 +99,30 @@
     align-items: center;
 }
 
+.bottomSignUpButton12345 {
+    width: 99%;
+    height: 10%;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    background: black;
+    border-radius: 10px;
+    border: 0.50px white solid;  
+    cursor: pointer;
+    color: white;
+    font-size: 20px;
+    font-weight: 300;
+    margin-top: 5%;
+    justify-content: center;
+    align-items: center;
+}
+
 .bottomSignUpButton123:disabled {
+    background-color: #919191;
+    color:white;
+}
+
+.bottomSignUpButton12345:disabled {
     background-color: #919191;
     color:white;
 }

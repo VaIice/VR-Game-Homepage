@@ -16,13 +16,15 @@ export default function NoticeBoard() {
     // 사용자가 적고 있는 이름
     const [name, setName] = useState('');
     // 이메일이 유효한 형식인지 확인
-    const [emailValid, setEmailValid] = useState(false);
+    const [emailValid, setEmailValid] = useState(true);
     // 핸드폰 번호가 유효한 형식인지 확인
-    const [phoneNumberValid, setPhoneNumberValid] = useState(false);
+    const [phoneNumberValid, setPhoneNumberValid] = useState(true);
     // 이름이 유효한 형식인지 확인
-    const [nameValid, setNameValid] = useState(false);
+    const [nameValid, setNameValid] = useState(true);
     // 정보들이 유효한 형식이면 활성화
     const [notAllow, setNotAllow] = useState(true);
+
+    let flag = true;
 
     // 서버에 보낼 정보
     const dataToSend = {
@@ -45,7 +47,6 @@ export default function NoticeBoard() {
                 setPhoneNumberValid(true);
                 setNameValid(true);
                 setNotAllow(true);
-                console.log(notAllow);
             } catch (error) {
                 alert('오엥', error);
             }
@@ -57,25 +58,13 @@ export default function NoticeBoard() {
 
     // 이메일, 비밀번호가 유효한 형식이라면 버튼 활성화
     useEffect(() => {
-        if (phoneNumberValid && nameValid) {
+        if (phoneNumberValid && nameValid && flag === false) {
             setNotAllow(false);
-            console.log('설마 여기?', notAllow);
             return;
         } else {
             setNotAllow(true);
         }
     }, [phoneNumberValid, nameValid]);
-
-    const handleEmail = (e) => {
-        setEmail(e.target.value);
-        const regex =
-            /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
-        if (regex.test(e.target.value)) {
-            setEmailValid(true);
-        } else {
-            setEmailValid(false);
-        }
-    }
 
     const handlePhoneNumber = async (e) => {
         if (e.target.value.length === 10 || e.target.value.length === 12) {
@@ -84,7 +73,7 @@ export default function NoticeBoard() {
             e.target.value = e.target.value.replace(/-/g, '').replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
         }
         e.target.value = e.target.value.slice(0,13);
-
+        flag = false;
         setPhoneNumber(e.target.value);
         console.log(notAllow);
 
@@ -99,7 +88,7 @@ export default function NoticeBoard() {
     const handleName = async (e) => {
         const regex = /^[ㄱ-ㅎ가-힣a-zA-Z]+$/;
         setName(e.target.value);
-
+        flag = false;
         if (regex.test(e.target.value) && e.target.value.length >= 2) {
             setNameValid(true);
         } else {
@@ -277,7 +266,7 @@ export default function NoticeBoard() {
                         }
                     </div>
 
-                    <button onClick={onClickConfirmButton} disabled={notAllow} className="bottomSignUpButton123">내 정보 수정</button>
+                    <button onClick={onClickConfirmButton} disabled={notAllow} className="bottomSignUpButton12345">내 정보 수정</button>
 
                     <div className="signInBottom">
                         <div className="modifyPassword123" onClick={goToInformationPassword}>
