@@ -111,9 +111,9 @@
 }
 
 .BulletinBoardWritingContentsWrap {
-    background-color: white;
-    margin-top: 0.5%;
-    margin-bottom: 0.5%;
+    /* background-color: aqua; */
+    padding-bottom: 1%;
+    display: flex;
 }
 
 .inputWritingContents {
