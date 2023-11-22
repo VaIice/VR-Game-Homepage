@@ -8,6 +8,7 @@ const cookies = new Cookies()
 
 const SERVER_URL = `${process.env.REACT_APP_SERVER_URL}/boards/register`;
 const SERVER_URL_IMAGE = `${process.env.REACT_APP_SERVER_URL}/boards/api/upload`;
+export let secretPageWriting = '0';
 
 export default function FreeBulletinBoardPageWriting() {
     const navigate = useNavigate();
@@ -122,6 +123,7 @@ export default function FreeBulletinBoardPageWriting() {
             });
 
             if (fileExist) {
+                console.log(file);
                 for (let i = 0; i < file.length; i++) {
                     const responseImage = await axios.post(SERVER_URL_IMAGE, 
                         {
@@ -138,6 +140,9 @@ export default function FreeBulletinBoardPageWriting() {
                 }
             }
 
+            if (secret === '1') {
+                secretPageWriting = '1';
+            }
             console.log('게시글 등록이 완료되었습니다.')
             navigate(`/FreeBulletinBoardPage/${response.data}`);
 
@@ -197,6 +202,16 @@ export default function FreeBulletinBoardPageWriting() {
         navigate("/Information");
     }
     
+    const handleDeleteImage = (index) => {
+        const updatedFiles = [...file];
+        updatedFiles.splice(index, 1);
+        setFile(updatedFiles);
+
+        if (!updatedFiles[0]) {
+            setFileExist(false);
+        }
+      };
+
     return (
         <div className="page12345">
             <img src="assets/image/555.png" alt="background" className='wallPaper123'/>
@@ -300,12 +315,15 @@ export default function FreeBulletinBoardPageWriting() {
                     {fileExist && (
                         <div className = "BulletinBoardWritingImage">
                             {file.map((file, index) => (
-                                <img
-                                    key={index}
-                                    src={URL.createObjectURL(file)}
-                                    alt={`file-${index}`}
-                                    className="BulletinBoardImage"
-                                />
+                                <div key={index} className="ImageContainer">
+                                    <img
+                                        key={index}
+                                        src={URL.createObjectURL(file)}
+                                        alt={`file-${index}`}
+                                        className="BulletinBoardImage"
+                                    />                                    
+                                    <img src="assets/image/trash1.svg" className="trashImage" onClick={() => handleDeleteImage(index)}/>
+                                </div>
                             ))}
                         </div>
                     )}

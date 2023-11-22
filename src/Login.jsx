@@ -165,6 +165,7 @@ export default function Login() {
                 // cookies.set('accessToken', response.data.accessToken, {maxAge: response.data.accessTokenExpiresln})
                 cookies.set('accessToken', response.data.accessToken, {maxAge: 60*30})
                 cookies.set('refreshToken', response.data.refreshToken, {maxAge: 10000000});
+                cookies.set('email', encodeURIComponent(email), {maxAge: 60*30});
                 console.log('accessToken: ', response.data.accessToken);
                 console.log('refreshToken: ', response.data.refreshToken);
                 loginSuccess();

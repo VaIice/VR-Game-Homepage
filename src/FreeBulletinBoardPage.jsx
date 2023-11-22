@@ -5,7 +5,7 @@ import { Cookies } from 'react-cookie';
 import Swal from "sweetalert2";
 import { useRef } from "react";
 import Pagination from "react-js-pagination";
-import { secretPage, pageNumber } from './FreeBulletinBoard';
+import { secretPage } from './FreeBulletinBoard';
 
 const cookies = new Cookies()
 
@@ -37,7 +37,7 @@ export default function FreeBulletinBoardPage(bno) {
                     setPostsComment(responseComment.data);
                     setPostsCommentLoaded(true);
                     setNotAllow(true);
-                    console.log(response.data.fileNames);
+                    console.log(response.data.secret);
                 } catch (error) {
                     alert('해당 게시글은 관리자와 작성자만 확인가능합니다.');
                     goToFreeBulletinBoard();
@@ -58,6 +58,7 @@ export default function FreeBulletinBoardPage(bno) {
                     setRegDate(response.data.regDate);
                     setPostsComment(responseComment.data);
                     setPostsCommentLoaded(true);
+                    console.log(response.data.secret);
                 } catch (error) {
                     alert('해당 게시글은 관리자와 작성자만 확인가능합니다.');
                     goToFreeBulletinBoard();
@@ -92,10 +93,11 @@ export default function FreeBulletinBoardPage(bno) {
                         headers: {
                             'Authorization': `Bearer ${cookies.get('accessToken')}`}
                     });
-                    console.log(response);
+                    const responseComment = await axios.get(`${process.env.REACT_APP_SERVER_URL}/replies/FREE/list/${bno.bno}`);
+                    setPostsComment(responseComment.data);
                     // window.location.reload();
                 } catch (error) {
-                    alert('Error remove data: 삭제 실패', error);
+                    alert('해당 댓글은 관리자와 작성자만 삭제 가능합니다.', error);
                 }
             }
         });
@@ -152,7 +154,7 @@ export default function FreeBulletinBoardPage(bno) {
                     console.log('url : ', `${process.env.REACT_APP_SERVER_URL}/boards/remove/FREE/${bnum}`)
                     goToFreeBulletinBoard();
                 } catch (error) {
-                    alert('관리자와 해당 글의 작성자만 게시글을 삭제할 수 있습니다.', error);
+                    alert('해당 게시글은 관리자와 작성자만 삭제 가능합니다.', error);
                 }
             }
         });
@@ -179,6 +181,11 @@ export default function FreeBulletinBoardPage(bno) {
             headers: {
                 'Authorization': `Bearer ${cookies.get('accessToken')}`}
         });
+        const responseComment = await axios.get(`${process.env.REACT_APP_SERVER_URL}/replies/FREE/list/${bno.bno}`);
+        setBnum(response.data.bno);
+        setPostsComment(responseComment.data);
+        // setPostsCommentLoaded(true);
+        console.log(response.data.secret);
         console.log(response);
         // window.location.reload();
     }
@@ -241,7 +248,14 @@ export default function FreeBulletinBoardPage(bno) {
     }
 
     const goToFreeBulletinBoardPageModifyWriting = () => {
-        navigate(`/FreeBulletinBoardPageModifyWriting/${bno.bno}`)
+        const decodedEmail = decodeURIComponent(cookies.get('email'));
+        console.log(decodedEmail);
+        if (decodedEmail === writer) {
+            navigate(`/FreeBulletinBoardPageModifyWriting/${bno.bno}`)    
+        }
+        else {
+            alert('해당 게시글은 관리자와 작성자만 수정 가능합니다.');
+        }
     }
 
     return (

@@ -79,44 +79,44 @@
 }
 
 .BulletinBoardWritingImage {
-    justify-content: center;
-    align-items: center;
+    display: flex;
     margin-left: 15%;
     background-color: white;
     width: 70%;
+    height: 30vh;
 }
 
-.BulletinBoardWritingImage img{
-    width: 18%;
-    height: 20vh;
+.BulletinBoardImage{
+    width: 100%;
     object-fit: cover;
+    max-height: 90%;
+    min-height: 80%;
     flex : 1;
-    margin: 1%;
+    background-color: #919191;
+    margin-top: 1%;
+}
+
+.ImageContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 18%;
+    padding: 1%;
 }
 
 .BulletinBoardWritingContentsWrap {
-    /* background-color: aqua; */
     padding-bottom: 0.5%;
     display: flex;
 }
 
-.inputWritingContents {
-    /* display: block;
-    width: 96.5%;
-    min-height: 52vh;
-    outline: none;
-    border: none;
-    font-size: 16px;
-    font-weight: 400;
-    margin-left: 1.5%;
-    padding-top: 1%;
-    font-family: 'Inter';
-    border: 'none';
-    outline: 'none';
-    box-shadow: 'none';
-    resize: none;
-    */
+.trashImage {
+    margin-top: 5%;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+}
 
+.inputWritingContents {
     border: 'none';
     outline: 'none';
     box-shadow: 'none';

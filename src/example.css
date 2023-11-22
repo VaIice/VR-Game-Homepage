@@ -57,7 +57,6 @@
 
   .dropdownMenu123 {
     display: none;
-    z-index: 1;
   }
 }
 
@@ -85,7 +84,7 @@
   }
 
   .upperCommunityWrap {
-    /* background-color: aliceblue; */
+    z-index: 1;
   }
 
   .upperLoginWrap {
@@ -113,6 +112,7 @@
     border: none; /* 버튼 테두리 없애기 */
     cursor: pointer; /* 커서 스타일 설정 */
     background-color: transparent;
+    font-family: "Libre Bodoni";
   }
 
   .upperNotice123,
@@ -127,6 +127,7 @@
     cursor: pointer;
     background-color: transparent;
     position: relative;
+    font-family: "Libre Bodoni";
   }
 
   .upperLogin1 {
@@ -137,7 +138,26 @@
     cursor: pointer;
     background-color: transparent;
     position: relative;
+    font-family: "Libre Bodoni";
   }
+
+  .downloadButton {
+    cursor: pointer;
+    color: white;
+    font-size: 35px;
+    font-weight: 300;
+    width: 250px;
+    height: 70px;
+    background: #171A23;
+    border-radius: 10px;
+    border: 1px white solid;
+    color: white;
+    margin-left: 10%;
+    margin-bottom: 5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 .upperSignOutWrap {
   white-space: nowrap;
@@ -162,18 +182,19 @@
   }
   
   .VRGame123 {
-    font-size: 100px;
+    font-size: 80px;
     font-weight: 600;
     color: white;
     padding-left: 10%;
+    margin-bottom: 0.5%;
   }
   
   .Intro123 {
-    font-size: 60px;
+    font-size: 30px;
     font-weight: 600;
     color: white;
     padding-left: 10%;
-    margin-bottom: 5%;
+    margin-bottom: 2.5%;
   }
 }
 
@@ -203,4 +224,9 @@
   height: 100%;
   z-index: -1;
   opacity: 0.5;
+}
+
+body {
+  font-family: "Libre Bodoni";
+  src: url("../public/assets/font/LibreBodoni-VariableFont_wght.ttf");
 }

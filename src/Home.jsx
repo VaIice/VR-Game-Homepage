@@ -88,8 +88,9 @@ export default function Home() {
 
             <div className="contentWrap123">
                 <div className="Title123">Darkest Planet</div>
-                <div className="VRGame123">VRGame</div>
-                <div className="Intro123">Intro</div>
+                <div className="VRGame123">VR Game</div>
+                <div className="Intro123">간단한 소개</div>
+                <div className="downloadButton">Download</div>
             </div>
         </div>
     )}

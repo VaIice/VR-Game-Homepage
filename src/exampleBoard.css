@@ -81,7 +81,7 @@
         font-weight: 400;
         background-color: rgba(255, 255, 255, 0.0);
         color: white;
-        margin: 4%;
+        margin: 5%;
         margin-right: 3%;
 }
 
@@ -217,7 +217,6 @@ ul.pagination li a {
 text-decoration: none;
 color: white;
 font-size: 1rem;
-margin-bottom: 1px;
 }
 
 ul.pagination li.active a {
@@ -230,7 +229,7 @@ background-color: white;
 
 ul.pagination li a:hover,
 ul.pagination li a.active {
-color: rgb(148, 148, 148);
+color: rgb(113, 113, 113);
 }
 
 .searchLineLeftUpper {
