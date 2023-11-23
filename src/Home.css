@@ -193,8 +193,8 @@
     /* 드롭다운 메뉴의 스타일 설정 */
     position: absolute;
     top: 80%;
-    width: 95%;
-    height: 175%;
+    width: 110%;
+    height: 200%;
     border-radius: 10px;
     padding: 10%;
     cursor: pointer;
@@ -208,7 +208,7 @@
   }
 
   .dropdownWord {
-    font-size: 20px;
+    font-size: 17px;
     list-style-type: none; 
   }
 
