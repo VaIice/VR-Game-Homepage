@@ -104,10 +104,10 @@ export default function Login() {
     
         // 비밀번호가 유효한 형식인지 확인
         const handlePw = (e) => {
-            e.target.value = e.target.value.slice(0,16);
+            e.target.value = e.target.value.slice(0,15);
             setPw(e.target.value);
             const regex =
-                /^(?=.*[a-zA-z])(?=.*[0-9]).{8,20}$/;
+                /^(?=.*[a-zA-z])(?=.*[0-9]).{8,15}$/;
             if (regex.test(e.target.value) && e.target.value.length >= 8)  {
                 setPwValid(true);
             } else {
@@ -260,7 +260,7 @@ export default function Login() {
                     <div className="errorMessage123">
                     {
                         pw.length > 0 && !pwValid && (
-                            <span>8~20자의 영문, 숫자를 입력해주세요.</span>
+                            <span>8~15자의 영문, 숫자를 포함해서 입력해주세요.</span>
                         )
                     }
                     </div>

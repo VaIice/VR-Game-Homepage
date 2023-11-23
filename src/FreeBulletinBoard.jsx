@@ -160,8 +160,14 @@ export default function FreeBulletinBoard() {
                                         비밀글입니다.
                                     </div>
                                 )}
-                            {/* </div> */}
+                            <div className="postListReplyCount123">
+                                {post.replyCount !== 0 && `(${post.replyCount})`}
+                            </div>
+                            <img src="assets/image/view.svg" alt="lock" className="postListView"/>
+                            <span className="postListViewNumber">1</span>
+                            <div className="postListItemLine"/>
                             <div className="postListUser123">{post.writer}</div>
+                            <div className="postListItemLine"/>
                             <div className="postListDate">{post.regDate[0]}-{post.regDate[1]}-{post.regDate[2]}</div>
                     </div>
                 ))

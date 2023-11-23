@@ -42,6 +42,11 @@ export default function Home() {
     const toggleDropdown = () => {
         setIsDropdownVisible(!isDropdownVisible);
       };
+
+    const onClickDownloadButton = () => {
+        // window.location.href = 'https://www.naver.com';
+        window.open('https://www.naver.com', '_blank');
+    }
     
     return (
         <div className="page123">
@@ -89,8 +94,8 @@ export default function Home() {
             <div className="contentWrap123">
                 <div className="Title123">Darkest Planet</div>
                 <div className="VRGame123">VR Game</div>
-                <div className="Intro123">간단한 소개</div>
-                <div className="downloadButton">Download</div>
+                <div className="Intro123">마을에 생겨난 이상 현상을 해결하기 위해 검은 사원을 탐사하는 VR RPG</div>
+                <div className="downloadButton" onClick={onClickDownloadButton}>Download</div>
             </div>
         </div>
     )}
