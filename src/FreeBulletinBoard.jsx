@@ -212,7 +212,7 @@ export default function FreeBulletinBoard() {
     const onClickSignOutButton = () => {
         cookies.remove('accessToken');
         alert('로그아웃이 완료되었습니다.');
-        goToHome();
+        window.location.reload();
     }
 
     const goToInfo = () => {

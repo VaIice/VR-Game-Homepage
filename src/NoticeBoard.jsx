@@ -8,7 +8,6 @@ import Pagination from "react-js-pagination";
 const cookies = new Cookies()
 const SERVER_URL_NOTICE_LIST = `${process.env.REACT_APP_SERVER_URL}/boards/NOTICE/list?page=1`;
 export let secretPage = '0';
-export let pageNumber = 0;
 
 export default function NoticeBulletinBoard() {
     const navigate = useNavigate();
@@ -93,7 +92,6 @@ export default function NoticeBulletinBoard() {
                 console.log(`${process.env.REACT_APP_SERVER_URL}/boards/NOTICE/${bno}/withImages`);
             }
             secretPage = secret;
-            pageNumber = bno;
             navigate(`/NoticeBulletinBoardPage/${bno}`);
         } catch (error) {
             alert('해당 게시글은 관리자와 작성자만 확인가능합니다.');

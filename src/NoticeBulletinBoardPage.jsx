@@ -5,7 +5,7 @@ import { Cookies } from 'react-cookie';
 import Swal from "sweetalert2";
 import { useRef } from "react";
 import Pagination from "react-js-pagination";
-import { secretPage, pageNumber } from './NoticeBoard';
+import { secretPage} from './NoticeBoard';
 
 const cookies = new Cookies()
 
@@ -36,7 +36,6 @@ export default function NoticeBulletinBoardPage(bno) {
                     setPostsComment(responseComment.data);
                     setPostsCommentLoaded(true);
                     setNotAllow(true);
-                    console.log(responseComment.data);
                 } catch (error) {
                     alert('해당 게시글은 관리자와 작성자만 확인가능합니다.');
                     goToNoticeBoard();
@@ -51,7 +50,7 @@ export default function NoticeBulletinBoardPage(bno) {
                     setContent(response.data.content);
                     setWriter(response.data.writer);
                     setSecret(response.data.secret);
-                    setFileName(response.data.fileNames[0]);
+                    setFileName(response.data.fileNames);
                     setBnum(response.data.bno);
                     setModDate(response.data.modDate);
                     setRegDate(response.data.regDate);
@@ -92,10 +91,12 @@ export default function NoticeBulletinBoardPage(bno) {
                         headers: {
                             'Authorization': `Bearer ${cookies.get('accessToken')}`}
                     });
+                    const responseComment = await axios.get(`${process.env.REACT_APP_SERVER_URL}/replies/NOTICE/list/${bno.bno}`);
+                    setPostsComment(responseComment.data);
                     console.log(response);
                     // window.location.reload();
                 } catch (error) {
-                    alert('Error remove data: 삭제 실패', error);
+                    alert('해당 댓글은 관리자와 작성자만 삭제 가능합니다.', error);
                 }
             }
         });
@@ -177,7 +178,9 @@ export default function NoticeBulletinBoardPage(bno) {
                 headers: {
                     'Authorization': `Bearer ${cookies.get('accessToken')}`}
             });
-            console.log(response);
+            const responseComment = await axios.get(`${process.env.REACT_APP_SERVER_URL}/replies/NOTICE/list/${bno.bno}`);
+            setBnum(response.data.bno);
+            setPostsComment(responseComment.data);
         } catch (error) {
             alert('로그인을 해주세요.');
         }
@@ -239,6 +242,17 @@ export default function NoticeBulletinBoardPage(bno) {
         navigate("/Information");
     }
     
+    const goToNoticeBulletinBoardPageModifyWriting = () => {
+        const decodedEmail = decodeURIComponent(cookies.get('email'));
+        console.log(decodedEmail);
+        if (decodedEmail === writer && cookies.get('accessToken')) {
+            navigate(`/NoticeBulletinBoardPageModifyWriting/${bno.bno}`)    
+        }
+        else {
+            alert('해당 게시글은 관리자와 작성자만 수정 가능합니다.');
+        }
+    }
+
     return (
         <div className="page12345">
             <img src="/assets/image/555.png" alt="background" className='wallPaper123'/>
@@ -301,7 +315,7 @@ export default function NoticeBulletinBoardPage(bno) {
                             {content}
                         </div>
                         <div className="BulletinBoardPageContentsBottom">
-                            <button className="BulletinBoardPageModifyButton">
+                            <button className="BulletinBoardPageModifyButton"  onClick={goToNoticeBulletinBoardPageModifyWriting}>
                                 수정
                             </button>
                             <button className="BulletinBoardPageRemoveButton" onClick={onClickRemoveButton}>

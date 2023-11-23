@@ -40,7 +40,7 @@ export default function Login() {
         const checkToken = async () => {
             Swal.fire({
                 icon: "info",
-                title: "세션 만료",
+                title: "로그인 정보가 만료되었습니다.",
                 text: '로그인을 연장할까요?',
                 showCancelButton: true,
                 confirmButtonText: "예",
@@ -273,7 +273,7 @@ export default function Login() {
                         </div>
 
                         <div className="signUp123" onClick={goToSignUp}>
-                            Sign Up
+                            회원가입
                         </div>
                     </div>
                 </div>

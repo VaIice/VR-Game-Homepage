@@ -275,7 +275,6 @@ export default function FreeBulletinBoardPageModifyWriting(bnum) {
                             'Authorization': `Bearer ${cookies.get('accessToken')}`,
                         }
                     });
-                    console.log('빵빵이');
                 } catch (error) {
                     alert('Error fetching data: Free Writing Button', error);
                 }
@@ -412,12 +411,12 @@ export default function FreeBulletinBoardPageModifyWriting(bnum) {
                         <div className = "BulletinBoardWritingImage">
                             {file.map((file, index) => (
                                 <div key={index} className="ImageContainer">
-                                    <img
-                                        key={index}
-                                        src={URL.createObjectURL(file)}
-                                        alt={`file-${index}`}
-                                        className="BulletinBoardImage"
-                                    />                                    
+                                <img
+                                    key={index}
+                                    src={URL.createObjectURL(file)}
+                                    alt={`file-${index}`}
+                                    className="BulletinBoardImage"
+                                />                                    
                                     <img src="/assets/image/trash1.svg" className="trashImage" onClick={() => handleDeleteImage(index)}/>
                                 </div>
                             ))}

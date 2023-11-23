@@ -37,7 +37,6 @@ export default function FreeBulletinBoardPage(bno) {
                     setPostsComment(responseComment.data);
                     setPostsCommentLoaded(true);
                     setNotAllow(true);
-                    console.log(response.data.secret);
                 } catch (error) {
                     alert('해당 게시글은 관리자와 작성자만 확인가능합니다.');
                     goToFreeBulletinBoard();
@@ -58,7 +57,7 @@ export default function FreeBulletinBoardPage(bno) {
                     setRegDate(response.data.regDate);
                     setPostsComment(responseComment.data);
                     setPostsCommentLoaded(true);
-                    console.log(response.data.secret);
+                    console.log(response.data);
                 } catch (error) {
                     alert('해당 게시글은 관리자와 작성자만 확인가능합니다.');
                     goToFreeBulletinBoard();
@@ -250,7 +249,7 @@ export default function FreeBulletinBoardPage(bno) {
     const goToFreeBulletinBoardPageModifyWriting = () => {
         const decodedEmail = decodeURIComponent(cookies.get('email'));
         console.log(decodedEmail);
-        if (decodedEmail === writer) {
+        if (decodedEmail === writer && cookies.get('accessToken')) {
             navigate(`/FreeBulletinBoardPageModifyWriting/${bno.bno}`)    
         }
         else {
@@ -313,6 +312,7 @@ export default function FreeBulletinBoardPage(bno) {
                         <div className="BulletinBoardPageTitle">{title}</div>
                         <div className="BulletinBoardPageUser">{writer}</div>
                         <div className="BulletinBoardPageDate">{regDate[0]}-{regDate[1]}-{regDate[2]} {regDate[3]}:{regDate[4]}</div>
+                        {/* <div className="BulletinBoardPageDate">수정 {modDate[0]}-{modDate[1]}-{modDate[2]} {modDate[3]}:{modDate[4]}</div> */}
                     </div>
                     <div className="BulletinBoardShortLine"/>
                     <div className = "BulletinBoardPageContentsWrap">

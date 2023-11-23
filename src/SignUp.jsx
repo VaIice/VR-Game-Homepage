@@ -219,7 +219,7 @@ export default function NoticeBoard() {
 
             <div className="contentWrap123">
                 <div className="SignUpWrap">
-                    <div className="titleSignUp123">Sign Up</div>
+                    <div className="titleSignUp123">회원가입</div>
                     <div className="inputWrapEmailSignUp123">
                         <div className="inputWrapEmailSignUpLeft123">
                             <input
@@ -290,7 +290,7 @@ export default function NoticeBoard() {
                         }
                     </div>
 
-                    <button onClick={onClickConfirmButton} disabled={notAllow} className="bottomSignUpButton123">Sign Up</button>
+                    <button onClick={onClickConfirmButton} disabled={notAllow} className="bottomSignUpButton123">회원가입</button>
 
                 </div>
             </div>
