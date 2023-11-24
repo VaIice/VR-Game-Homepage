@@ -20,8 +20,8 @@
   }
 
   @font-face {
-    font-family: "Libre Bodoni";
-    src: url("../public/assets/font/LibreBodoni-VariableFont_wght.ttf");
+    font-family: "Barlow-ExtraLight";
+    src: url("../public/assets/font/Barlow-ExtraLight.ttf");
   }
 
   .topLoginButton {

@@ -66,7 +66,6 @@
     width: 85%;
     height: 75%;
     background: black;
-    border-radius: 10px;
     border: 0.50px white solid;  
     cursor: pointer;
     color: white;
@@ -88,7 +87,6 @@
     margin-right: auto;
     display: flex;
     background: black;
-    border-radius: 10px;
     border: 0.50px white solid;  
     cursor: pointer;
     color: white;
@@ -107,7 +105,6 @@
     margin-right: auto;
     display: flex;
     background: black;
-    border-radius: 10px;
     border: 0.50px white solid;  
     cursor: pointer;
     color: white;

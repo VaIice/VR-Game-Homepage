@@ -15,7 +15,8 @@ export default function FreeBulletinBoardPage(bno) {
     const [postsComment, setPostsComment] = useState([]);
     // 이메일, 비밀번호가 유효하다면 활성화
     const [notAllow, setNotAllow] = useState(true);
-
+    const [notAllowModifyComment, setNotAllowModifyComment] = useState(true);
+    
     useEffect(() => {    
         const fetchData = async () => {
             if (secretPage === '1') {
@@ -189,7 +190,51 @@ export default function FreeBulletinBoardPage(bno) {
         // window.location.reload();
     }
 
+    const onClickCommentModifyButton = async () => {
+        console.log(modifyCommentRno, modifyComment);
+        const response = await axios.put(`${process.env.REACT_APP_SERVER_URL}/replies/FREE/${modifyCommentRno}`,
+        {
+            bno: bnum, replyText: modifyComment
+        },
+        {
+            headers: {
+                'Authorization': `Bearer ${cookies.get('accessToken')}`}
+        });
+        const responseComment = await axios.get(`${process.env.REACT_APP_SERVER_URL}/replies/FREE/list/${bno.bno}`);
+        setPostsComment(responseComment.data);
+        setModifyCommentRno(null);
+    }
+
+    const handleModifyComment = (e) => {
+        const newComments = e.target.value;
+        setModifyComment(newComments);
+        if (newComments.length >= 1) {
+            setNotAllowModifyComment(false);
+        } else {
+            setNotAllowModifyComment(true);
+        }
+
+        modifyTextarea.current.style.height = 'auto';
+        modifyTextarea.current.style.height = `${modifyTextarea.current.scrollHeight}px`;
+    };
+
     const textarea = useRef();
+
+    const modifyTextarea = useRef();
+
+    const [modifyCommentRno, setModifyCommentRno] = useState(null);
+
+    const [modifyComment, setModifyComment] = useState(null);
+
+    const onSetModifyComment = (rno) => {
+        const commentToEdit = postsComment.dtoList.find((comment) => comment.rno === rno);
+        setModifyCommentRno(rno);
+        setModifyComment(commentToEdit.replyText);
+    };
+
+    const onClickCommentModifyCancelButton = async () => {
+        setModifyCommentRno(null);
+    }
 
     const PostComments = ({ postComments }) => {
         if (postComments.total !== 0) {
@@ -201,14 +246,36 @@ export default function FreeBulletinBoardPage(bno) {
                                 <div className="BulletinBoardPagePostCommentListItemUpper">
                                     <div className="BulletinBoardPagePostCommentListWriter">{postComment.replyer}</div>
                                     <div className="BulletinBoardPagePostCommentListRegDate">({postComment.regDate})</div>
-                                    <button className="BulletinBoardPagePostCommentListModify">
-                                        수정
-                                    </button>
-                                    <button className="BulletinBoardPagePostCommentListRemove" onClick={() => onClickCommentRemoveButton(postComment.rno)}>
-                                        삭제
-                                    </button>
-                                </div>
-                                <div className="BulletinBoardPagePostCommentListReplyText">{postComment.replyText}</div>
+                                    {modifyCommentRno === postComment.rno ? (<></>
+                                    ) : (
+                                        <>
+                                            <button className="BulletinBoardPagePostCommentListModify" onClick={() => onSetModifyComment(postComment.rno)}>
+                                                수정
+                                            </button>
+                                            <button className="BulletinBoardPagePostCommentListRemove" onClick={() => onClickCommentRemoveButton(postComment.rno)}>
+                                                삭제
+                                            </button>
+                                        </>
+                                    )}
+                                    </div>
+                                    {modifyCommentRno === postComment.rno ? (
+                                    <div className="BulletinBoardWritingCommentWrap">
+                                        <textarea
+                                            ref={modifyTextarea}
+                                            type="text"
+                                            className="inputWritingComment"
+                                            placeholder="댓글을 작성해주세요."
+                                            value={modifyComment}
+                                            onChange={handleModifyComment}
+                                        />
+                                        <div>
+                                            <button className='BulletinBoardPageCommentModifyButton' disabled={notAllowModifyComment} onClick={onClickCommentModifyButton}>수정</button>
+                                            <button className='BulletinBoardPageCommentModifyCancelButton' onClick={onClickCommentModifyCancelButton}>취소</button>
+                                        </div>
+                                    </div>
+                                    ) : (
+                                        <div className="BulletinBoardPagePostCommentListReplyText">{postComment.replyText}</div>
+                                    )}
                         </div>
                     ))
                     ) : (
@@ -355,6 +422,7 @@ export default function FreeBulletinBoardPage(bno) {
                             <button className='BulletinBoardPageCommentButton' disabled={notAllow} onClick={onClickCommentEnrollButton}>등록</button>
                         </div>
                     </div>
+                    
                     <div className="BulletinBoardShortLine"/>
                     <div className = "BulletinBoardWritingCommentWrap">
                         <PostComments postComments={postsComment}></PostComments>

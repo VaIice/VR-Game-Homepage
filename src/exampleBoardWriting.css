@@ -34,7 +34,6 @@
     width: 120px;
     height: 43px;
     background: black;
-    border-radius: 10px;
     border: 0.50px white solid;  
     cursor: pointer;
     align-items: center;
@@ -177,7 +176,6 @@
     width: 105px;
     height: 40px;
     background: black;
-    border-radius: 10px;
     border: 0.50px white solid;  
     cursor: pointer;
     color: white;
@@ -197,7 +195,6 @@
     width: 105px;
     height: 40px;
     background-color: #919191;
-    border-radius: 10px;
     border: 0.50px white solid;  
     cursor: pointer;
     color: white;

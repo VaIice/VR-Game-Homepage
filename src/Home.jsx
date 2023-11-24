@@ -50,23 +50,23 @@ export default function Home() {
     
     return (
         <div className="page123">
-            <img src="assets/image/555.png" alt="background" className='wallPaper123'/>
+            <img src="assets/image/background.jpg" alt="background" className='wallPaper123'/>
             <div className="upperSpace123">
                 <div className="upperHomeWrap">
-                    <button class="upperHome123" onClick={goToHome}>Home</button>
+                    <button class="upperHome123" onClick={goToHome}>HOME</button>
                 </div>
 
                 <div className="upperNoticeWrap">
-                    <button className="upperNotice123" onClick={goToNoticeBoard}>Notice</button>
+                    <button className="upperNotice123" onClick={goToNoticeBoard}>NOTICE</button>
                 </div>
 
                 <div className="upperGuideWrap">
-                    <button className="upperGuide123" onClick={goToInfo}>Guide</button>
+                    <button className="upperGuide123" onClick={goToInfo}>GUIDE</button>
                 </div>
 
                 <div className="upperCommunityWrap">
                     <button className="upperCommunity123"  onMouseEnter={toggleDropdown} onMouseLeave={toggleDropdown}>
-                        Community
+                        COMMUNITY
                         {isDropdownVisible && (
                             <div className="dropdownMenu123">
                                 <li onClick={goToFreeBulletinBoard} className="dropdownWord">자유 게시판</li>
@@ -78,24 +78,25 @@ export default function Home() {
                 { cookies.get('accessToken') ? (
                         <div className="upperLoginAndSignOutWrap">
                             <div className="upperInfoWrap123">
-                                <button className="upperLogin1" onClick={goToInfo}>Info</button> 
+                                <button className="upperLogin1" onClick={goToInfo}>INFO</button> 
                             </div>
                             <div className="upperSignOutWrap">
-                                <button className="upperLogin1" onClick={onClickSignOutButton}>Logout</button> 
+                                <button className="upperLogin1" onClick={onClickSignOutButton}>LOGOUT</button> 
                             </div>
                         </div>
                     ) : (
                         <div className="upperLoginWrap">
-                            <button className="upperLogin123" onClick={goToLogin}>Login</button>
+                            <button className="upperLogin123" onClick={goToLogin}>LOGIN</button>
                         </div>
                 )}
             </div>
 
             <div className="contentWrap123">
-                <div className="Title123">Darkest Planet</div>
                 <div className="VRGame123">VR Game</div>
-                <div className="Intro123">마을에 생겨난 이상 현상을 해결하기 위해 검은 사원을 탐사하는 VR RPG</div>
-                <div className="downloadButton" onClick={onClickDownloadButton}>Download</div>
+                <div className="Title123">DARKEST PLANET</div>
+                <div className="Intro123">공포가 피어나는 어둠에 갇힌 행성 속, 당신은 유일한 희망입니다.<br />
+                'Darkest Planet'에 오신 것을 환영합니다.</div>
+                <div className="downloadButton" onClick={onClickDownloadButton}>DOWNLOAD</div>
             </div>
         </div>
     )}

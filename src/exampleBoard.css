@@ -24,7 +24,6 @@
         width: 400px;
         height: 45px;
         background: rgba(81, 81, 81, 0.15);
-        border-radius: 10px;
         border: 1.20px rgba(255, 255, 255, 0.69) solid;   
         margin-left: auto;
         flex: 1;
@@ -196,7 +195,6 @@
         width: 105px;
         height: 40px;
         background: black;
-        border-radius: 10px;
         border: 0.50px white solid;  
         cursor: pointer;
         color: white;
@@ -234,11 +232,9 @@ font-size: 1rem;
 }
 
 ul.pagination li:first-child{
-border-radius: 5px 0 0 5px;
 }
 
 ul.pagination li:last-child{
-border-radius: 0 5px 5px 0;
 }
 
 ul.pagination li a {
@@ -276,7 +272,6 @@ color: rgb(113, 113, 113);
         z-index: 0;
         list-style-type: none; /* 리스트 마커 제거 */
         border: 1px solid rgba(255, 255, 255, 0.69);
-        border-radius: 10px;
 }
       
 .searchDropdownContent.active,
