@@ -107,7 +107,7 @@ export default function Login() {
             e.target.value = e.target.value.slice(0,15);
             setPw(e.target.value);
             const regex =
-                /^(?=.*[a-zA-z])(?=.*[0-9]).{8,15}$/;
+                /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'"]).{8,15}$/;
             if (regex.test(e.target.value) && e.target.value.length >= 8)  {
                 setPwValid(true);
             } else {
@@ -192,25 +192,37 @@ export default function Login() {
         setIsDropdownVisible(!isDropdownVisible);
       };
 
+    const goToInfo = () => {
+        navigate("/Information");
+    }
+
+    const onClickSignOutButton = () => {
+        cookies.remove('accessToken');
+        cookies.remove('refreshToken');
+        cookies.remove('email');
+        alert('로그아웃이 완료되었습니다.');
+        window.location.reload(); // Reload the page after logging out
+    }
+
     return (
         <div className="page123">
-            <img src="assets/image/555.png" alt="background" className='wallPaper123'/>
+            <img src="assets/image/background.jpg" alt="background" className='wallPaper123'/>
             <div className="upperSpace123">
                 <div className="upperHomeWrap">
-                    <button class="upperHome123" onClick={goToHome}>Home</button>
+                    <button class="upperHome123" onClick={goToHome}>HOME</button>
                 </div>
 
                 <div className="upperNoticeWrap">
-                    <button className="upperNotice123" onClick={goToNoticeBoard}>Notice</button>
+                    <button className="upperNotice123" onClick={goToNoticeBoard}>NOTICE</button>
                 </div>
 
                 <div className="upperGuideWrap">
-                    <button className="upperGuide123">Guide</button>
+                    <button className="upperGuide123">GUIDE</button>
                 </div>
 
                 <div className="upperCommunityWrap">
                     <button className="upperCommunity123"  onMouseEnter={toggleDropdown} onMouseLeave={toggleDropdown}>
-                        Community
+                        COMMUNITY
                         {isDropdownVisible && (
                             <div className="dropdownMenu123">
                                 <li onClick={goToFreeBulletinBoard} className="dropdownWord">자유 게시판</li>
@@ -219,15 +231,20 @@ export default function Login() {
                         )}
                     </button>
                 </div>
-
-                <div className="upperLoginWrap">
-                    { cookies.get('accessToken') ? (
-                        <button className="upperLogin123">Info</button>        
+                { cookies.get('accessToken') ? (
+                        <div className="upperLoginAndSignOutWrap">
+                            <div className="upperInfoWrap123">
+                                <button className="upperLogin123" onClick={goToInfo}>INFO</button> 
+                            </div>
+                            <div className="upperSignOutWrap">
+                                <button className="upperLogin123" onClick={onClickSignOutButton}>LOGOUT</button> 
+                            </div>
+                        </div>
                     ) : (
-                        <button className="upperLogin123" onClick={goToLogin}>Login</button>
-                    )}
-                </div>
-
+                        <div className="upperLoginWrap">
+                            <button className="upperLogin123" onClick={goToLogin}>LOGIN</button>
+                        </div>
+                )}
             </div>
 
             <div className="contentWrap123">
@@ -260,7 +277,7 @@ export default function Login() {
                     <div className="errorMessage123">
                     {
                         pw.length > 0 && !pwValid && (
-                            <span>8~15자의 영문, 숫자를 포함해서 입력해주세요.</span>
+                            <span>8~15자의 영문, 숫자, 특수문자를 포함해서 입력해주세요.</span>
                         )
                     }
                     </div>

@@ -3,9 +3,9 @@ import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { Cookies } from 'react-cookie';
 import { useRef } from "react";
-import { secretPage, pageNumber } from './FreeBulletinBoard';
 
 const cookies = new Cookies()
+export let secretPageModify = null;
 
 export default function FreeBulletinBoardPageModifyWriting(bnum) {
     // 사용자가 적고 있는 이메일 
@@ -19,17 +19,19 @@ export default function FreeBulletinBoardPageModifyWriting(bnum) {
     const [flag, setFlag] = useState(false);
     const [imageFlag, setImageFlag] = useState(false);
     const [notAllow, setNotAllow] = useState(true);
+    const [fileId, setFileId] = useState([]);
+
     useEffect(() => { 
         const fetchData = async () => {
-            if (secretPage === '0') {
+            if (cookies.get('secret') === 0) {
                 try {
                     const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/boards/FREE/${bnum.bno}/withImages`);
-                    console.log(response);
                     setTitle(response.data.title);
                     setContents(response.data.content);
                     setNotAllow(true);
                     setFlag(false);
                     setFile(response.data.fileNames);
+                    setFileId(response.data.imageIds);
                     setNotAllow(true);
                     if (response.data.fileNames[0]) {
                         setFileExist(true);
@@ -39,9 +41,10 @@ export default function FreeBulletinBoardPageModifyWriting(bnum) {
                         setFileExist(false);
                         setImageFlag(false);
                     }
-                    (response.data.secret === '0' ? setSecret(false) : setSecret(true));
+                    (response.data.secret === 0 ? setSecret(false) : setSecret(true));
+                    console.log(response.data);
                 } catch (error) {
-                    alert('해당 게시글은 관리자와 작성자만 확인가능합니다.');
+                    alert('예상치 못한 문제를 발견하였습니다.');
                     goToFreeBulletinBoard();
                 }
             }
@@ -54,10 +57,11 @@ export default function FreeBulletinBoardPageModifyWriting(bnum) {
                     });
                     setTitle(response.data.title);
                     setContents(response.data.content);
-                    setSecret(response.data.secret);
+                    setSecret(true);
                     setNotAllow(true);
                     setFlag(false);
                     setFile(response.data.fileNames);
+                    setFileId(response.data.imageIds);
                     setNotAllow(true);
                     if (response.data.fileNames[0]) {
                         setFileExist(true);
@@ -68,7 +72,7 @@ export default function FreeBulletinBoardPageModifyWriting(bnum) {
                         setImageFlag(false);
                     }
                 } catch (error) {
-                    alert('해당 게시글은 관리자와 작성자만 확인가능합니다.');
+                    alert('예상치 못한 문제를 발견하였습니다.');
                     goToFreeBulletinBoard();
                 }
             }
@@ -91,8 +95,6 @@ export default function FreeBulletinBoardPageModifyWriting(bnum) {
 
     const goToHome = () => {
         navigate("/");
-        console.log(1, cookies.get('refreshToken'))
-        console.log(2, cookies.get('accessToken'))
     }
 
     const goToNoticeBoard = () => {
@@ -158,13 +160,10 @@ export default function FreeBulletinBoardPageModifyWriting(bnum) {
     const onClickSecretButton = async () => {
         if (secret===true) {
             setSecret(false);
-            console.log('공개 전환');
         }
         else {
             setSecret(true);
-            console.log('비공개 전환');
         }
-        console.log(secret);
         setFlag(true);
     }
 
@@ -172,21 +171,20 @@ export default function FreeBulletinBoardPageModifyWriting(bnum) {
         const fetchData = async () => {
         try {
             if (secret === true) {
-                dataToSend.secret = '1';
+                dataToSend.secret = 1;
+                cookies.set('secret', 1, { maxAge: 60*60*24});
             }
             else {
-                dataToSend.secret = '0';
+                dataToSend.secret = 0;
+                cookies.set('secret', 0, { maxAge: 60*60*24});
             }
-            console.log(dataToSend);
             const response = await axios.put(`${process.env.REACT_APP_SERVER_URL}/boards/modify/FREE/${bnum.bno}`, dataToSend, {
                 headers: {
                     'Authorization': `Bearer ${cookies.get('accessToken')}`,
                     'Content-Type': 'application/json'
                 }
             });
-            console.log(bnum.bno);
             if (fileExist && !imageFlag) {
-                console.log(file[0]);
                 for (let i = 0; i < file.length; i++) {
                     // `${process.env.REACT_APP_SERVER_URL}/boards/api/edit/${bnum.bno}`
                     const responseImage = await axios.post(`${process.env.REACT_APP_SERVER_URL}/boards/api/upload`, 
@@ -203,11 +201,9 @@ export default function FreeBulletinBoardPageModifyWriting(bnum) {
                     });
                 }
             }
-            console.log('게시글이 수정되었습니다.')
             navigate(`/FreeBulletinBoardPage/${bnum.bno}`);
-            console.log(response);
         } catch (error) {
-            alert('Error fetching data: Free Writing Button', error);
+            alert('게시글 수정을 실패하였습니다.');
         }
         };
 
@@ -236,7 +232,10 @@ export default function FreeBulletinBoardPageModifyWriting(bnum) {
     };
 
     const onFileSelect = (e) => {
-        setImageFlag(false);
+        if (imageFlag === true) {
+            setImageFlag(false);
+        }
+        
         setFlag(true);
         if (e.target.files[0]) {
             if (e.target.files.length > 5) {
@@ -251,14 +250,15 @@ export default function FreeBulletinBoardPageModifyWriting(bnum) {
             }
         }
         else {
-          console.log('파일이 선택되지 않았습니다.');
           setFileExist(false); // checkbox 선택 상태로 변경
         }
     };
 
     const onClickSignOutButton = () => {
         cookies.remove('accessToken');
-        alert('로그아웃이 완료되었습니다.');
+        cookies.remove('refreshToken');
+        cookies.remove('email');
+        alert('로그아웃이 완료되었습니다. 홈 화면으로 이동합니다.');
         goToHome();
     }
 
@@ -270,18 +270,14 @@ export default function FreeBulletinBoardPageModifyWriting(bnum) {
         if (imageFlag) {
             const fetchData = async () => {
                 try {
-                    const response = await axios.delete(`${process.env.REACT_APP_SERVER_URL}/boards/api/delete/${bnum.bno}`, {
-                        headers: {
-                            'Authorization': `Bearer ${cookies.get('accessToken')}`,
-                        }
-                    });
+                    const response = await axios.delete(`${process.env.REACT_APP_SERVER_URL}/boards/api/delete/${fileId[index]}`);
                 } catch (error) {
-                    alert('Error fetching data: Free Writing Button', error);
+                    alert('이미지를 삭제하는데 실패하였습니다.');
                 }
             };
-
             fetchData();
         }
+
         const updatedFiles = [...file];
         updatedFiles.splice(index, 1);
         setFile(updatedFiles);
@@ -289,27 +285,27 @@ export default function FreeBulletinBoardPageModifyWriting(bnum) {
         if (!updatedFiles[0]) {
             setFileExist(false);
         }
-      };
+    };
 
     return (
         <div className="page12345">
-            <img src="/assets/image/555.png" alt="background" className='wallPaper123'/>
+            <img src="/assets/image/background.jpg" alt="background" className='wallPaper123'/>
             <div className="upperSpace123">
                 <div className="upperHomeWrap">
-                    <button class="upperHome123" onClick={goToHome}>Home</button>
+                    <button class="upperHome123" onClick={goToHome}>HOME</button>
                 </div>
 
                 <div className="upperNoticeWrap">
-                    <button className="upperNotice123" onClick={goToNoticeBoard}>Notice</button>
+                    <button className="upperNotice123" onClick={goToNoticeBoard}>NOTICE</button>
                 </div>
 
                 <div className="upperGuideWrap">
-                    <button className="upperGuide123" onClick={goToInfo}>Guide</button>
+                    <button className="upperGuide123" onClick={goToInfo}>GUIDE</button>
                 </div>
 
                 <div className="upperCommunityWrap">
                     <button className="upperCommunity123"  onMouseEnter={toggleDropdown} onMouseLeave={toggleDropdown}>
-                        Community
+                        COMMUNITY
                         {isDropdownVisible && (
                             <div className="dropdownMenu123">
                                 <li onClick={goToFreeBulletinBoard} className="dropdownWord">자유 게시판</li>
@@ -321,15 +317,15 @@ export default function FreeBulletinBoardPageModifyWriting(bnum) {
                 { cookies.get('accessToken') ? (
                         <div className="upperLoginAndSignOutWrap">
                             <div className="upperInfoWrap123">
-                                <button className="upperLogin1" onClick={goToInfo}>Info</button> 
+                              <button className="upperLogin123" onClick={goToInfo}>INFO</button> 
                             </div>
                             <div className="upperSignOutWrap">
-                                <button className="upperLogin1" onClick={onClickSignOutButton}>Logout</button> 
+                                <button className="upperLogin123" onClick={onClickSignOutButton}>LOGOUT</button> 
                             </div>
                         </div>
                     ) : (
                         <div className="upperLoginWrap">
-                            <button className="upperLogin123" onClick={goToLogin}>Login</button>
+                            <button className="upperLogin123" onClick={goToLogin}>LOGIN</button>
                         </div>
                 )}
             </div>

@@ -33,6 +33,8 @@ export default function Home() {
 
     const onClickSignOutButton = () => {
         cookies.remove('accessToken');
+        cookies.remove('refreshToken');
+        cookies.remove('email');
         alert('로그아웃이 완료되었습니다.');
         window.location.reload(); // Reload the page after logging out
     }
@@ -78,10 +80,10 @@ export default function Home() {
                 { cookies.get('accessToken') ? (
                         <div className="upperLoginAndSignOutWrap">
                             <div className="upperInfoWrap123">
-                                <button className="upperLogin1" onClick={goToInfo}>INFO</button> 
+                                <button className="upperLogin123" onClick={goToInfo}>INFO</button> 
                             </div>
                             <div className="upperSignOutWrap">
-                                <button className="upperLogin1" onClick={onClickSignOutButton}>LOGOUT</button> 
+                                <button className="upperLogin123" onClick={onClickSignOutButton}>LOGOUT</button> 
                             </div>
                         </div>
                     ) : (

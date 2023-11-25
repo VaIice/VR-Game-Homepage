@@ -5,30 +5,93 @@ import { Cookies } from 'react-cookie';
 import { useRef } from "react";
 
 const cookies = new Cookies()
+export let secretPageModify = null;
 
-const SERVER_URL = `${process.env.REACT_APP_SERVER_URL}/boards/register`;
-const SERVER_URL_IMAGE = `${process.env.REACT_APP_SERVER_URL}/boards/api/upload`;
-
-export default function FreeBulletinBoardPageWriting() {
-    const navigate = useNavigate();
-    // 이메일이 유효한지 확인
-    const [titleValid, setTitleValid] = useState(false);
-    // 비밀번호가 유효한지 확인
-    const [contentValid, setContentValid] = useState(false);
+export default function NoticeBulletinBoardPageModifyWriting(bnum) {
+    // 사용자가 적고 있는 이메일 
+    const [title, setTitle] = useState('');
+    // // 사용자가 적고 있는 비밀번호
+    const [contents, setContents] = useState('');
+    // 이메일이 유효한 형식인지 확인
+    const [titleValid, setTitleValid] = useState(true);
+    // 핸드폰 번호가 유효한 형식인지 확인
+    const [contentsValid, setContentsValid] = useState(true);
+    const [flag, setFlag] = useState(false);
+    const [imageFlag, setImageFlag] = useState(false);
     const [notAllow, setNotAllow] = useState(true);
+    useEffect(() => { 
+        const fetchData = async () => {
+            if (cookies.get('secret') === 0) {
+                try {
+                    const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/boards/NOTICE/${bnum.bno}/withImages`);
+                    setTitle(response.data.title);
+                    setContents(response.data.content);
+                    setNotAllow(true);
+                    setFlag(false);
+                    setFile(response.data.fileNames);
+                    setNotAllow(true);
+                    if (response.data.fileNames[0]) {
+                        setFileExist(true);
+                        setImageFlag(true);
+                    }
+                    else {
+                        setFileExist(false);
+                        setImageFlag(false);
+                    }
+                    (response.data.secret === 0 ? setSecret(false) : setSecret(true));
+                    console.log(response.data);
+                } catch (error) {
+                    alert('예상치 못한 문제를 발견하였습니다.');
+                    goToNoticeBoard();
+                }
+            }
+            else {
+                try {
+                    const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/boards/NOTICE/${bnum.bno}/withImages`, {
+                        headers: {
+                            'Authorization': `Bearer ${cookies.get('accessToken')}`,
+                        }
+                    });
+                    setTitle(response.data.title);
+                    setContents(response.data.content);
+                    setSecret(true);
+                    setNotAllow(true);
+                    setFlag(false);
+                    setFile(response.data.fileNames);
+                    setNotAllow(true);
+                    if (response.data.fileNames[0]) {
+                        setFileExist(true);
+                        setImageFlag(true);
+                    }
+                    else {
+                        setFileExist(false);
+                        setImageFlag(false);
+                    }
+                } catch (error) {
+                    alert('예상치 못한 문제를 발견하였습니다.');
+                    goToNoticeBoard();
+                }
+            }
+        };
+        fetchData();
+    }, []);
+
+    useEffect(() => {
+        if (titleValid && contentsValid && flag === true) {
+            setNotAllow(false);
+        } else {
+            setNotAllow(true);
+        }
+
+    }, [titleValid, contentsValid, title, contents, flag]);
+
+    const [secret, setSecret] = useState(false);
+
+    const navigate = useNavigate();
 
     const goToHome = () => {
         navigate("/");
     }
-
-    useEffect(() => {
-        if (titleValid && contentValid) {
-            setNotAllow(false);
-            return;
-        } else {
-            setNotAllow(true);
-        }
-    }, [titleValid, contentValid]);
 
     const goToNoticeBoard = () => {
         navigate("/NoticeBoard");
@@ -53,16 +116,10 @@ export default function FreeBulletinBoardPageWriting() {
         setIsDropdownVisible(!isDropdownVisible);
     };
 
-    // 사용자가 적고 있는 이메일 
-    const [title, setTitle] = useState('');
-    // // 사용자가 적고 있는 비밀번호
-    const [contents, setContents] = useState('');
-
-    const [secret, setSecret] = useState(0);
-
     const handleTitle = (e) => {
         const newTitle = e.target.value;
         setTitle(newTitle);
+        setFlag(true);
         if (newTitle.length >= 1) {
             setTitleValid(true);
         }
@@ -73,55 +130,64 @@ export default function FreeBulletinBoardPageWriting() {
 
     const textarea = useRef();
 
-
     const handleContents = (e) => {
         const newContents = e.target.value;
         setContents(newContents);
+        setFlag(true);
         textarea.current.style.height = 'auto';
         textarea.current.style.height = textarea.current.scrollHeight + 'px';
         if (newContents.length >= 1) {
-            setContentValid(true);
+            setContentsValid(true);
         }
         else {
-            setContentValid(false);
+            setContentsValid(false);
         }
     };
 
     const dataToSend = {
         title: title,
         content: contents,
-        boardType: "FREE",
+        boardType: "NOTICE",
         secret: secret
     };
 
     const [bno, setBno] = useState(-1);
 
     const onClickSecretButton = async () => {
-        if (secret===1) {
-            setSecret(0);
+        if (secret===true) {
+            setSecret(false);
         }
         else {
-            setSecret(1);
+            setSecret(true);
         }
+        setFlag(true);
     }
 
     const onClickWritingButton = async () => {
         const fetchData = async () => {
         try {
-            const response = await axios.post(SERVER_URL, dataToSend, {
+            if (secret === true) {
+                dataToSend.secret = 1;
+                cookies.set('secret', 1, { maxAge: 60*60*24});
+            }
+            else {
+                dataToSend.secret = 0;
+                cookies.set('secret', 0, { maxAge: 60*60*24});
+            }
+            const response = await axios.put(`${process.env.REACT_APP_SERVER_URL}/boards/modify/NOTICE/${bnum.bno}`, dataToSend, {
                 headers: {
                     'Authorization': `Bearer ${cookies.get('accessToken')}`,
                     'Content-Type': 'application/json'
                 }
             });
-
-            if (fileExist) {
+            if (fileExist && !imageFlag) {
                 for (let i = 0; i < file.length; i++) {
-                    const responseImage = await axios.post(SERVER_URL_IMAGE, 
+                    // `${process.env.REACT_APP_SERVER_URL}/boards/api/edit/${bnum.bno}`
+                    const responseImage = await axios.post(`${process.env.REACT_APP_SERVER_URL}/boards/api/upload`, 
                         {
                             file: file[i],
-                            boardType: "FREE",
-                            bno: response.data
+                            boardType: "NOTICE",
+                            bno: bnum.bno
                         },
                         {
                             headers: {
@@ -129,13 +195,11 @@ export default function FreeBulletinBoardPageWriting() {
                                 'Content-Type': 'multipart/form-data'
                             }
                     });
-                    console.log('이미지', responseImage);
                 }
             }
-            cookies.set('secret', secret, { maxAge: 60*60*24});
-            navigate(`/FreeBulletinBoardPage/${response.data}`);
+            navigate(`/NoticeBulletinBoardPage/${bnum.bno}`);
         } catch (error) {
-            alert('게시글 등록을 실패하였습니다.', error);
+            alert('게시글 수정을 실패하였습니다.');
         }
         };
 
@@ -143,7 +207,7 @@ export default function FreeBulletinBoardPageWriting() {
     }
 
     const onClickCancelButton = async () => {
-        goToFreeBulletinBoard();
+        goToNoticeBoard();
     }
 
 
@@ -152,14 +216,20 @@ export default function FreeBulletinBoardPageWriting() {
     const [fileExist, setFileExist] = useState(false);
 
     const [file, setFile] = useState('');
+
+    const dataToSendImage = {
+        file: file,
+        boardType: "NOTICE",
+        bno: bnum.bno
+    };
     
     const onClickImageUpload = () => {
         imageInput.current.click();
     };
 
-    const formData = new FormData();
-
     const onFileSelect = (e) => {
+        setImageFlag(false);
+        setFlag(true);
         if (e.target.files[0]) {
             if (e.target.files.length > 5) {
                 alert('이미지는 5개로 제한됩니다.');
@@ -190,10 +260,20 @@ export default function FreeBulletinBoardPageWriting() {
     }
     
     const handleDeleteImage = (index) => {
+        if (imageFlag) {
+            const fetchData = async () => {
+                try {
+                    const response = await axios.delete(`${process.env.REACT_APP_SERVER_URL}/boards/api/delete/${bnum.bno}`);
+                } catch (error) {
+                    alert('이미지를 삭제하는데 실패하였습니다.');
+                }
+            };
+            fetchData();
+        }
         const updatedFiles = [...file];
         updatedFiles.splice(index, 1);
         setFile(updatedFiles);
-
+        setFlag(true);
         if (!updatedFiles[0]) {
             setFileExist(false);
         }
@@ -229,7 +309,7 @@ export default function FreeBulletinBoardPageWriting() {
                 { cookies.get('accessToken') ? (
                         <div className="upperLoginAndSignOutWrap">
                             <div className="upperInfoWrap123">
-                                <button className="upperLogin123" onClick={goToInfo}>INFO</button> 
+                              <button className="upperLogin123" onClick={goToInfo}>INFO</button> 
                             </div>
                             <div className="upperSignOutWrap">
                                 <button className="upperLogin123" onClick={onClickSignOutButton}>LOGOUT</button> 
@@ -245,7 +325,7 @@ export default function FreeBulletinBoardPageWriting() {
             <div className="contentWrap123">
                 <div className = "BulletinBoardWritingUpper">
                     <div className="BulletinBoardWritingUpperLeft">
-                        <div className="BulletinBoardTitle123">자유 게시판</div>
+                        <div className="BulletinBoardTitle123">공지 게시판</div>
                     </div>
                     <div className="BulletinBoardWritingUpperRight">
                         <button className="BulletinBoardSecretButton" onClick={onClickSecretButton}>
@@ -254,6 +334,7 @@ export default function FreeBulletinBoardPageWriting() {
                                 type="checkbox"
                                 className='BulletinBoardImageCheckbox'
                                 onChange={onClickSecretButton}
+                                checked={secret}
                                 />
                         </button>
 
@@ -299,17 +380,32 @@ export default function FreeBulletinBoardPageWriting() {
                     <div className="BulletinBoardShortLine"/>
                 </div>
                 <div className = "BulletinBoardWritingBottom">
-                    {fileExist && (
+                    {imageFlag && fileExist && (
                         <div className = "BulletinBoardWritingImage">
                             {file.map((file, index) => (
                                 <div key={index} className="ImageContainer">
                                     <img
                                         key={index}
-                                        src={URL.createObjectURL(file)}
+                                        src={file}
                                         alt={`file-${index}`}
                                         className="BulletinBoardImage"
                                     />                                    
-                                    <img src="assets/image/trash1.svg" className="trashImage" onClick={() => handleDeleteImage(index)}/>
+                                    <img src="/assets/image/trash1.svg" className="trashImage" onClick={() => handleDeleteImage(index)}/>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                    {!imageFlag && fileExist && (
+                        <div className = "BulletinBoardWritingImage">
+                            {file.map((file, index) => (
+                                <div key={index} className="ImageContainer">
+                                <img
+                                    key={index}
+                                    src={URL.createObjectURL(file)}
+                                    alt={`file-${index}`}
+                                    className="BulletinBoardImage"
+                                />                                    
+                                    <img src="/assets/image/trash1.svg" className="trashImage" onClick={() => handleDeleteImage(index)}/>
                                 </div>
                             ))}
                         </div>

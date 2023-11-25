@@ -2,13 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { Cookies } from 'react-cookie';
-import styled from "styled-components";
 import Pagination from "react-js-pagination";
 
 const cookies = new Cookies()
 const SERVER_URL_NOTICE_LIST = `${process.env.REACT_APP_SERVER_URL}/boards/NOTICE/list?page=1`;
-export let secretPage = '0';
-
 export default function NoticeBulletinBoard() {
     const navigate = useNavigate();
 
@@ -19,11 +16,10 @@ export default function NoticeBulletinBoard() {
             try {
                 const response = await axios.get(SERVER_URL_NOTICE_LIST);
                 setPosts(response.data);
-                console.log(response.data);
                 setPostsLoaded(true);
+                console.log(response.data);
             } catch (error) {
-                alert('Error fetching data: NoticeBulletinBoard', error);
-                console.log(SERVER_URL_NOTICE_LIST);
+                alert('게시글 목록을 불러오는데 실패하였습니다.');
             }
         };
         fetchData();
@@ -32,37 +28,35 @@ export default function NoticeBulletinBoard() {
     const handlePage = async (page) => {
         const SERVER_URL_NOTICE_LIST_PAGE = `${process.env.REACT_APP_SERVER_URL}/boards/NOTICE/list?page=${page}`
         const fetchData = async () => {
-            if (searchFlag === false) {
-            const response = await axios.get(SERVER_URL_NOTICE_LIST_PAGE, {
-                headers: {
-                    'Authorization': `Bearer ${cookies.get('accessToken')}`,
+            try {
+                if (searchFlag === false) {
+                    const response = await axios.get(SERVER_URL_NOTICE_LIST_PAGE, {
+                        headers: {
+                            'Authorization': `Bearer ${cookies.get('accessToken')}`,
+                        }
+                    });
+                    setPosts(response.data);
+                    setPostsLoaded(true);
                 }
-            });
-            setPosts(response.data);
-            setPostsLoaded(true);
-            console.log(response.data);
-        }
-            else {
-                const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/boards/NOTICE/search?type=${searchWord}&keyword=${searchKeyword}&page=${page}`, {
-                    headers: {
-                        'Authorization': `Bearer ${cookies.get('accessToken')}`,
+                else {
+                        const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/boards/NOTICE/search?type=${searchWord}&keyword=${searchKeyword}&page=${page}`, {
+                            headers: {
+                                'Authorization': `Bearer ${cookies.get('accessToken')}`,
+                            }
+                        });
+                        setPosts(response.data);
+                        setPostsLoaded(true);
                     }
-                });
-                console.log(response);
-                setPosts(response.data);
-                setPostsLoaded(true);
-                console.log(response.data);
+            } catch (error) {
+                alert('게시글 목록을 불러오는데 실패하였습니다.');
             }
         };
         fetchData();
         setPage(page);
-        console.log(page);
     }
 
     const goToHome = () => {
         navigate("/");
-        console.log(1, cookies.get('refreshToken'))
-        console.log(2, cookies.get('accessToken'))
     }
 
     const goToNoticeBoard = () => {
@@ -83,28 +77,29 @@ export default function NoticeBulletinBoard() {
 
     const onClickNoticeBulletinBoardPageButton = async (bno, secret) => {
         try {
-            if (secret === '1') {
+            if (secret === 0) {
+                navigate(`/NoticeBulletinBoardPage/${bno}`);
+            }
+            else {
                 const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/boards/NOTICE/${bno}/withImages`, {
                     headers: {
                         'Authorization': `Bearer ${cookies.get('accessToken')}`,
                     }
                 });
-                console.log(`${process.env.REACT_APP_SERVER_URL}/boards/NOTICE/${bno}/withImages`);
+                navigate(`/NoticeBulletinBoardPage/${bno}`);
             }
-            secretPage = secret;
-            navigate(`/NoticeBulletinBoardPage/${bno}`);
+            cookies.set('secret', secret, { maxAge: 60*60*24});
         } catch (error) {
-            alert('해당 게시글은 관리자와 작성자만 확인가능합니다.');
+            alert('해당 게시글은 관리자만 확인 가능합니다.');
         }
     }
 
     const goToNoticeBulletinBoardPageWriting = () => {
-        if (cookies.get('accessToken') && cookies.get('refreshToken')) {
+        if (cookies.get('accessToken') && cookies.get('refreshToken') && decodeURIComponent(cookies.get('email')) === 'darkest0722@gmail.com') {
             navigate("/NoticeBulletinBoardPageWriting");
         }
         else {
-            alert('로그인을 해주세요.')
-            goToLogin();
+            alert('해당 게시글은 관리자만 작성 가능합니다.');
         }
     }
     const [searchKeyword, setSearchKeyword] = useState('');
@@ -123,16 +118,12 @@ export default function NoticeBulletinBoard() {
         const fetchData = async () => {
             try {
                 const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/boards/NOTICE/search?type=${searchWord}&keyword=${searchKeyword}&page=1`);
-                console.log(`${process.env.REACT_APP_SERVER_URL}/boards/NOTICE/search?type=${searchWord}&keyword=${searchKeyword}`);
-                console.log(response);
                 setPosts(response.data);
                 setPostsLoaded(true);
-                console.log(response.data);
                 setPage(1);
                 setSearchFlag(true);
-                console.log(page);
             } catch (error) {
-                alert('Error fetching data: Notice Search Button', error);
+                alert('게시글 검색을 실패하였습니다.');
             }
         };
 
@@ -152,7 +143,7 @@ export default function NoticeBulletinBoard() {
                 {postsLoaded ? (
                 posts.dtoList.map((post) => (
                     <div key={post.bno} className="postListItem123" onClick={() => onClickNoticeBulletinBoardPageButton(post.bno, post.secret)}>
-                            {post.secret === '0' ? (
+                            {post.secret === 0 ? (
                                     <div className="postListTitle123">{post.title}</div>
                                 ) : (
                                     <div className="postListTitle123">
@@ -163,16 +154,16 @@ export default function NoticeBulletinBoard() {
                             <div className="postListReplyCount123">
                                 {post.replyCount !== 0 && `(${post.replyCount})`}
                             </div>
-                            <img src="assets/image/view.svg" alt="lock" className="postListView"/>
+                            {/* <img src="assets/image/view.svg" alt="lock" className="postListView"/>
                             <span className="postListViewNumber">1</span>
-                            <div className="postListItemLine"/>
+                            <div className="postListItemLine"/> */}
                             <div className="postListUser123">{post.writer}</div>
                             <div className="postListItemLine"/>
                             <div className="postListDate">{post.regDate[0]}-{post.regDate[1]}-{post.regDate[2]}</div>
                     </div>
                 ))
                 ) : (
-                <div>Loading...</div>
+                <></>
                 )}
             </div>
             );
@@ -215,14 +206,16 @@ export default function NoticeBulletinBoard() {
 
     const [searchDropdownVisible, setSearchDropdownVisible] = useState(false);
 
-    const goToInfo = () => {
-        navigate("/Information");
-    }
-
     const onClickSignOutButton = () => {
         cookies.remove('accessToken');
+        cookies.remove('refreshToken');
+        cookies.remove('email');
         alert('로그아웃이 완료되었습니다.');
         window.location.reload(); // Reload the page after logging out
+    }
+
+    const goToInfo = () => {
+        navigate("/Information");
     }
 
     return (
@@ -255,10 +248,10 @@ export default function NoticeBulletinBoard() {
                 { cookies.get('accessToken') ? (
                         <div className="upperLoginAndSignOutWrap">
                             <div className="upperInfoWrap123">
-                                <button className="upperLogin1" onClick={goToInfo}>INFO</button> 
+                                <button className="upperLogin123" onClick={goToInfo}>INFO</button> 
                             </div>
                             <div className="upperSignOutWrap">
-                                <button className="upperLogin1" onClick={onClickSignOutButton}>LOGOUT</button> 
+                                <button className="upperLogin123" onClick={onClickSignOutButton}>LOGOUT</button> 
                             </div>
                         </div>
                     ) : (
@@ -280,7 +273,9 @@ export default function NoticeBulletinBoard() {
                                     <div className='searchWord123' >
                                         {searchWordKorean}
                                     </div>
-                                    <img src={"/assets/image/dropdown.svg"} alt="dropdown" className='searchDropdownIcon123' onClick={onClickSearchDropdownButton}/>
+                                    <div>
+                                        <img src={"/assets/image/dropdown.svg"} alt="dropdown" className='searchDropdownIcon123' onClick={onClickSearchDropdownButton}/>
+                                    </div>
                                 </div>
                                 <div className={`searchDropdownContent ${searchDropdownVisible ? 'active' : ''}`}>
                                     <li className="searchDropdownMenu" onClick={onClickSearchWordTitle}>제목</li>
@@ -313,7 +308,7 @@ export default function NoticeBulletinBoard() {
                         activePage={posts.page}
                         itemsCountPerPage={posts.size}
                         totalItemsCount={posts.total}
-                        pageRangeDisplayed={10}
+                        pageRangeDisplayed={5}
                         prevPageText={"‹"}
                         nextPageText={"›"}
                         onChange={handlePage}

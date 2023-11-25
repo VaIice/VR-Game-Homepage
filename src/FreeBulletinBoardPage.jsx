@@ -5,7 +5,6 @@ import { Cookies } from 'react-cookie';
 import Swal from "sweetalert2";
 import { useRef } from "react";
 import Pagination from "react-js-pagination";
-import { secretPage } from './FreeBulletinBoard';
 
 const cookies = new Cookies()
 
@@ -16,10 +15,10 @@ export default function FreeBulletinBoardPage(bno) {
     // 이메일, 비밀번호가 유효하다면 활성화
     const [notAllow, setNotAllow] = useState(true);
     const [notAllowModifyComment, setNotAllowModifyComment] = useState(true);
-    
+
     useEffect(() => {    
         const fetchData = async () => {
-            if (secretPage === '1') {
+            if (cookies.get('secret') === 1) {
                 try {
                     const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/boards/FREE/${bno.bno}/withImages`, {
                         headers: {
@@ -95,9 +94,8 @@ export default function FreeBulletinBoardPage(bno) {
                     });
                     const responseComment = await axios.get(`${process.env.REACT_APP_SERVER_URL}/replies/FREE/list/${bno.bno}`);
                     setPostsComment(responseComment.data);
-                    // window.location.reload();
                 } catch (error) {
-                    alert('해당 댓글은 관리자와 작성자만 삭제 가능합니다.', error);
+                    alert('해당 댓글은 관리자와 작성자만 삭제 가능합니다.');
                 }
             }
         });
@@ -149,12 +147,9 @@ export default function FreeBulletinBoardPage(bno) {
                         headers: {
                             'Authorization': `Bearer ${cookies.get('accessToken')}`}
                     });
-                    console.log('RESPONSE :', response);
-                    console.log('bnum :', bnum);
-                    console.log('url : ', `${process.env.REACT_APP_SERVER_URL}/boards/remove/FREE/${bnum}`)
                     goToFreeBulletinBoard();
                 } catch (error) {
-                    alert('해당 게시글은 관리자와 작성자만 삭제 가능합니다.', error);
+                    alert('해당 게시글은 관리자와 작성자만 삭제 가능합니다.');
                 }
             }
         });
@@ -177,32 +172,37 @@ export default function FreeBulletinBoardPage(bno) {
     };
 
     const onClickCommentEnrollButton = async () => {
-        const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/replies/FREE/register`, {bno: bnum, replyText: comment}, {
-            headers: {
-                'Authorization': `Bearer ${cookies.get('accessToken')}`}
-        });
-        const responseComment = await axios.get(`${process.env.REACT_APP_SERVER_URL}/replies/FREE/list/${bno.bno}`);
-        setBnum(response.data.bno);
-        setPostsComment(responseComment.data);
-        // setPostsCommentLoaded(true);
-        console.log(response.data.secret);
-        console.log(response);
-        // window.location.reload();
+        try {
+            const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/replies/FREE/register`, {bno: bnum, replyText: comment}, {
+                headers: {
+                    'Authorization': `Bearer ${cookies.get('accessToken')}`}
+            });
+            const responseComment = await axios.get(`${process.env.REACT_APP_SERVER_URL}/replies/FREE/list/${bno.bno}`);
+            setBnum(response.data.bno);
+            setPostsComment(responseComment.data);
+        }
+        catch (error) {
+            alert('로그인을 해주세요.');
+        }
     }
 
     const onClickCommentModifyButton = async () => {
-        console.log(modifyCommentRno, modifyComment);
-        const response = await axios.put(`${process.env.REACT_APP_SERVER_URL}/replies/FREE/${modifyCommentRno}`,
-        {
-            bno: bnum, replyText: modifyComment
-        },
-        {
-            headers: {
-                'Authorization': `Bearer ${cookies.get('accessToken')}`}
-        });
-        const responseComment = await axios.get(`${process.env.REACT_APP_SERVER_URL}/replies/FREE/list/${bno.bno}`);
-        setPostsComment(responseComment.data);
-        setModifyCommentRno(null);
+        try {
+            const response = await axios.put(`${process.env.REACT_APP_SERVER_URL}/replies/FREE/${modifyCommentRno}`,
+            {
+                bno: bnum, replyText: modifyComment
+            },
+            {
+                headers: {
+                    'Authorization': `Bearer ${cookies.get('accessToken')}`}
+            });
+            const responseComment = await axios.get(`${process.env.REACT_APP_SERVER_URL}/replies/FREE/list/${bno.bno}`);
+            setPostsComment(responseComment.data);
+            setModifyCommentRno(null);
+        }
+        catch (error) {
+            alert('댓글 수정을 실패하였습니다.');
+        }
     }
 
     const handleModifyComment = (e) => {
@@ -226,10 +226,15 @@ export default function FreeBulletinBoardPage(bno) {
 
     const [modifyComment, setModifyComment] = useState(null);
 
-    const onSetModifyComment = (rno) => {
-        const commentToEdit = postsComment.dtoList.find((comment) => comment.rno === rno);
-        setModifyCommentRno(rno);
-        setModifyComment(commentToEdit.replyText);
+    const onSetModifyComment = (rno, replyer) => {
+        if (decodeURIComponent(cookies.get('email')) === replyer) {
+            const commentToEdit = postsComment.dtoList.find((comment) => comment.rno === rno);
+            setModifyCommentRno(rno);
+            setModifyComment(commentToEdit.replyText);
+        }
+        else {
+            alert('해당 댓글은 관리자와 작성자만 수정 가능합니다.');
+        }
     };
 
     const onClickCommentModifyCancelButton = async () => {
@@ -249,7 +254,7 @@ export default function FreeBulletinBoardPage(bno) {
                                     {modifyCommentRno === postComment.rno ? (<></>
                                     ) : (
                                         <>
-                                            <button className="BulletinBoardPagePostCommentListModify" onClick={() => onSetModifyComment(postComment.rno)}>
+                                            <button className="BulletinBoardPagePostCommentListModify" onClick={() => onSetModifyComment(postComment.rno, postComment.replyer)}>
                                                 수정
                                             </button>
                                             <button className="BulletinBoardPagePostCommentListRemove" onClick={() => onClickCommentRemoveButton(postComment.rno)}>
@@ -279,7 +284,7 @@ export default function FreeBulletinBoardPage(bno) {
                         </div>
                     ))
                     ) : (
-                    <div>Loading...</div>
+                    <></>
                     )}
                 </div>
             );
@@ -289,24 +294,28 @@ export default function FreeBulletinBoardPage(bno) {
     const [page, setPage] = useState(1);
 
     const handlePage = async (page) => {
-        const SERVER_URL_COMMENT_PAGE = `${process.env.REACT_APP_SERVER_URL}/replies/FREE/list/${bnum}?page=${page}`;
-        console.log(`${process.env.REACT_APP_SERVER_URL}/replies/FREE/list/2`);
-        const fetchData = async () => {
-            const response = await axios.get(SERVER_URL_COMMENT_PAGE);
-            setPostsComment(response.data);
-            setPostsCommentLoaded(true);
-            console.log(response.data);
-        };
-        fetchData();
-        setPage(page);
-        console.log(page);
+        try {
+            const SERVER_URL_COMMENT_PAGE = `${process.env.REACT_APP_SERVER_URL}/replies/FREE/list/${bnum}?page=${page}`;
+            const fetchData = async () => {
+                const response = await axios.get(SERVER_URL_COMMENT_PAGE);
+                setPostsComment(response.data);
+                setPostsCommentLoaded(true);
+            };
+            fetchData();
+            setPage(page);
+        }
+        catch (error) {
+            alert('댓글 페이지를 불러오는데 실패하였습니다.');
+        }
     }
 
     
     const onClickSignOutButton = () => {
         cookies.remove('accessToken');
+        cookies.remove('refreshToken');
+        cookies.remove('email');
         alert('로그아웃이 완료되었습니다.');
-        goToHome();
+        window.location.reload(); // Reload the page after logging out
     }
 
     const goToInfo = () => {
@@ -315,7 +324,6 @@ export default function FreeBulletinBoardPage(bno) {
 
     const goToFreeBulletinBoardPageModifyWriting = () => {
         const decodedEmail = decodeURIComponent(cookies.get('email'));
-        console.log(decodedEmail);
         if (decodedEmail === writer && cookies.get('accessToken')) {
             navigate(`/FreeBulletinBoardPageModifyWriting/${bno.bno}`)    
         }
@@ -326,23 +334,23 @@ export default function FreeBulletinBoardPage(bno) {
 
     return (
         <div className="page12345">
-            <img src="/assets/image/555.png" alt="background" className='wallPaper123'/>
+            <img src="/assets/image/background.jpg" alt="background" className='wallPaper123'/>
             <div className="upperSpace123">
                 <div className="upperHomeWrap">
-                    <button class="upperHome123" onClick={goToHome}>Home</button>
+                    <button class="upperHome123" onClick={goToHome}>HOME</button>
                 </div>
 
                 <div className="upperNoticeWrap">
-                    <button className="upperNotice123" onClick={goToNoticeBoard}>Notice</button>
+                    <button className="upperNotice123" onClick={goToNoticeBoard}>NOTICE</button>
                 </div>
 
                 <div className="upperGuideWrap">
-                    <button className="upperGuide123" onClick={goToInfo}>Guide</button>
+                    <button className="upperGuide123" onClick={goToInfo}>GUIDE</button>
                 </div>
 
                 <div className="upperCommunityWrap">
                     <button className="upperCommunity123"  onMouseEnter={toggleDropdown} onMouseLeave={toggleDropdown}>
-                        Community
+                        COMMUNITY
                         {isDropdownVisible && (
                             <div className="dropdownMenu123">
                                 <li onClick={goToFreeBulletinBoard} className="dropdownWord">자유 게시판</li>
@@ -354,15 +362,15 @@ export default function FreeBulletinBoardPage(bno) {
                 { cookies.get('accessToken') ? (
                         <div className="upperLoginAndSignOutWrap">
                             <div className="upperInfoWrap123">
-                                <button className="upperLogin1" onClick={goToInfo}>Info</button> 
+                                <button className="upperLogin123" onClick={goToInfo}>INFO</button> 
                             </div>
                             <div className="upperSignOutWrap">
-                                <button className="upperLogin1" onClick={onClickSignOutButton}>Logout</button> 
+                                <button className="upperLogin123" onClick={onClickSignOutButton}>LOGOUT</button> 
                             </div>
                         </div>
                     ) : (
                         <div className="upperLoginWrap">
-                            <button className="upperLogin123" onClick={goToLogin}>Login</button>
+                            <button className="upperLogin123" onClick={goToLogin}>LOGIN</button>
                         </div>
                 )}
             </div>

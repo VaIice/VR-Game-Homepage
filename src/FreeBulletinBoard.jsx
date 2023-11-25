@@ -2,12 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { Cookies } from 'react-cookie';
-import styled from "styled-components";
 import Pagination from "react-js-pagination";
 
 const cookies = new Cookies()
 const SERVER_URL_FREE_LIST = `${process.env.REACT_APP_SERVER_URL}/boards/FREE/list?page=1`;
-export let secretPage = '0';
 
 export default function FreeBulletinBoard() {
     const navigate = useNavigate();
@@ -19,11 +17,10 @@ export default function FreeBulletinBoard() {
             try {
                 const response = await axios.get(SERVER_URL_FREE_LIST);
                 setPosts(response.data);
-                console.log(response.data);
                 setPostsLoaded(true);
+                console.log(response.data);
             } catch (error) {
-                alert('Error fetching data: FreeBulletinBoard', error);
-                console.log(SERVER_URL_FREE_LIST);
+                alert('게시글 목록을 불러오는데 실패하였습니다.');
             }
         };
         fetchData();
@@ -32,37 +29,35 @@ export default function FreeBulletinBoard() {
     const handlePage = async (page) => {
         const SERVER_URL_FREE_LIST_PAGE = `${process.env.REACT_APP_SERVER_URL}/boards/FREE/list?page=${page}`
         const fetchData = async () => {
-            if (searchFlag === false) {
-            const response = await axios.get(SERVER_URL_FREE_LIST_PAGE, {
-                headers: {
-                    'Authorization': `Bearer ${cookies.get('accessToken')}`,
+            try {
+                if (searchFlag === false) {
+                    const response = await axios.get(SERVER_URL_FREE_LIST_PAGE, {
+                        headers: {
+                            'Authorization': `Bearer ${cookies.get('accessToken')}`,
+                        }
+                    });
+                    setPosts(response.data);
+                    setPostsLoaded(true);
                 }
-            });
-            setPosts(response.data);
-            setPostsLoaded(true);
-            console.log(response.data);
-        }
-            else {
-                const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/boards/FREE/search?type=${searchWord}&keyword=${searchKeyword}&page=${page}`, {
-                    headers: {
-                        'Authorization': `Bearer ${cookies.get('accessToken')}`,
+                else {
+                        const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/boards/FREE/search?type=${searchWord}&keyword=${searchKeyword}&page=${page}`, {
+                            headers: {
+                                'Authorization': `Bearer ${cookies.get('accessToken')}`,
+                            }
+                        });
+                        setPosts(response.data);
+                        setPostsLoaded(true);
                     }
-                });
-                console.log(response);
-                setPosts(response.data);
-                setPostsLoaded(true);
-                console.log(response.data);
+            } catch (error) {
+                alert('게시글 목록을 불러오는데 실패하였습니다.');
             }
         };
         fetchData();
         setPage(page);
-        console.log(page);
     }
 
     const goToHome = () => {
         navigate("/");
-        console.log(1, cookies.get('refreshToken'))
-        console.log(2, cookies.get('accessToken'))
     }
 
     const goToNoticeBoard = () => {
@@ -83,16 +78,18 @@ export default function FreeBulletinBoard() {
 
     const onClickFreeBulletinBoardPageButton = async (bno, secret) => {
         try {
-            if (secret === '1') {
+            if (secret === 0) {
+                navigate(`/FreeBulletinBoardPage/${bno}`);
+            }
+            else {
                 const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/boards/FREE/${bno}/withImages`, {
                     headers: {
                         'Authorization': `Bearer ${cookies.get('accessToken')}`,
                     }
                 });
-                console.log(`${process.env.REACT_APP_SERVER_URL}/boards/FREE/${bno}/withImages`);
+                navigate(`/FreeBulletinBoardPage/${bno}`);
             }
-            secretPage = secret;
-            navigate(`/FreeBulletinBoardPage/${bno}`);
+            cookies.set('secret', secret, { maxAge: 60*60*24});
         } catch (error) {
             alert('해당 게시글은 관리자와 작성자만 확인가능합니다.');
         }
@@ -103,8 +100,7 @@ export default function FreeBulletinBoard() {
             navigate("/FreeBulletinBoardPageWriting");
         }
         else {
-            alert('로그인을 해주세요.')
-            goToLogin();
+            alert('로그인을 해주세요.');
         }
     }
     const [searchKeyword, setSearchKeyword] = useState('');
@@ -123,16 +119,12 @@ export default function FreeBulletinBoard() {
         const fetchData = async () => {
             try {
                 const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/boards/FREE/search?type=${searchWord}&keyword=${searchKeyword}&page=1`);
-                console.log(`${process.env.REACT_APP_SERVER_URL}/boards/FREE/search?type=${searchWord}&keyword=${searchKeyword}`);
-                console.log(response);
                 setPosts(response.data);
                 setPostsLoaded(true);
-                console.log(response.data);
                 setPage(1);
                 setSearchFlag(true);
-                console.log(page);
             } catch (error) {
-                alert('Error fetching data: Free Search Button', error);
+                alert('게시글 검색을 실패하였습니다.');
             }
         };
 
@@ -152,7 +144,7 @@ export default function FreeBulletinBoard() {
                 {postsLoaded ? (
                 posts.dtoList.map((post) => (
                     <div key={post.bno} className="postListItem123" onClick={() => onClickFreeBulletinBoardPageButton(post.bno, post.secret)}>
-                            {post.secret === '0' ? (
+                            {post.secret === 0 ? (
                                     <div className="postListTitle123">{post.title}</div>
                                 ) : (
                                     <div className="postListTitle123">
@@ -163,16 +155,16 @@ export default function FreeBulletinBoard() {
                             <div className="postListReplyCount123">
                                 {post.replyCount !== 0 && `(${post.replyCount})`}
                             </div>
-                            <img src="assets/image/view.svg" alt="lock" className="postListView"/>
+                            {/* <img src="assets/image/view.svg" alt="lock" className="postListView"/>
                             <span className="postListViewNumber">1</span>
-                            <div className="postListItemLine"/>
+                            <div className="postListItemLine"/> */}
                             <div className="postListUser123">{post.writer}</div>
                             <div className="postListItemLine"/>
                             <div className="postListDate">{post.regDate[0]}-{post.regDate[1]}-{post.regDate[2]}</div>
                     </div>
                 ))
                 ) : (
-                <div>Loading...</div>
+                <></>
                 )}
             </div>
             );
@@ -217,8 +209,10 @@ export default function FreeBulletinBoard() {
 
     const onClickSignOutButton = () => {
         cookies.remove('accessToken');
+        cookies.remove('refreshToken');
+        cookies.remove('email');
         alert('로그아웃이 완료되었습니다.');
-        window.location.reload();
+        window.location.reload(); // Reload the page after logging out
     }
 
     const goToInfo = () => {
@@ -227,23 +221,23 @@ export default function FreeBulletinBoard() {
 
     return (
         <div className="page123">
-            <img src="assets/image/555.png" alt="background" className='wallPaper123'/>
+            <img src="assets/image/background.jpg" alt="background" className='wallPaper123'/>
             <div className="upperSpace123">
                 <div className="upperHomeWrap">
-                    <button class="upperHome123" onClick={goToHome}>Home</button>
+                    <button class="upperHome123" onClick={goToHome}>HOME</button>
                 </div>
 
                 <div className="upperNoticeWrap">
-                    <button className="upperNotice123" onClick={goToNoticeBoard}>Notice</button>
+                    <button className="upperNotice123" onClick={goToNoticeBoard}>NOTICE</button>
                 </div>
 
                 <div className="upperGuideWrap">
-                    <button className="upperGuide123" onClick={goToInfo}>Guide</button>
+                    <button className="upperGuide123" onClick={goToInfo}>GUIDE</button>
                 </div>
 
                 <div className="upperCommunityWrap">
                     <button className="upperCommunity123"  onMouseEnter={toggleDropdown} onMouseLeave={toggleDropdown}>
-                        Community
+                        COMMUNITY
                         {isDropdownVisible && (
                             <div className="dropdownMenu123">
                                 <li onClick={goToFreeBulletinBoard} className="dropdownWord">자유 게시판</li>
@@ -255,15 +249,15 @@ export default function FreeBulletinBoard() {
                 { cookies.get('accessToken') ? (
                         <div className="upperLoginAndSignOutWrap">
                             <div className="upperInfoWrap123">
-                                <button className="upperLogin1" onClick={goToInfo}>Info</button> 
+                                <button className="upperLogin123" onClick={goToInfo}>INFO</button> 
                             </div>
                             <div className="upperSignOutWrap">
-                                <button className="upperLogin1" onClick={onClickSignOutButton}>Logout</button> 
+                                <button className="upperLogin123" onClick={onClickSignOutButton}>LOGOUT</button> 
                             </div>
                         </div>
                     ) : (
                         <div className="upperLoginWrap">
-                            <button className="upperLogin123" onClick={goToLogin}>Login</button>
+                            <button className="upperLogin123" onClick={goToLogin}>LOGIN</button>
                         </div>
                 )}
             </div>

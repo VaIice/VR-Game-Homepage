@@ -12,7 +12,9 @@ import NoticeBulletinBoardPage from "./NoticeBulletinBoardPage";
 import FreeBulletinBoardPageWriting from "./FreeBulletinBoardPageWriting";
 import FreeBulletinBoardPageModifyWriting from "./FreeBulletinBoardPageModifyWriting";
 import NoticeBulletinBoardPageWriting from "./NoticeBulletinBoardPageWriting";
+import NoticeBulletinBoardPageModifyWriting from "./NoticeBulletinBoardPageModifyWriting";
 import ReportBulletinBoardPageWriting from "./ReportBulletinBoardPageWriting";
+import ReportBulletinBoardPageModifyWriting from "./ReportBulletinBoardPageModifyWriting";
 import Information from "./Information";
 import InformationPassword from "./InformationPassword";
 import SearchPassword from "./SearchPassword";
@@ -75,6 +77,22 @@ function App() {
     />
   ));
 
+  const routes7 = Array.from({ length: 1000 }, (_, index) => (
+    <Route
+      key={index}
+      path={`/NoticeBulletinBoardPageModifyWriting/${index}`}
+      element={<NoticeBulletinBoardPageModifyWriting bno={index} />}
+    />
+  ));
+
+  const routes8 = Array.from({ length: 1000 }, (_, index) => (
+    <Route
+      key={index}
+      path={`/ReportBulletinBoardPageModifyWriting/${index}`}
+      element={<ReportBulletinBoardPageModifyWriting bno={index} />}
+    />
+  ));
+
   return (
     <BrowserRouter>
       <Routes>
@@ -90,7 +108,6 @@ function App() {
         <Route path="/ReportBulletinBoardPage" element={<ReportBulletinBoardPage />} />
         <Route path="/NoticeBulletinBoardPage" element={<NoticeBulletinBoardPage />} />
         <Route path="/FreeBulletinBoardPageWriting" element={<FreeBulletinBoardPageWriting />} />
-        {/* <Route path="/FreeBulletinBoardPageModifyWriting" element={<FreeBulletinBoardPageModifyWriting />} /> */}
         <Route path="/NoticeBulletinBoardPageWriting" element={<NoticeBulletinBoardPageWriting />} />
         <Route path="/ReportBulletinBoardPageWriting" element={<ReportBulletinBoardPageWriting />} />
         <Route path="/SearchPassword" element={<SearchPassword/>} />
@@ -114,6 +131,12 @@ function App() {
         </Route>
         <Route>
           {routes6}
+        </Route>
+        <Route>
+          {routes7}
+        </Route>
+        <Route>
+          {routes8}
         </Route>
       </Routes>
     </BrowserRouter> 
