@@ -47,15 +47,10 @@ export default function InformationPassword() {
             navigate("/Login");
         }
 
-        const goToSignUp = () => {
-            navigate("/SignUp");
-        }
-
         // 확인 버튼을 클릭했을 시 토큰 비교 (수정 필요)
         const onClickModifyPasswordButton = async () => {
             const fetchData = async () => {
             try {
-                console.log(dataToSend);
                 const response = await axios.post(SERVER_URL, dataToSend, {
                     headers: {
                     'Authorization': `Bearer ${cookies.get('accessToken')}`,
@@ -63,7 +58,7 @@ export default function InformationPassword() {
                 alert('비밀번호가 변경되었습니다.')
                 goToHome();
             } catch (error) {
-                alert("Error fetching data: Fail modify password", error);
+                alert("비밀번호 변경에 실패하였습니다.");
             }
             };
             fetchData();

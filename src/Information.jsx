@@ -48,7 +48,8 @@ export default function NoticeBoard() {
                 setNameValid(true);
                 // setNotAllow(true);
             } catch (error) {
-                alert('오엥', error);
+                alert('회원 정보를 불러오지 못했습니다.');
+                goToHome();
             }
 
         };
@@ -75,7 +76,6 @@ export default function NoticeBoard() {
         e.target.value = e.target.value.slice(0,13);
         setFlag(true);
         setPhoneNumber(e.target.value);
-        console.log(notAllow);
 
         const regex = /[0-9]+$/;
         if (regex.test(e.target.value) && (e.target.value.length === 12 || e.target.value.length === 13)) {
@@ -135,11 +135,10 @@ export default function NoticeBoard() {
                     }
                 }
                 );
-                console.log(response);
                 alert('회원 정보가 업데이트되었습니다.');
                 goToHome();
             } catch (error) {
-                alert('Error fetching data: signUp ClickButton', error);
+                alert('회원 정보 업데이트에 실패하였습니다.');
             }
         };
         fetchData();
@@ -152,11 +151,9 @@ export default function NoticeBoard() {
                 {
                     headers: {
                     'Authorization': `Bearer ${cookies.get('accessToken')}`,
-                }});
-                console.log(response);
-                
+                }});                
             } catch (error) {
-                alert('Error fetching data: signUp ClickButton', error);
+                alert('회원 탈퇴에 실패하였습니다.');
             }
         };
 
@@ -173,9 +170,12 @@ export default function NoticeBoard() {
                 try {
                     fetchData();
                     alert('회원 탈퇴가 완료되었습니다.');
+                    cookies.remove('accessToken');
+                    cookies.remove('refreshToken');
+                    cookies.remove('email');
                     goToHome();
                 } catch (error) {
-                    alert('Error remove data: 삭제 실패', error);
+                    alert('회원탈퇴에 실패하였습니다.');
                 }
             }
         });

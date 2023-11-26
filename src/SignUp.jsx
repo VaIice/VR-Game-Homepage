@@ -11,6 +11,7 @@ export default function NoticeBoard() {
     const [email, setEmail] = useState('');
     // 사용자가 적고 있는 비밀번호
     const [pw, setPw] = useState('');
+    const [pw2, setPw2] = useState('');
     // 사용자가 적고 있는 핸드폰 번호
     const [phoneNumber, setPhoneNumber] = useState('');
     // 사용자가 적고 있는 이름
@@ -20,6 +21,7 @@ export default function NoticeBoard() {
     const [emailValid, setEmailValid] = useState(false);
     // 비밀번호가 유효한 형식인지 확인
     const [pwValid, setPwValid] = useState(false);
+    const [pw2Valid, setPw2Valid] = useState(false);
     // 핸드폰 번호가 유효한 형식인지 확인
     const [phoneNumberValid, setPhoneNumberValid] = useState(false);
     // 이름이 유효한 형식인지 확인
@@ -40,13 +42,13 @@ export default function NoticeBoard() {
 
     // 이메일, 비밀번호가 유효한 형식이라면 버튼 활성화
     useEffect(() => {
-        if (emailValid && pwValid && phoneNumberValid && nameValid) {
+        if (emailValid && pwValid && phoneNumberValid && nameValid && pw2Valid && enabledEmail) {
             setNotAllow(false);
             return;
         } else {
             setNotAllow(true);
         }
-    }, [emailValid, pwValid, phoneNumberValid, nameValid]);
+    }, [emailValid, pwValid, phoneNumberValid, nameValid, pw2Valid, enabledEmail]);
 
     useEffect(() => {
         if (emailValid) {
@@ -76,6 +78,21 @@ export default function NoticeBoard() {
             setPwValid(true);
         } else {
             setPwValid(false);
+        }
+        if (e.target.value !== pw2) {
+            setPw2Valid(false);
+        }
+    }
+
+    const handlePw2 = (e) => {
+        e.target.value = e.target.value.slice(0,15);
+        setPw2(e.target.value);
+        const regex =
+            /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'"]).{8,15}$/;
+        if (regex.test(e.target.value) && e.target.value.length >= 8 && (pw === e.target.value))  {
+            setPw2Valid(true);
+        } else {
+            setPw2Valid(false);
         }
     }
 
@@ -141,7 +158,7 @@ export default function NoticeBoard() {
                 alert('회원가입에 성공했습니다.');
                 goToLogin();
             } catch (error) {
-                alert('Error fetching data: signUp ClickButton', error);
+                alert('회원가입에 실패하였습니다.');
             }
         };
         fetchData();
@@ -162,7 +179,7 @@ export default function NoticeBoard() {
                     setEmailValid(false);
                 }
             } catch (error) {
-                alert('Error fetching data: signUp ClickButton', error);
+                alert('이메일 중복 체크에 실패하였습니다.');
             }
             
         };
@@ -267,6 +284,22 @@ export default function NoticeBoard() {
                     {
                         pw.length > 0 && !pwValid && (
                             <span>8~15자의 영문, 숫자, 특수문자를 포함해서 입력해주세요.</span>
+                        )
+                    }
+                    </div>
+
+                    <div className="inputWrapPasswordSignUp123"> 
+                        <input
+                            type = 'password'
+                            className="input123"
+                            placeholder="비밀번호 확인"
+                            value={pw2}
+                            onChange={handlePw2}/>
+                    </div>
+                    <div className="errorMessage123">
+                    {
+                        pw2.length > 0 && !pw2Valid && (pw !== pw2) && (
+                            <span>비밀번호와 일치하지 않습니다.</span>
                         )
                     }
                     </div>

@@ -64,12 +64,11 @@ export default function NoticeBoard() {
         const onClickSendEmailButton = async () => {
             const fetchData = async () => {
             try {
-                console.log(dataToSend);
                 const response = await axios.post(SERVER_URL, dataToSend);
                 alert('이메일을 발송하였습니다.')
                 goToHome();
             } catch (error) {
-                alert("Error fetching data: Fail send an email", error);
+                alert("이메일 발송에 실패하였습니다.", error);
             }
             };
 

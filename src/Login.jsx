@@ -50,31 +50,28 @@ export default function Login() {
                     try {
                         if (cookies.get('accessToken') && cookies.get('refreshToken')) {
                             const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/auth/reissue`, { accessToken: cookies.get('accessToken'), refreshToken: cookies.get('refreshToken') });
-                            console.log('response', response);
-
-                            // cookies.set('accessToken', response.data.accessToken, { maxAge: response.data.accessTokenExpiresln});
                             cookies.set('accessToken', response.data.accessToken, { maxAge: 60*30});
                             cookies.set('refreshToken', response.data.refreshToken, { maxAge: 10000000 });
-    
-                            console.log('재발행 response :', response);
+                            cookies.set('email', encodeURIComponent(email), {maxAge: 60*30});
                             setTimeout(checkToken, 60*25*1000); // 10초 후에 checkTokenInterval 함수를 다시 호출
+                            alert('로그인을 연장에 성공하였습니다.');
                         }
                         else {
-                            alert('세션 만료');
+                            alert('로그인 연장에 실패하였습니다. 다시 로그인을 해주세요.');
                             cookies.remove('accessToken');
                             cookies.remove('refreshToken');
-                            console.log('쿠키 삭제');
+                            cookies.remove('email');
                             goToLogin();
                         }
                     } catch (error) {
-                        alert('Error fetching data: 재발행 실패', error);
+                        alert('로그인 연장에 실패하였습니다. 다시 로그인을 해주세요.');
                     }
                 } else {
-                    alert('연장 취소');
+                    alert('로그인이 만료되었습니다.');
                     cookies.remove('accessToken');
                     cookies.remove('refreshToken');
-                    console.log('연장 취소 버튼 쿠키 삭제')
-                    goToLogin();
+                    cookies.remove('email');
+                    window.location.reload(); // Reload the page after logging out
                 }
             });
     };
@@ -148,26 +145,10 @@ export default function Login() {
         const onClickConfirmButton = async () => {
             const fetchData = async () => {
             try {
-                console.log(dataToSend);
                 const response = await axios.post(SERVER_URL, dataToSend);
-                console.log('response: ', response);
-                console.log('response.data: ', response.data);
-                console.log('response.data.accessToken: ', response.data.accessToken);
-                // const newAccessToken = response.data.accessToken;
-                // const newRefreshToken = response.data.refreshToken;
-                // const newExpireIn = response.data.accessTokenExpiresln;
-
-                // setGrantType(response.data.grantType);
-                // setAccessToken(newAccessToken);
-                // setRefreshToken(newRefreshToken);
-                // setAccessTokenExpiresln(newExpireIn);
-
-                // cookies.set('accessToken', response.data.accessToken, {maxAge: response.data.accessTokenExpiresln})
                 cookies.set('accessToken', response.data.accessToken, {maxAge: 60*30})
                 cookies.set('refreshToken', response.data.refreshToken, {maxAge: 10000000});
                 cookies.set('email', encodeURIComponent(email), {maxAge: 60*30});
-                console.log('accessToken: ', response.data.accessToken);
-                console.log('refreshToken: ', response.data.refreshToken);
                 loginSuccess();
             } catch (error) {
                 alert('등록되지 않은 정보입니다.', error);

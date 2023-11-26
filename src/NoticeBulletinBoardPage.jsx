@@ -15,7 +15,7 @@ export default function NoticeBulletinBoardPage(bno) {
     // 이메일, 비밀번호가 유효하다면 활성화
     const [notAllow, setNotAllow] = useState(true);
     const [notAllowModifyComment, setNotAllowModifyComment] = useState(true);
-    
+
     useEffect(() => {    
         const fetchData = async () => {
             if (cookies.get('secret') === 1) {
@@ -126,9 +126,6 @@ export default function NoticeBulletinBoardPage(bno) {
     const toggleDropdown = () => {
         setIsDropdownVisible(!isDropdownVisible);
     };
-    const goToNoticeBulletinBoardPageWriting = () => {
-        navigate("/NoticeBulletinBoardPageWriting");
-    }
     
     const onClickRemoveButton = async () => {
         Swal.fire({
@@ -148,7 +145,7 @@ export default function NoticeBulletinBoardPage(bno) {
                     });
                     goToNoticeBoard();
                 } catch (error) {
-                    alert('해당 게시글은 관리자만 삭제 가능합니다.');
+                    alert('해당 게시글은 관리자와 작성자만 삭제 가능합니다.');
                 }
             }
         });
@@ -159,7 +156,6 @@ export default function NoticeBulletinBoardPage(bno) {
     const handleComment = (e) => {
         const newComment = e.target.value;
         setComment(newComment);
-
         if (newComment.length >= 1) {
             setNotAllow(false);
         } else {
@@ -177,8 +173,8 @@ export default function NoticeBulletinBoardPage(bno) {
                     'Authorization': `Bearer ${cookies.get('accessToken')}`}
             });
             const responseComment = await axios.get(`${process.env.REACT_APP_SERVER_URL}/replies/NOTICE/list/${bno.bno}`);
-            setBnum(response.data.bno);
             setPostsComment(responseComment.data);
+            setComment('');
         }
         catch (error) {
             alert('로그인을 해주세요.');
@@ -198,6 +194,7 @@ export default function NoticeBulletinBoardPage(bno) {
             const responseComment = await axios.get(`${process.env.REACT_APP_SERVER_URL}/replies/NOTICE/list/${bno.bno}`);
             setPostsComment(responseComment.data);
             setModifyCommentRno(null);
+            setNotAllowModifyComment(true);
         }
         catch (error) {
             alert('댓글 수정을 실패하였습니다.');
@@ -212,14 +209,9 @@ export default function NoticeBulletinBoardPage(bno) {
         } else {
             setNotAllowModifyComment(true);
         }
-
-        modifyTextarea.current.style.height = 'auto';
-        modifyTextarea.current.style.height = `${modifyTextarea.current.scrollHeight}px`;
     };
 
     const textarea = useRef();
-
-    const modifyTextarea = useRef();
 
     const [modifyCommentRno, setModifyCommentRno] = useState(null);
 
@@ -238,6 +230,28 @@ export default function NoticeBulletinBoardPage(bno) {
 
     const onClickCommentModifyCancelButton = async () => {
         setModifyCommentRno(null);
+    }
+
+    const ModifyTextArea = () => {
+        const textareaRef = useRef();
+        useEffect(() => {
+          if (textareaRef.current) {
+            const cursorPosition = modifyComment ? modifyComment.length : 0;
+            textareaRef.current.setSelectionRange(cursorPosition, cursorPosition);
+            textareaRef.current.focus();
+          }
+        }, [modifyComment]);
+      
+        return (
+          <textarea
+            ref={textareaRef}
+            type="text"
+            className="inputWritingComment"
+            placeholder="댓글을 작성해주세요."
+            value={modifyComment}
+            onChange={handleModifyComment}
+          />
+        );
     }
 
     const PostComments = ({ postComments }) => {
@@ -264,14 +278,7 @@ export default function NoticeBulletinBoardPage(bno) {
                                     </div>
                                     {modifyCommentRno === postComment.rno ? (
                                     <div className="BulletinBoardWritingCommentWrap">
-                                        <textarea
-                                            ref={modifyTextarea}
-                                            type="text"
-                                            className="inputWritingComment"
-                                            placeholder="댓글을 작성해주세요."
-                                            value={modifyComment}
-                                            onChange={handleModifyComment}
-                                        />
+                                        <ModifyTextArea/>
                                         <div>
                                             <button className='BulletinBoardPageCommentModifyButton' disabled={notAllowModifyComment} onClick={onClickCommentModifyButton}>수정</button>
                                             <button className='BulletinBoardPageCommentModifyCancelButton' onClick={onClickCommentModifyCancelButton}>취소</button>

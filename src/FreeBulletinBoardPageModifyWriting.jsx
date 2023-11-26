@@ -42,7 +42,6 @@ export default function FreeBulletinBoardPageModifyWriting(bnum) {
                         setImageFlag(false);
                     }
                     (response.data.secret === 0 ? setSecret(false) : setSecret(true));
-                    console.log(response.data);
                 } catch (error) {
                     alert('예상치 못한 문제를 발견하였습니다.');
                     goToFreeBulletinBoard();
@@ -231,12 +230,17 @@ export default function FreeBulletinBoardPageModifyWriting(bnum) {
         imageInput.current.click();
     };
 
-    const onFileSelect = (e) => {
+    const onFileSelect = async (e) => {
         if (imageFlag === true) {
             setImageFlag(false);
+            for (let i = 0; i < fileId.length; i++) {
+                try {
+                    const response = await axios.delete(`${process.env.REACT_APP_SERVER_URL}/boards/api/delete/${fileId[i]}`);
+                } catch (error) {
+                    alert('기존의 이미지를 삭제하는데 실패하였습니다.');
+                }
+            }
         }
-        
-        setFlag(true);
         if (e.target.files[0]) {
             if (e.target.files.length > 5) {
                 alert('이미지는 5개로 제한됩니다.');
@@ -247,6 +251,7 @@ export default function FreeBulletinBoardPageModifyWriting(bnum) {
                 const selectedFiles = Array.from(e.target.files);
                 setFile(selectedFiles);
                 setFileExist(true);
+                setFlag(true);
             }
         }
         else {
@@ -409,11 +414,11 @@ export default function FreeBulletinBoardPageModifyWriting(bnum) {
                                 <div key={index} className="ImageContainer">
                                 <img
                                     key={index}
-                                    src={URL.createObjectURL(file)}
+                                    src={file instanceof File ? URL.createObjectURL(file) : file}
                                     alt={`file-${index}`}
                                     className="BulletinBoardImage"
                                 />                                    
-                                    <img src="/assets/image/trash1.svg" className="trashImage" onClick={() => handleDeleteImage(index)}/>
+                                <img src="/assets/image/trash1.svg" className="trashImage" onClick={() => handleDeleteImage(index)}/>
                                 </div>
                             ))}
                         </div>

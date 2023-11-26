@@ -5,7 +5,6 @@ import { Cookies } from 'react-cookie';
 import { useRef } from "react";
 
 const cookies = new Cookies()
-export let secretPageModify = null;
 
 export default function ReportBulletinBoardPageModifyWriting(bnum) {
     // 사용자가 적고 있는 이메일 
@@ -19,6 +18,8 @@ export default function ReportBulletinBoardPageModifyWriting(bnum) {
     const [flag, setFlag] = useState(false);
     const [imageFlag, setImageFlag] = useState(false);
     const [notAllow, setNotAllow] = useState(true);
+    const [fileId, setFileId] = useState([]);
+
     useEffect(() => { 
         const fetchData = async () => {
             if (cookies.get('secret') === 0) {
@@ -29,6 +30,7 @@ export default function ReportBulletinBoardPageModifyWriting(bnum) {
                     setNotAllow(true);
                     setFlag(false);
                     setFile(response.data.fileNames);
+                    setFileId(response.data.imageIds);
                     setNotAllow(true);
                     if (response.data.fileNames[0]) {
                         setFileExist(true);
@@ -39,7 +41,6 @@ export default function ReportBulletinBoardPageModifyWriting(bnum) {
                         setImageFlag(false);
                     }
                     (response.data.secret === 0 ? setSecret(false) : setSecret(true));
-                    console.log(response.data);
                 } catch (error) {
                     alert('예상치 못한 문제를 발견하였습니다.');
                     goToReportBulletinBoard();
@@ -58,6 +59,7 @@ export default function ReportBulletinBoardPageModifyWriting(bnum) {
                     setNotAllow(true);
                     setFlag(false);
                     setFile(response.data.fileNames);
+                    setFileId(response.data.imageIds);
                     setNotAllow(true);
                     if (response.data.fileNames[0]) {
                         setFileExist(true);
@@ -227,9 +229,18 @@ export default function ReportBulletinBoardPageModifyWriting(bnum) {
         imageInput.current.click();
     };
 
-    const onFileSelect = (e) => {
-        setImageFlag(false);
-        setFlag(true);
+    const onFileSelect = async (e) => {
+        if (imageFlag === true) {
+            setImageFlag(false);
+            for (let i = 0; i < fileId.length; i++) {
+                try {
+                    const response = await axios.delete(`${process.env.REACT_APP_SERVER_URL}/boards/api/delete/${fileId[i]}`);
+                } catch (error) {
+                    alert('기존의 이미지를 삭제하는데 실패하였습니다.');
+                }
+            }
+        }
+
         if (e.target.files[0]) {
             if (e.target.files.length > 5) {
                 alert('이미지는 5개로 제한됩니다.');
@@ -240,6 +251,7 @@ export default function ReportBulletinBoardPageModifyWriting(bnum) {
                 const selectedFiles = Array.from(e.target.files);
                 setFile(selectedFiles);
                 setFileExist(true);
+                setFlag(true);
             }
         }
         else {
@@ -263,13 +275,14 @@ export default function ReportBulletinBoardPageModifyWriting(bnum) {
         if (imageFlag) {
             const fetchData = async () => {
                 try {
-                    const response = await axios.delete(`${process.env.REACT_APP_SERVER_URL}/boards/api/delete/${bnum.bno}`);
+                    const response = await axios.delete(`${process.env.REACT_APP_SERVER_URL}/boards/api/delete/${fileId[index]}`);
                 } catch (error) {
                     alert('이미지를 삭제하는데 실패하였습니다.');
                 }
             };
             fetchData();
         }
+
         const updatedFiles = [...file];
         updatedFiles.splice(index, 1);
         setFile(updatedFiles);
@@ -277,7 +290,7 @@ export default function ReportBulletinBoardPageModifyWriting(bnum) {
         if (!updatedFiles[0]) {
             setFileExist(false);
         }
-      };
+    };
 
     return (
         <div className="page12345">
@@ -401,11 +414,11 @@ export default function ReportBulletinBoardPageModifyWriting(bnum) {
                                 <div key={index} className="ImageContainer">
                                 <img
                                     key={index}
-                                    src={URL.createObjectURL(file)}
+                                    src={file instanceof File ? URL.createObjectURL(file) : file}
                                     alt={`file-${index}`}
                                     className="BulletinBoardImage"
                                 />                                    
-                                    <img src="/assets/image/trash1.svg" className="trashImage" onClick={() => handleDeleteImage(index)}/>
+                                <img src="/assets/image/trash1.svg" className="trashImage" onClick={() => handleDeleteImage(index)}/>
                                 </div>
                             ))}
                         </div>

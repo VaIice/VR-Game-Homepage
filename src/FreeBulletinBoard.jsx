@@ -18,7 +18,6 @@ export default function FreeBulletinBoard() {
                 const response = await axios.get(SERVER_URL_FREE_LIST);
                 setPosts(response.data);
                 setPostsLoaded(true);
-                console.log(response.data);
             } catch (error) {
                 alert('게시글 목록을 불러오는데 실패하였습니다.');
             }

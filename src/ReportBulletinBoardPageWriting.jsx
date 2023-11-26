@@ -129,7 +129,6 @@ export default function ReportBulletinBoardPageWriting() {
                                 'Content-Type': 'multipart/form-data'
                             }
                     });
-                    console.log('이미지', responseImage);
                 }
             }
             cookies.set('secret', secret, { maxAge: 60*60*24});
