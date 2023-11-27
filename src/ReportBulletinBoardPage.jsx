@@ -38,7 +38,11 @@ export default function ReportBulletinBoardPage(bno) {
                     setPostsCommentLoaded(true);
                     setNotAllow(true);
                 } catch (error) {
-                    alert('해당 게시글은 관리자와 작성자만 확인가능합니다.');
+                    Swal.fire({
+                        icon: "error",
+                        title: '게시글 조회 관련 알 수 없는 에러가 발생하였습니다.',
+                        showCancelButton: false
+                    });
                     goToReportBulletinBoard();
                 }
             }
@@ -58,7 +62,11 @@ export default function ReportBulletinBoardPage(bno) {
                     setPostsComment(responseComment.data);
                     setPostsCommentLoaded(true);
                 } catch (error) {
-                    alert('해당 게시글은 관리자와 작성자만 확인가능합니다.');
+                    Swal.fire({
+                        icon: "error",
+                        title: '게시글 조회 관련 알 수 없는 에러가 발생하였습니다.',
+                        showCancelButton: false
+                    });
                     goToReportBulletinBoard();
                 }
             }
@@ -94,7 +102,11 @@ export default function ReportBulletinBoardPage(bno) {
                     const responseComment = await axios.get(`${process.env.REACT_APP_SERVER_URL}/replies/REPORT/list/${bno.bno}`);
                     setPostsComment(responseComment.data);
                 } catch (error) {
-                    alert('해당 댓글은 관리자와 작성자만 삭제 가능합니다.');
+                    Swal.fire({
+                        icon: "info",
+                        title: '해당 댓글은 관리자와 작성자만 삭제 가능합니다.',
+                        showCancelButton: false
+                    });
                 }
             }
         });
@@ -149,7 +161,11 @@ export default function ReportBulletinBoardPage(bno) {
                     });
                     goToReportBulletinBoard();
                 } catch (error) {
-                    alert('해당 게시글은 관리자와 작성자만 삭제 가능합니다.');
+                    Swal.fire({
+                        icon: "info",
+                        title: '해당 게시글은 관리자와 작성자만 삭제 가능합니다.',
+                        showCancelButton: false
+                    });
                 }
             }
         });
@@ -182,7 +198,11 @@ export default function ReportBulletinBoardPage(bno) {
             setComment('');
         }
         catch (error) {
-            alert('로그인을 해주세요.');
+            Swal.fire({
+                icon: "info",
+                title: '로그인을 해주세요.',
+                showCancelButton: false
+            });
         }
     }
 
@@ -202,7 +222,11 @@ export default function ReportBulletinBoardPage(bno) {
             setNotAllowModifyComment(true);
         }
         catch (error) {
-            alert('댓글 수정을 실패하였습니다.');
+            Swal.fire({
+                icon: "error",
+                title: '댓글 수정을 실패하였습니다.',
+                showCancelButton: false
+            });
         }
     }
 
@@ -229,7 +253,11 @@ export default function ReportBulletinBoardPage(bno) {
             setModifyComment(commentToEdit.replyText);
         }
         else {
-            alert('해당 댓글은 관리자와 작성자만 수정 가능합니다.');
+            Swal.fire({
+                icon: "info",
+                title: '해당 댓글은 관리자와 작성자만 수정 가능합니다.',
+                showCancelButton: false
+            });
         }
     };
 
@@ -316,17 +344,62 @@ export default function ReportBulletinBoardPage(bno) {
             setPage(page);
         }
         catch (error) {
-            alert('댓글 페이지를 불러오는데 실패하였습니다.');
+            Swal.fire({
+                icon: "error",
+                title: '댓글 페이지를 불러오는데 실패하였습니다.',
+                showCancelButton: false
+            });
         }
     }
 
     
     const onClickSignOutButton = () => {
-        cookies.remove('accessToken');
-        cookies.remove('refreshToken');
-        cookies.remove('email');
-        alert('로그아웃이 완료되었습니다.');
-        window.location.reload(); // Reload the page after logging out
+        Swal.fire({
+            icon: "warning",
+            title: "로그아웃 하시겠습니까?",
+            showCancelButton: true,
+            confirmButtonText: "예",
+            cancelButtonText: "아니요",
+        }).then(async (res) => {
+            if (res.isConfirmed) {
+                try {
+                    cookies.remove('accessToken');
+                    cookies.remove('refreshToken');
+                    cookies.remove('email');
+                    Swal.fire({
+                        icon: "success",
+                        title: '로그아웃이 완료되었습니다.',
+                        // text: '홈 화면으로 이동합니다.',
+                        showCancelButton: false
+                    }).then(async () => {
+                        window.location.reload(); // Reload the page after logging out
+                    });
+                } catch (error) {
+                    cookies.remove('accessToken');
+                    cookies.remove('refreshToken');
+                    cookies.remove('email');
+                    Swal.fire({
+                        icon: "error",
+                        title: '로그인 에러가 발생하였습니다.',
+                        text: '다시 로그인을 진행해주세요.',
+                        showCancelButton: false
+                    });
+                }
+            } else {
+                try {
+                } catch (error) {
+                    cookies.remove('accessToken');
+                    cookies.remove('refreshToken');
+                    cookies.remove('email');
+                    Swal.fire({
+                        icon: "error",
+                        title: '로그인 에러가 발생하였습니다.',
+                        text: '다시 로그인을 진행해주세요.',
+                        showCancelButton: false
+                    });
+                }
+            }
+        });
     }
 
     const goToInfo = () => {
@@ -339,7 +412,11 @@ export default function ReportBulletinBoardPage(bno) {
             navigate(`/ReportBulletinBoardPageModifyWriting/${bno.bno}`)    
         }
         else {
-            alert('해당 게시글은 관리자와 작성자만 수정 가능합니다.');
+            Swal.fire({
+                icon: "info",
+                title: '해당 게시글은 관리자와 작성자만 수정 가능합니다.',
+                showCancelButton: false
+            });
         }
     }
 

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import {Cookies} from 'react-cookie';
+import Swal from "sweetalert2";
 
 const SERVER_URL = `${process.env.REACT_APP_SERVER_URL}/send-mail/password`
 
@@ -63,17 +64,34 @@ export default function NoticeBoard() {
         // 확인 버튼을 클릭했을 시 토큰 비교 (수정 필요)
         const onClickSendEmailButton = async () => {
             const fetchData = async () => {
-            try {
-                const response = await axios.post(SERVER_URL, dataToSend);
-                alert('이메일을 발송하였습니다.')
-                goToHome();
-            } catch (error) {
-                alert("이메일 발송에 실패하였습니다.", error);
-            }
+                const loadingSwal = Swal.fire({
+                    icon: "warning",
+                    title: "이메일을 발송 중입니다.",
+                    showConfirmButton: false,
+                    showCancelButton: false
+                });
+                try {
+                    const response = await axios.post(SERVER_URL, dataToSend);
+
+                    loadingSwal.close();
+                    Swal.fire({
+                        icon: "success",
+                        title: "이메일 발송에 성공하였습니다.",
+                        showCancelButton: false
+                    });
+                    goToHome();
+                } catch (error) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "이메일 발송에 실패하였습니다.",
+                        text: "회원 가입 여부를 확인해주세요.",
+                        showCancelButton: false
+                    });
+                }
             };
 
             fetchData();
-    }
+        }
 
     const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
@@ -86,13 +104,53 @@ export default function NoticeBoard() {
     }
 
     const onClickSignOutButton = () => {
-        cookies.remove('accessToken');
-        cookies.remove('refreshToken');
-        cookies.remove('email');
-        alert('로그아웃이 완료되었습니다.');
-        window.location.reload(); // Reload the page after logging out
+        Swal.fire({
+            icon: "warning",
+            title: "로그아웃 하시겠습니까?",
+            showCancelButton: true,
+            confirmButtonText: "예",
+            cancelButtonText: "아니요",
+        }).then(async (res) => {
+            if (res.isConfirmed) {
+                try {
+                    cookies.remove('accessToken');
+                    cookies.remove('refreshToken');
+                    cookies.remove('email');
+                    Swal.fire({
+                        icon: "success",
+                        title: '로그아웃이 완료되었습니다.',
+                        showCancelButton: false
+                    }).then(async () => {
+                        window.location.reload(); // Reload the page after logging out
+                    });
+                } catch (error) {
+                    cookies.remove('accessToken');
+                    cookies.remove('refreshToken');
+                    cookies.remove('email');
+                    Swal.fire({
+                        icon: "error",
+                        title: '로그인 에러가 발생하였습니다.',
+                        text: '다시 로그인을 진행해주세요.',
+                        showCancelButton: false
+                    });
+                }
+            } else {
+                try {
+                } catch (error) {
+                    cookies.remove('accessToken');
+                    cookies.remove('refreshToken');
+                    cookies.remove('email');
+                    Swal.fire({
+                        icon: "error",
+                        title: '로그인 에러가 발생하였습니다.',
+                        text: '다시 로그인을 진행해주세요.',
+                        showCancelButton: false
+                    });
+                }
+            }
+        });
     }
-    
+
     return (
         <div className="page123">
             <img src="assets/image/background.jpg" alt="background" className='wallPaper123'/>

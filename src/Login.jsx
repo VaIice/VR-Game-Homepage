@@ -54,20 +54,37 @@ export default function Login() {
                             cookies.set('refreshToken', response.data.refreshToken, { maxAge: 10000000 });
                             cookies.set('email', encodeURIComponent(email), {maxAge: 60*30});
                             setTimeout(checkToken, 60*25*1000); // 10초 후에 checkTokenInterval 함수를 다시 호출
-                            alert('로그인을 연장에 성공하였습니다.');
+                            Swal.fire({
+                                icon: "success",
+                                title: '로그인을 연장하였습니다.',
+                                showCancelButton: false
+                            });
                         }
                         else {
-                            alert('로그인 연장에 실패하였습니다. 다시 로그인을 해주세요.');
+                            Swal.fire({
+                                icon: "error",
+                                title: '로그인 연장에 실패하였습니다.',
+                                text: '다시 로그인을 진행해주세요.',
+                                showCancelButton: false
+                            });
                             cookies.remove('accessToken');
                             cookies.remove('refreshToken');
                             cookies.remove('email');
-                            goToLogin();
                         }
                     } catch (error) {
-                        alert('로그인 연장에 실패하였습니다. 다시 로그인을 해주세요.');
+                        Swal.fire({
+                            icon: "error",
+                            title: '로그인 연장에 실패하였습니다.',
+                            text: '다시 로그인을 진행해주세요.',
+                            showCancelButton: false
+                        });
                     }
                 } else {
-                    alert('로그인이 만료되었습니다.');
+                    Swal.fire({
+                        icon: "warning",
+                        title: '로그아웃됩니다.',
+                        showCancelButton: false
+                    });
                     cookies.remove('accessToken');
                     cookies.remove('refreshToken');
                     cookies.remove('email');
@@ -151,15 +168,21 @@ export default function Login() {
                 cookies.set('email', encodeURIComponent(email), {maxAge: 60*30});
                 loginSuccess();
             } catch (error) {
-                alert('등록되지 않은 정보입니다.', error);
+                Swal.fire({
+                    icon: "error",
+                    title: '등록되지 않은 정보입니다.',
+                    showCancelButton: false
+                });
             }
             };
         
             const loginSuccess = () => {
                 axios.defaults.headers.common['Authorization'] = `${grantType} ${accessToken}`;
-                // cookies.set('accessToken', accessToken, {maxAge: accessTokenExpiresln})
-                // cookies.set('refreshToken', refreshToken, {maxAge: 60});
-                alert('로그인에 성공했습니다.');
+                Swal.fire({
+                    icon: "success",
+                    title: '로그인에 성공하였습니다.',
+                    showCancelButton: false
+                });
                 goToHome();
                 setTimeout(checkToken, 60*25*1000); // 10초 후에 checkTokenInterval 함수를 다시 호출
             };
@@ -178,11 +201,51 @@ export default function Login() {
     }
 
     const onClickSignOutButton = () => {
-        cookies.remove('accessToken');
-        cookies.remove('refreshToken');
-        cookies.remove('email');
-        alert('로그아웃이 완료되었습니다.');
-        window.location.reload(); // Reload the page after logging out
+        Swal.fire({
+            icon: "warning",
+            title: "로그아웃 하시겠습니까?",
+            showCancelButton: true,
+            confirmButtonText: "예",
+            cancelButtonText: "아니요",
+        }).then(async (res) => {
+            if (res.isConfirmed) {
+                try {
+                    cookies.remove('accessToken');
+                    cookies.remove('refreshToken');
+                    cookies.remove('email');
+                    Swal.fire({
+                        icon: "success",
+                        title: '로그아웃이 완료되었습니다.',
+                        showCancelButton: false
+                    }).then(async () => {
+                        window.location.reload();
+                    });
+                } catch (error) {
+                    cookies.remove('accessToken');
+                    cookies.remove('refreshToken');
+                    cookies.remove('email');
+                    Swal.fire({
+                        icon: "error",
+                        title: '로그인 에러가 발생하였습니다.',
+                        text: '다시 로그인을 진행해주세요.',
+                        showCancelButton: false
+                    });
+                }
+            } else {
+                try {
+                } catch (error) {
+                    cookies.remove('accessToken');
+                    cookies.remove('refreshToken');
+                    cookies.remove('email');
+                    Swal.fire({
+                        icon: "error",
+                        title: '로그인 에러가 발생하였습니다.',
+                        text: '다시 로그인을 진행해주세요.',
+                        showCancelButton: false
+                    });
+                }
+            }
+        });
     }
 
     return (

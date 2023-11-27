@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { Cookies } from 'react-cookie';
 import { useRef } from "react";
+import Swal from "sweetalert2";
 
 const cookies = new Cookies()
 
@@ -42,7 +43,11 @@ export default function ReportBulletinBoardPageModifyWriting(bnum) {
                     }
                     (response.data.secret === 0 ? setSecret(false) : setSecret(true));
                 } catch (error) {
-                    alert('예상치 못한 문제를 발견하였습니다.');
+                    Swal.fire({
+                        icon: "error",
+                        title: '게시글 수정 관련 알 수 없는 에러가 발생하였습니다.',
+                        showCancelButton: false
+                    });
                     goToReportBulletinBoard();
                 }
             }
@@ -70,7 +75,11 @@ export default function ReportBulletinBoardPageModifyWriting(bnum) {
                         setImageFlag(false);
                     }
                 } catch (error) {
-                    alert('예상치 못한 문제를 발견하였습니다.');
+                    Swal.fire({
+                        icon: "error",
+                        title: '게시글 수정 관련 알 수 없는 에러가 발생하였습니다.',
+                        showCancelButton: false
+                    });
                     goToReportBulletinBoard();
                 }
             }
@@ -201,7 +210,11 @@ export default function ReportBulletinBoardPageModifyWriting(bnum) {
             }
             navigate(`/ReportBulletinBoardPage/${bnum.bno}`);
         } catch (error) {
-            alert('게시글 수정을 실패하였습니다.');
+            Swal.fire({
+                icon: "error",
+                title: '게시글 수정을 실패하였습니다.',
+                showCancelButton: false
+            });
         }
         };
 
@@ -236,14 +249,22 @@ export default function ReportBulletinBoardPageModifyWriting(bnum) {
                 try {
                     const response = await axios.delete(`${process.env.REACT_APP_SERVER_URL}/boards/api/delete/${fileId[i]}`);
                 } catch (error) {
-                    alert('기존의 이미지를 삭제하는데 실패하였습니다.');
+                    Swal.fire({
+                        icon: "error",
+                        title: '기존의 이미지를 삭제하는데 실패하였습니다.',
+                        showCancelButton: false
+                    });
                 }
             }
         }
 
         if (e.target.files[0]) {
             if (e.target.files.length > 5) {
-                alert('이미지는 5개로 제한됩니다.');
+                Swal.fire({
+                    icon: "warning",
+                    title: '이미지는 5개로 제한됩니다.',
+                    showCancelButton: false
+                });
                 e.target.value = null; // 파일 선택 창 초기화
                 setFileExist(false);
             }
@@ -260,11 +281,52 @@ export default function ReportBulletinBoardPageModifyWriting(bnum) {
     };
 
     const onClickSignOutButton = () => {
-        cookies.remove('accessToken');
-        cookies.remove('refreshToken');
-        cookies.remove('email');
-        alert('로그아웃이 완료되었습니다. 홈 화면으로 이동합니다.');
-        goToHome();
+        Swal.fire({
+            icon: "warning",
+            title: "로그아웃 하시겠습니까?",
+            showCancelButton: true,
+            confirmButtonText: "예",
+            cancelButtonText: "아니요",
+        }).then(async (res) => {
+            if (res.isConfirmed) {
+                try {
+                    cookies.remove('accessToken');
+                    cookies.remove('refreshToken');
+                    cookies.remove('email');
+                    Swal.fire({
+                        icon: "success",
+                        title: '로그아웃이 완료되었습니다.',
+                        text: '홈 화면으로 이동합니다.',
+                        showCancelButton: false
+                    }).then(async () => {
+                        goToHome();
+                    });
+                } catch (error) {
+                    cookies.remove('accessToken');
+                    cookies.remove('refreshToken');
+                    cookies.remove('email');
+                    Swal.fire({
+                        icon: "error",
+                        title: '로그인 에러가 발생하였습니다.',
+                        text: '다시 로그인을 진행해주세요.',
+                        showCancelButton: false
+                    });
+                }
+            } else {
+                try {
+                } catch (error) {
+                    cookies.remove('accessToken');
+                    cookies.remove('refreshToken');
+                    cookies.remove('email');
+                    Swal.fire({
+                        icon: "error",
+                        title: '로그인 에러가 발생하였습니다.',
+                        text: '다시 로그인을 진행해주세요.',
+                        showCancelButton: false
+                    });
+                }
+            }
+        });
     }
 
     const goToInfo = () => {
@@ -277,7 +339,11 @@ export default function ReportBulletinBoardPageModifyWriting(bnum) {
                 try {
                     const response = await axios.delete(`${process.env.REACT_APP_SERVER_URL}/boards/api/delete/${fileId[index]}`);
                 } catch (error) {
-                    alert('이미지를 삭제하는데 실패하였습니다.');
+                    Swal.fire({
+                        icon: "error",
+                        title: '이미지를 삭제하는데 실패하였습니다.',
+                        showCancelButton: false
+                    });
                 }
             };
             fetchData();

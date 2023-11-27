@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { Cookies } from 'react-cookie';
 import Pagination from "react-js-pagination";
+import Swal from "sweetalert2";
 
 const cookies = new Cookies()
 const SERVER_URL_FREE_LIST = `${process.env.REACT_APP_SERVER_URL}/boards/FREE/list?page=1`;
@@ -19,7 +20,11 @@ export default function FreeBulletinBoard() {
                 setPosts(response.data);
                 setPostsLoaded(true);
             } catch (error) {
-                alert('게시글 목록을 불러오는데 실패하였습니다.');
+                Swal.fire({
+                    icon: "error",
+                    title: '게시글 목록을 불러오는데 실패하였습니다.',
+                    showCancelButton: false
+                });
             }
         };
         fetchData();
@@ -48,7 +53,11 @@ export default function FreeBulletinBoard() {
                         setPostsLoaded(true);
                     }
             } catch (error) {
-                alert('게시글 목록을 불러오는데 실패하였습니다.');
+                Swal.fire({
+                    icon: "error",
+                    title: '게시글 목록을 불러오는데 실패하였습니다.',
+                    showCancelButton: false
+                });
             }
         };
         fetchData();
@@ -90,7 +99,11 @@ export default function FreeBulletinBoard() {
             }
             cookies.set('secret', secret, { maxAge: 60*60*24});
         } catch (error) {
-            alert('해당 게시글은 관리자와 작성자만 확인가능합니다.');
+            Swal.fire({
+                icon: "info",
+                title: '해당 게시글은 관리자와 작성자만 확인가능합니다.',
+                showCancelButton: false
+            });
         }
     }
 
@@ -99,7 +112,11 @@ export default function FreeBulletinBoard() {
             navigate("/FreeBulletinBoardPageWriting");
         }
         else {
-            alert('로그인을 해주세요.');
+            Swal.fire({
+                icon: "info",
+                title: '로그인을 해주세요.',
+                showCancelButton: false
+            });
         }
     }
     const [searchKeyword, setSearchKeyword] = useState('');
@@ -123,7 +140,11 @@ export default function FreeBulletinBoard() {
                 setPage(1);
                 setSearchFlag(true);
             } catch (error) {
-                alert('게시글 검색을 실패하였습니다.');
+                Swal.fire({
+                    icon: "error",
+                    title: '게시글 검색을 실패하였습니다.',
+                    showCancelButton: false
+                });
             }
         };
 
@@ -207,11 +228,52 @@ export default function FreeBulletinBoard() {
     const [searchDropdownVisible, setSearchDropdownVisible] = useState(false);
 
     const onClickSignOutButton = () => {
-        cookies.remove('accessToken');
-        cookies.remove('refreshToken');
-        cookies.remove('email');
-        alert('로그아웃이 완료되었습니다.');
-        window.location.reload(); // Reload the page after logging out
+        Swal.fire({
+            icon: "warning",
+            title: "로그아웃 하시겠습니까?",
+            showCancelButton: true,
+            confirmButtonText: "예",
+            cancelButtonText: "아니요",
+        }).then(async (res) => {
+            if (res.isConfirmed) {
+                try {
+                    cookies.remove('accessToken');
+                    cookies.remove('refreshToken');
+                    cookies.remove('email');
+                    Swal.fire({
+                        icon: "success",
+                        title: '로그아웃이 완료되었습니다.',
+                        // text: '홈 화면으로 이동합니다.',
+                        showCancelButton: false
+                    }).then(async () => {
+                        window.location.reload(); // Reload the page after logging out
+                    });
+                } catch (error) {
+                    cookies.remove('accessToken');
+                    cookies.remove('refreshToken');
+                    cookies.remove('email');
+                    Swal.fire({
+                        icon: "error",
+                        title: '로그인 에러가 발생하였습니다.',
+                        text: '다시 로그인을 진행해주세요.',
+                        showCancelButton: false
+                    });
+                }
+            } else {
+                try {
+                } catch (error) {
+                    cookies.remove('accessToken');
+                    cookies.remove('refreshToken');
+                    cookies.remove('email');
+                    Swal.fire({
+                        icon: "error",
+                        title: '로그인 에러가 발생하였습니다.',
+                        text: '다시 로그인을 진행해주세요.',
+                        showCancelButton: false
+                    });
+                }
+            }
+        });
     }
 
     const goToInfo = () => {

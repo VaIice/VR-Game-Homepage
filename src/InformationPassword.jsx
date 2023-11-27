@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import {Cookies} from 'react-cookie';
+import Swal from "sweetalert2";
 
 const SERVER_URL = `${process.env.REACT_APP_SERVER_URL}/api/member/reset-password`
 
@@ -55,10 +56,18 @@ export default function InformationPassword() {
                     headers: {
                     'Authorization': `Bearer ${cookies.get('accessToken')}`,
                 }});
-                alert('비밀번호가 변경되었습니다.')
+                Swal.fire({
+                    icon: "success",
+                    title: "비밀번호를 변경하였습니다.",
+                    showCancelButton: false
+                });
                 goToHome();
             } catch (error) {
-                alert("비밀번호 변경에 실패하였습니다.");
+                Swal.fire({
+                    icon: "error",
+                    title: "비밀번호 변경을 실패하였습니다.",
+                    showCancelButton: false
+                });
             }
             };
             fetchData();
@@ -88,7 +97,12 @@ export default function InformationPassword() {
         cookies.remove('accessToken');
         cookies.remove('refreshToken');
         cookies.remove('email');
-        alert('로그아웃이 완료되었습니다. 홈 화면으로 이동합니다.');
+        Swal.fire({
+            icon: "success",
+            title: "로그아웃이 완료되었습니다.",
+            text: "홈 화면으로 이동합니다.",
+            showCancelButton: false
+        });
         goToHome();
     }
 

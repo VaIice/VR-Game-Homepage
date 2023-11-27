@@ -48,7 +48,11 @@ export default function NoticeBoard() {
                 setNameValid(true);
                 // setNotAllow(true);
             } catch (error) {
-                alert('회원 정보를 불러오지 못했습니다.');
+                Swal.fire({
+                    icon: "error",
+                    title: '회원 정보를 불러오지 못했습니다.',
+                    showCancelButton: false
+                });
                 goToHome();
             }
 
@@ -135,10 +139,18 @@ export default function NoticeBoard() {
                     }
                 }
                 );
-                alert('회원 정보가 업데이트되었습니다.');
+                Swal.fire({
+                    icon: "success",
+                    title: '회원 정보가 업데이트되었습니다.',
+                    showCancelButton: false
+                });
                 goToHome();
             } catch (error) {
-                alert('회원 정보 업데이트에 실패하였습니다.');
+                Swal.fire({
+                    icon: "error",
+                    title: '회원 정보 업데이트에 실패하였습니다.',
+                    showCancelButton: false
+                });
             }
         };
         fetchData();
@@ -153,7 +165,11 @@ export default function NoticeBoard() {
                     'Authorization': `Bearer ${cookies.get('accessToken')}`,
                 }});                
             } catch (error) {
-                alert('회원 탈퇴에 실패하였습니다.');
+                Swal.fire({
+                    icon: "error",
+                    title: '회원 탈퇴에 실패하였습니다.',
+                    showCancelButton: false
+                });
             }
         };
 
@@ -169,13 +185,21 @@ export default function NoticeBoard() {
             if (res.isConfirmed) {
                 try {
                     fetchData();
-                    alert('회원 탈퇴가 완료되었습니다.');
+                    Swal.fire({
+                        icon: "success",
+                        title: '회원 탈퇴가 완료되었습니다.',
+                        showCancelButton: false
+                    });
                     cookies.remove('accessToken');
                     cookies.remove('refreshToken');
                     cookies.remove('email');
                     goToHome();
                 } catch (error) {
-                    alert('회원탈퇴에 실패하였습니다.');
+                    Swal.fire({
+                        icon: "error",
+                        title: '회원탈퇴에 실패하였습니다.',
+                        showCancelButton: false
+                    });
                 }
             }
         });
@@ -188,11 +212,52 @@ export default function NoticeBoard() {
       };
 
       const onClickSignOutButton = () => {
-        cookies.remove('accessToken');
-        cookies.remove('refreshToken');
-        cookies.remove('email');
-        alert('로그아웃이 완료되었습니다. 홈 화면으로 이동합니다.');
-        goToHome();
+        Swal.fire({
+            icon: "warning",
+            title: "로그아웃 하시겠습니까?",
+            showCancelButton: true,
+            confirmButtonText: "예",
+            cancelButtonText: "아니요",
+        }).then(async (res) => {
+            if (res.isConfirmed) {
+                try {
+                    cookies.remove('accessToken');
+                    cookies.remove('refreshToken');
+                    cookies.remove('email');
+                    Swal.fire({
+                        icon: "success",
+                        title: '로그아웃이 완료되었습니다.',
+                        text: '홈 화면으로 이동합니다.',
+                        showCancelButton: false
+                    }).then(async () => {
+                        goToHome();
+                    });
+                } catch (error) {
+                    cookies.remove('accessToken');
+                    cookies.remove('refreshToken');
+                    cookies.remove('email');
+                    Swal.fire({
+                        icon: "error",
+                        title: '로그인 에러가 발생하였습니다.',
+                        text: '다시 로그인을 진행해주세요.',
+                        showCancelButton: false
+                    });
+                }
+            } else {
+                try {
+                } catch (error) {
+                    cookies.remove('accessToken');
+                    cookies.remove('refreshToken');
+                    cookies.remove('email');
+                    Swal.fire({
+                        icon: "error",
+                        title: '로그인 에러가 발생하였습니다.',
+                        text: '다시 로그인을 진행해주세요.',
+                        showCancelButton: false
+                    });
+                }
+            }
+        });
     }
 
     return (

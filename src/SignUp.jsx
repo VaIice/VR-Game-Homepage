@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import { Cookies } from 'react-cookie';
+import Swal from "sweetalert2";
 
 const cookies = new Cookies()
 const SERVER_URL_SIGN_UP = `${process.env.REACT_APP_SERVER_URL}/auth/signup`
@@ -155,10 +156,18 @@ export default function NoticeBoard() {
         const fetchData = async () => {
             try {
                 const response = await axios.post(SERVER_URL_SIGN_UP, dataToSend);
-                alert('회원가입에 성공했습니다.');
+                Swal.fire({
+                    icon: "sucess",
+                    title: '회원가입에 성공했습니다.',
+                    showCancelButton: false
+                });
                 goToLogin();
             } catch (error) {
-                alert('회원가입에 실패하였습니다.');
+                Swal.fire({
+                    icon: "error",
+                    title: '회원가입에 실패하였습니다.',
+                    showCancelButton: false
+                });
             }
         };
         fetchData();
@@ -171,15 +180,27 @@ export default function NoticeBoard() {
             try {
                 const response = await axios.get(SERVER_URL_EMAIL_CHECK);
                 if (response.data === "사용 가능한 이메일입니다.") {
-                    alert("사용 가능한 이메일입니다.");
+                    Swal.fire({
+                        icon: "success",
+                        title: '사용 가능한 이메일입니다.',
+                        showCancelButton: false
+                    });
                     setEnabledEmail(true);
                 } else {
-                    alert("중복된 이메일입니다.")
+                    Swal.fire({
+                        icon: "warning",
+                        title: '중복된 이메일입니다.',
+                        showCancelButton: false
+                    });
                     setEnabledEmail(false);
                     setEmailValid(false);
                 }
             } catch (error) {
-                alert('이메일 중복 체크에 실패하였습니다.');
+                Swal.fire({
+                    icon: "error",
+                    title: '이메일 중복 체크에 실패하였습니다.',
+                    showCancelButton: false
+                });
             }
             
         };
@@ -197,13 +218,52 @@ export default function NoticeBoard() {
     }
 
     const onClickSignOutButton = () => {
-        cookies.remove('accessToken');
-        cookies.remove('refreshToken');
-        cookies.remove('email');
-        alert('로그아웃이 완료되었습니다.');
-        window.location.reload(); // Reload the page after logging out
+        Swal.fire({
+            icon: "warning",
+            title: "로그아웃 하시겠습니까?",
+            showCancelButton: true,
+            confirmButtonText: "예",
+            cancelButtonText: "아니요",
+        }).then(async (res) => {
+            if (res.isConfirmed) {
+                try {
+                    cookies.remove('accessToken');
+                    cookies.remove('refreshToken');
+                    cookies.remove('email');
+                    Swal.fire({
+                        icon: "success",
+                        title: '로그아웃이 완료되었습니다.',
+                        showCancelButton: false
+                    }).then(async () => {
+                        window.location.reload();
+                    });
+                } catch (error) {
+                    cookies.remove('accessToken');
+                    cookies.remove('refreshToken');
+                    cookies.remove('email');
+                    Swal.fire({
+                        icon: "error",
+                        title: '로그인 에러가 발생하였습니다.',
+                        text: '다시 로그인을 진행해주세요.',
+                        showCancelButton: false
+                    });
+                }
+            } else {
+                try {
+                } catch (error) {
+                    cookies.remove('accessToken');
+                    cookies.remove('refreshToken');
+                    cookies.remove('email');
+                    Swal.fire({
+                        icon: "error",
+                        title: '로그인 에러가 발생하였습니다.',
+                        text: '다시 로그인을 진행해주세요.',
+                        showCancelButton: false
+                    });
+                }
+            }
+        });
     }
-
     return (
         <div className="page123">
             <img src="assets/image/background.jpg" alt="background" className='wallPaper123'/>
