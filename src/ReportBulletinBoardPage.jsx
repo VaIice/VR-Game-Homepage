@@ -352,7 +352,10 @@ export default function ReportBulletinBoardPage(bno) {
         }
     }
 
-    
+    const goToGuide = () => {
+        navigate("/Guide");
+    }
+
     const onClickSignOutButton = () => {
         Swal.fire({
             icon: "warning",
@@ -433,7 +436,7 @@ export default function ReportBulletinBoardPage(bno) {
                 </div>
 
                 <div className="upperGuideWrap">
-                    <button className="upperGuide123" onClick={goToInfo}>GUIDE</button>
+                    <button className="upperGuide123" onClick={goToGuide}>GUIDE</button>
                 </div>
 
                 <div className="upperCommunityWrap">

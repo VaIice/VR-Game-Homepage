@@ -156,6 +156,10 @@ export default function NoticeBulletinBoard() {
     const [postsPerPage, setPostsPerPage] = useState(10);
     const [searchFlag, setSearchFlag] = useState(false);
 
+    const goToGuide = () => {
+        navigate("/Guide");
+    }
+
     const Posts = ({ posts }) => {
         if (posts.total !== 0) {
             return (
@@ -292,7 +296,7 @@ export default function NoticeBulletinBoard() {
                 </div>
 
                 <div className="upperGuideWrap">
-                    <button className="upperGuide123" onClick={goToInfo}>GUIDE</button>
+                    <button className="upperGuide123" onClick={goToGuide}>GUIDE</button>
                 </div>
 
                 <div className="upperCommunityWrap">

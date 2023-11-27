@@ -93,6 +93,10 @@ export default function InformationPassword() {
         }
     }
 
+    const goToGuide = () => {
+        navigate("/Guide");
+    }
+
     const onClickSignOutButton = () => {
         cookies.remove('accessToken');
         cookies.remove('refreshToken');
@@ -123,7 +127,7 @@ export default function InformationPassword() {
                 </div>
 
                 <div className="upperGuideWrap">
-                    <button className="upperGuide123" onClick={goToInfo}>GUIDE</button>
+                    <button className="upperGuide123" onClick={goToGuide}>GUIDE</button>
                 </div>
 
                 <div className="upperCommunityWrap">

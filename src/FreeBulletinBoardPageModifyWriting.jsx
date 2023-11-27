@@ -358,6 +358,10 @@ export default function FreeBulletinBoardPageModifyWriting(bnum) {
         }
     };
 
+    const goToGuide = () => {
+        navigate("/Guide");
+    }
+
     return (
         <div className="page12345">
             <img src="/assets/image/background.jpg" alt="background" className='wallPaper123'/>
@@ -371,7 +375,7 @@ export default function FreeBulletinBoardPageModifyWriting(bnum) {
                 </div>
 
                 <div className="upperGuideWrap">
-                    <button className="upperGuide123" onClick={goToInfo}>GUIDE</button>
+                    <button className="upperGuide123" onClick={goToGuide}>GUIDE</button>
                 </div>
 
                 <div className="upperCommunityWrap">

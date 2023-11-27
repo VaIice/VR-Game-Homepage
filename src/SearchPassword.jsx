@@ -93,6 +93,10 @@ export default function NoticeBoard() {
             fetchData();
         }
 
+        const goToGuide = () => {
+            navigate("/Guide");
+        }
+
     const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
     const toggleDropdown = () => {
@@ -164,7 +168,7 @@ export default function NoticeBoard() {
                 </div>
 
                 <div className="upperGuideWrap">
-                    <button className="upperGuide123" onClick={goToInfo}>GUIDE</button>
+                    <button className="upperGuide123" onClick={goToGuide}>GUIDE</button>
                 </div>
 
                 <div className="upperCommunityWrap">

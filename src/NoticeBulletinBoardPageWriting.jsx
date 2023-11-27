@@ -106,6 +106,9 @@ export default function NoticeBulletinBoardPageWriting() {
         }
     }
 
+    const goToGuide = () => {
+        navigate("/Guide");
+    }
 
     const onClickWritingButton = async () => {
         const fetchData = async () => {
@@ -271,7 +274,7 @@ export default function NoticeBulletinBoardPageWriting() {
                 </div>
 
                 <div className="upperGuideWrap">
-                    <button className="upperGuide123" onClick={goToInfo}>GUIDE</button>
+                    <button className="upperGuide123" onClick={goToGuide}>GUIDE</button>
                 </div>
 
                 <div className="upperCommunityWrap">

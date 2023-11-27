@@ -3,6 +3,7 @@ import { Routes, Route, BrowserRouter } from "react-router-dom";
 import Login from './Login';
 import SignUp from "./SignUp";
 import Home from './Home';
+import Guide from './Guide';
 import NoticeBoard from "./NoticeBoard";
 import FreeBulletinBoard from "./FreeBulletinBoard";
 import ReportBulletinBoard from "./ReportBulletinBoard";
@@ -99,6 +100,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/SignUp" element={<SignUp />} />
         <Route path="/Login" element={<Login />} />
+        <Route path="/Guide" element={<Guide />} />
         <Route path="/Information" element={<Information />} />
         <Route path="/InformationPassword" element={<InformationPassword />} />
         <Route path="/NoticeBoard" element={<NoticeBoard />} />

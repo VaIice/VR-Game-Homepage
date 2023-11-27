@@ -32,6 +32,10 @@ export default function Home() {
         navigate("/Login");
     }
 
+    const goToGuide = () => {
+        navigate("/Guide");
+    }
+
     const onClickSignOutButton = () => {
         Swal.fire({
             icon: "warning",
@@ -104,7 +108,7 @@ export default function Home() {
                 </div>
 
                 <div className="upperGuideWrap">
-                    <button className="upperGuide123" onClick={goToInfo}>GUIDE</button>
+                    <button className="upperGuide123" onClick={goToGuide}>GUIDE</button>
                 </div>
 
                 <div className="upperCommunityWrap">

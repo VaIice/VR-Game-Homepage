@@ -32,6 +32,10 @@ export default function NoticeBoard() {
         name: name
     };
 
+    const goToGuide = () => {
+        navigate("/Guide");
+    }
+
     useEffect(() => {    
         const fetchData = async () => {
             try {
@@ -273,7 +277,7 @@ export default function NoticeBoard() {
                 </div>
 
                 <div className="upperGuideWrap">
-                    <button className="upperGuide123" onClick={goToInfo}>GUIDE</button>
+                    <button className="upperGuide123" onClick={goToGuide}>GUIDE</button>
                 </div>
 
                 <div className="upperCommunityWrap">

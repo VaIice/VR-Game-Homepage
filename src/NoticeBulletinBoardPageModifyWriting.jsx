@@ -101,6 +101,10 @@ export default function NoticeBulletinBoardPageModifyWriting(bnum) {
 
     const navigate = useNavigate();
 
+    const goToGuide = () => {
+        navigate("/Guide");
+    }
+
     const goToHome = () => {
         navigate("/");
     }
@@ -371,7 +375,7 @@ export default function NoticeBulletinBoardPageModifyWriting(bnum) {
                 </div>
 
                 <div className="upperGuideWrap">
-                    <button className="upperGuide123" onClick={goToInfo}>GUIDE</button>
+                    <button className="upperGuide123" onClick={goToGuide}>GUIDE</button>
                 </div>
 
                 <div className="upperCommunityWrap">

@@ -151,6 +151,10 @@ export default function NoticeBoard() {
         navigate("/SignUp");
     }
     
+    const goToGuide = () => {
+        navigate("/Guide");
+    }
+
     // 확인 버튼을 클릭했을 시 토큰 비교 (수정 필요)
     const onClickConfirmButton = async() => {
         const fetchData = async () => {
@@ -277,7 +281,7 @@ export default function NoticeBoard() {
                 </div>
 
                 <div className="upperGuideWrap">
-                    <button className="upperGuide123" onClick={goToInfo}>GUIDE</button>
+                    <button className="upperGuide123" onClick={goToGuide}>GUIDE</button>
                 </div>
 
                 <div className="upperCommunityWrap">

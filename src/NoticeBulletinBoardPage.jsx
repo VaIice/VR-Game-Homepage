@@ -327,6 +327,10 @@ export default function NoticeBulletinBoardPage(bno) {
 
     const [page, setPage] = useState(1);
 
+    const goToGuide = () => {
+        navigate("/Guide");
+    }
+
     const handlePage = async (page) => {
         try {
             const SERVER_URL_COMMENT_PAGE = `${process.env.REACT_APP_SERVER_URL}/replies/NOTICE/list/${bnum}?page=${page}`;
@@ -428,7 +432,7 @@ export default function NoticeBulletinBoardPage(bno) {
                 </div>
 
                 <div className="upperGuideWrap">
-                    <button className="upperGuide123" onClick={goToInfo}>GUIDE</button>
+                    <button className="upperGuide123" onClick={goToGuide}>GUIDE</button>
                 </div>
 
                 <div className="upperCommunityWrap">

@@ -96,6 +96,10 @@ export default function ReportBulletinBoardPageModifyWriting(bnum) {
 
     }, [titleValid, contentsValid, title, contents, flag]);
 
+    const goToGuide = () => {
+        navigate("/Guide");
+    }
+
     const [secret, setSecret] = useState(false);
 
     const navigate = useNavigate();
@@ -371,7 +375,7 @@ export default function ReportBulletinBoardPageModifyWriting(bnum) {
                 </div>
 
                 <div className="upperGuideWrap">
-                    <button className="upperGuide123" onClick={goToInfo}>GUIDE</button>
+                    <button className="upperGuide123" onClick={goToGuide}>GUIDE</button>
                 </div>
 
                 <div className="upperCommunityWrap">

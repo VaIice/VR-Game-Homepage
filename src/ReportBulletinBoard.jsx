@@ -227,6 +227,10 @@ export default function ReportBulletinBoard() {
 
     const [searchDropdownVisible, setSearchDropdownVisible] = useState(false);
 
+    const goToGuide = () => {
+        navigate("/Guide");
+    }
+
     const onClickSignOutButton = () => {
         Swal.fire({
             icon: "warning",
@@ -293,7 +297,7 @@ export default function ReportBulletinBoard() {
                 </div>
 
                 <div className="upperGuideWrap">
-                    <button className="upperGuide123" onClick={goToInfo}>GUIDE</button>
+                    <button className="upperGuide123" onClick={goToGuide}>GUIDE</button>
                 </div>
 
                 <div className="upperCommunityWrap">

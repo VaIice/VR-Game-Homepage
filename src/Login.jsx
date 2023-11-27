@@ -37,6 +37,10 @@ export default function Login() {
             password: pw
         };
 
+        const goToGuide = () => {
+            navigate("/Guide");
+        }
+
         const checkToken = async () => {
             Swal.fire({
                 icon: "info",
@@ -261,7 +265,7 @@ export default function Login() {
                 </div>
 
                 <div className="upperGuideWrap">
-                    <button className="upperGuide123">GUIDE</button>
+                    <button className="upperGuide123" onClick={goToGuide}>GUIDE</button>
                 </div>
 
                 <div className="upperCommunityWrap">

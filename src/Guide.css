@@ -1,0 +1,37 @@
+.GuideSubTitle {
+    margin-top: 1%;
+    margin-bottom: 1%;
+    font-size: 28px;
+    font-weight: 600;
+    color: white;
+
+}
+
+.GuideMiddleDivision {
+    flex: 1;
+    padding-left: 15%;
+    padding-right: 15%;
+}
+
+.GuideMiddle {
+    flex: 5;
+    display: flex;
+    flex-direction: column;
+}
+
+.GuideStory {
+    color: white;
+    font-size: 18px;
+    margin-bottom: 1%;
+}
+
+.GuideUpper {
+    margin-top: 3.5%;
+}
+
+.GuideLine {
+    width: 100%;
+    border: 0.1px rgba(255, 255, 255, 0.3) solid;    
+    margin-left: auto;
+    margin-right: auto;
+}

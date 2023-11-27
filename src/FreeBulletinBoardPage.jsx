@@ -119,7 +119,10 @@ export default function FreeBulletinBoardPage(bno) {
         navigate("/NoticeBoard");
     }
 
-    
+    const goToGuide = () => {
+        navigate("/Guide");
+    }
+
     const goToLogin = () => {
         navigate("/Login");
     }
@@ -430,7 +433,7 @@ export default function FreeBulletinBoardPage(bno) {
                 </div>
 
                 <div className="upperGuideWrap">
-                    <button className="upperGuide123" onClick={goToInfo}>GUIDE</button>
+                    <button className="upperGuide123" onClick={goToGuide}>GUIDE</button>
                 </div>
 
                 <div className="upperCommunityWrap">

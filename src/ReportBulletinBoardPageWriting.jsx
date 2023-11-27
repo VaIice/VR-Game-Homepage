@@ -156,6 +156,10 @@ export default function ReportBulletinBoardPageWriting() {
         fetchData();
     }
 
+    const goToGuide = () => {
+        navigate("/Guide");
+    }
+
     const onClickCancelButton = async () => {
         goToReportBulletinBoard();
     }
@@ -271,7 +275,7 @@ export default function ReportBulletinBoardPageWriting() {
                 </div>
 
                 <div className="upperGuideWrap">
-                    <button className="upperGuide123" onClick={goToInfo}>GUIDE</button>
+                    <button className="upperGuide123" onClick={goToGuide}>GUIDE</button>
                 </div>
 
                 <div className="upperCommunityWrap">

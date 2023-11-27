@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './Login.css';
 import './SignUp.css';
 import './Home.css';
+import './Guide.css';
 import './Board.css';
 import './example.css';
 import './exampleBoard.css';
