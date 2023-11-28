@@ -1,3 +1,4 @@
+@media (min-width: 768px) {
 .BulletinBoardUpper {
         flex: 0.9;
         display: flex;
@@ -97,7 +98,7 @@
         width: 70%;
         height: 0.01px;
         border: 1.5px rgba(255, 255, 255, 0.5) solid;    
-        margin-top: 1%;
+        margin-top: 1.5%;
         margin-left: auto;
         margin-right: auto;
 }
@@ -129,6 +130,7 @@
         color: white;
         cursor: pointer;
         height: 10%;
+        align-items: center;
         border-bottom: 1px rgba(255, 255, 255, 0.5) solid;
 }
 
@@ -156,6 +158,13 @@
 }
 
 .postListItemLine {
+        height: 30%;
+        margin-top: 1.5%;
+        margin-bottom: 1.5%;
+        border: 1.20px rgba(141, 141, 141, 0.69) solid;    
+}
+
+.postListItemLine123 {
         height: 30%;
         margin-top: 1.5%;
         margin-bottom: 1.5%;
@@ -286,4 +295,296 @@ color: rgb(113, 113, 113);
         padding-top: 15%;
         padding-bottom: 15%;
         cursor: pointer;
+}
+}
+
+/* 작은 화면 */
+@media (max-width: 767px) {
+        .BulletinBoardUpper {
+                flex: 0.9;
+                display: flex;
+                align-items: flex-end;
+        }
+        
+        .BulletinBoardUpperLeft {
+                flex: 1;
+                padding-left: 15%;
+        }
+        
+        .BulletinBoardUpperRight {
+                flex: 2;
+                padding-right: 15%;
+        }
+        
+        .BulletinBoardTitle123 {
+                font-size: 20px;
+                font-weight: 600;
+                color: white;
+        }
+        
+        .searchLineOuter123 {
+                width: 220px;
+                height: 25px;
+                background: rgba(81, 81, 81, 0.15);
+                border: 1.20px rgba(255, 255, 255, 0.69) solid;   
+                margin-left: auto;
+                flex: 1;
+                display: flex;
+        }
+        
+        .searchLineLeft123 {
+                display: flex;
+                flex-direction: column;
+        }
+        
+        .searchWord123 {
+                color: white;
+                font-size: 13px;
+                font-family: 'Libre Bodoni';
+                font-weight: 300;
+                word-wrap: break-word;
+                text-align: center;
+                margin-left: 5%;
+                margin-top: 4%;
+                width: 60px;
+        }
+        
+        .abc123 {
+        }
+        .searchDropdownIcon123 {
+                cursor: pointer;
+                position: relative;
+                z-index: 0;
+                width: 100%;
+        }
+        
+        .searchLineInner123 {
+                height: 95%;
+                border: 1.20px rgba(255, 255, 255, 0.69) solid;    
+                margin-left: auto;
+        }
+        
+        .searchLineRight123 {
+                flex: 10;
+                display: flex;
+        }
+        
+        .searchLineInput {
+                flex : 1;
+                border: none;
+                outline: none;
+                font-size: 11px;
+                background-color: rgba(255, 255, 255, 0.0);
+                color: white;
+                margin-right: 3%;
+                margin-left: 3%;
+        }
+        
+        .searchIcon123 {
+                margin-left: auto;
+                width: 13%;
+                cursor: pointer;
+        }
+        
+        .BulletinBoardLongLineUpper {
+                width: 70%;
+                height: 0.01px;
+                border: 1.5px rgba(255, 255, 255, 0.5) solid;    
+                margin-top: 1.5%;
+                margin-left: auto;
+                margin-right: auto;
+        }
+        
+        .BulletinBoardLongLineBottom {
+                width: 70%;
+                height: 0.01px;
+                border: 1.5px rgba(255, 255, 255, 0.5) solid;    
+                margin-left: auto;
+                margin-right: auto;
+        }
+        
+        .BulletinBoardMiddle {
+                flex: 5;
+                display: flex;
+        }
+        
+        .postList123 {
+                display: flex;
+                flex-direction: column;
+                margin-left: auto;
+                margin-right: auto;
+                width: 70%;
+                height: 100%;
+        }
+        
+        .postListItem123 {
+                display: flex;
+                color: white;
+                cursor: pointer;
+                height: 10%;
+                align-items: center;
+                border-bottom: 1px rgba(255, 255, 255, 0.5) solid;
+        }
+        
+        .postListTitle123 {
+                margin-left: 0.5%;
+                padding-left: 1%;
+                padding-top: 1.5%;
+                padding-bottom: 1.5%;
+                display: flex;
+                margin-right: 0.5%;
+                font-size: 13px;
+        }
+        
+        .postListReplyCount123 {
+                padding-top: 1.5%;
+                padding-bottom: 1.5%;
+                margin-top: 1px;
+                color: rgba(141, 141, 141, 0.69);
+        }
+        
+        .postListViewNumber {
+                padding-top: 1.6%;
+                padding-bottom: 1.6%;
+                font-size: 15px;
+                padding-right: 1.5%;
+        }
+        
+        .postListItemLine {
+                height: 30%;
+                margin-top: 1.5%;
+                margin-bottom: 1.5%;
+                border: 1.20px rgba(141, 141, 141, 0.69) solid;    
+        }
+        
+        .postListItemLine123 {
+                display: none;
+        }
+
+        .postListView {
+                margin-left: auto;
+                margin-right: 0.8%;
+                width: 1.3%;
+                padding-bottom: 0.1%;
+        }
+        
+        .postListUser123 {
+                margin-left: auto;
+                padding: 1.5%;
+                font-size: 13px;
+        }
+        
+        .postListDate {
+                display: none;
+        }
+        
+        .postListItemLongLine {
+                width: 70%;
+                height: 0.10px;
+                border: 1.5px rgba(255, 255, 255, 0.5) solid;    
+                margin-top: 1.5%;
+                margin-left: auto;
+                margin-right: auto;
+        }
+        
+        .BulletinBoardBottom {
+                flex: 1;
+                display: flex;
+        }
+        
+        .BulletinBoardWriteButton {
+                width: 55px;
+                height: 25px;
+                background: black;
+                border: 0.50px white solid;  
+                cursor: pointer;
+                color: white;
+                font-size: 13px;
+                font-family: 'Inter';
+                font-weight: 300;
+                margin-right: 15%;
+                margin-top: 1.2%;
+                padding-bottom: 0.15%;
+        }
+        
+        .pagination {
+                justify-content: center;
+                margin-top: 1.2%;
+                display: flex;
+                margin-left: auto;
+                margin-right: auto;
+                margin-left: 28%;
+        }
+              
+        ul {
+        list-style: none;
+        padding: 0;
+        }
+        
+        ul.pagination li {
+        display: inline-block;
+        width: 22px;
+        height: 22px;
+        border: 1px solid white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1rem;
+        }
+        
+        ul.pagination li:first-child{
+        }
+        
+        ul.pagination li:last-child{
+        }
+        
+        ul.pagination li a {
+        text-decoration: none;
+        color: white;
+        font-size: 1rem;
+        }
+        
+        ul.pagination li.active a {
+        color: black;
+        }
+        
+        ul.pagination li.active {
+        background-color: white;
+        }
+        
+        ul.pagination li a:hover,
+        ul.pagination li a.active {
+        color: rgb(113, 113, 113);
+        }
+        
+        .searchLineLeftUpper {
+                display: flex;
+        }
+        
+        .searchDropdownContent {
+                display: none;  
+                background-color: #171A23;
+                color: white;
+                padding-left: 18px;
+                padding-right: 18px;
+                padding-top: 12px;
+                padding-bottom: 12px;
+                text-align: center;
+                z-index: 0;
+                list-style-type: none; /* 리스트 마커 제거 */
+                border: 1px solid rgba(255, 255, 255, 0.69);
+        }
+              
+        .searchDropdownContent.active,
+        .searchDropdownContent:hover {
+                display: block;
+        }
+        
+        .searchDropdownMenu {
+                font-size: 17px;
+                background-color: #171A23;
+                padding-top: 15%;
+                padding-bottom: 15%;
+                cursor: pointer;
+        }
 }

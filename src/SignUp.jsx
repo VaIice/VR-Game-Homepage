@@ -161,7 +161,7 @@ export default function NoticeBoard() {
             try {
                 const response = await axios.post(SERVER_URL_SIGN_UP, dataToSend);
                 Swal.fire({
-                    icon: "sucess",
+                    icon: "success",
                     title: '회원가입에 성공했습니다.',
                     showCancelButton: false
                 });
@@ -344,7 +344,7 @@ export default function NoticeBoard() {
                             value={pw}
                             onChange={handlePw}/>
                     </div>
-                    <div className="errorMessage123">
+                    <div className="errorMessage12345">
                     {
                         pw.length > 0 && !pwValid && (
                             <span>8~15자의 영문, 숫자, 특수문자를 포함해서 입력해주세요.</span>

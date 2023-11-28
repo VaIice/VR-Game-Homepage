@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import {Cookies} from 'react-cookie';
@@ -9,93 +9,87 @@ const SERVER_URL = `${process.env.REACT_APP_SERVER_URL}/send-mail/password`
 const cookies = new Cookies()
 
 export default function NoticeBoard() {
-        // const [cookies, setCookie, removeCookie] = useCookies(['Token']);
-        // 사용자가 적고 있는 이메일 
-        const [email, setEmail] = useState('');
-        // 이메일이 유효한지 확인
-        const [emailValid, setEmailValid] = useState(false);
-        // 이메일, 비밀번호가 유효하다면 활성화
-        const [notAllow, setNotAllow] = useState(true);
-        // grantType
-        const [grantType, setGrantType] = useState('');
-        // accessToken
-        const [accessToken, setAccessToken] = useState('');
+    // const [cookies, setCookie, removeCookie] = useCookies(['Token']);
+    // 사용자가 적고 있는 이메일 
+    const [email, setEmail] = useState('');
+    // 이메일이 유효한지 확인
+    const [emailValid, setEmailValid] = useState(false);
+    // 이메일, 비밀번호가 유효하다면 활성화
+    const [notAllow, setNotAllow] = useState(true);
+    // 서버에 보낼 이메일, 비밀번호
+    const dataToSend = {
+        email: email
+    };
+
+    const handleEmail = (e) => {
+        setEmail(e.target.value);
+        const regex =
+            /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
+        if (regex.test(e.target.value)) {
+            setEmailValid(true);
+            setNotAllow(false);
+        } else {
+            setEmailValid(false);
+            setNotAllow(true);
+        }
+    }
+
+    const navigate = useNavigate();
+    const goToHome = () => {
+        navigate("/");
+    }
+
+    const goToNoticeBoard = () => {
+        navigate("/NoticeBoard");
+    }
+
+    const goToFreeBulletinBoard = () => {
+        navigate("/FreeBulletinBoard");
+    }
+
+    const goToReportBulletinBoard = () => {
+        navigate("/ReportBulletinBoard");
+    }
+
+    const goToLogin = () => {
+        navigate("/Login");
+    }
+
+    // 확인 버튼을 클릭했을 시 토큰 비교 (수정 필요)
+    const onClickSendEmailButton = async () => {
+        const fetchData = async () => {
+            const loadingSwal = Swal.fire({
+                icon: "warning",
+                title: "이메일을 발송 중입니다.",
+                showConfirmButton: false,
+                showCancelButton: false
+            });
     
-        // 서버에 보낼 이메일, 비밀번호
-        const dataToSend = {
-            email: email
-        };
-
-        const handleEmail = (e) => {
-            setEmail(e.target.value);
-            const regex =
-                /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
-            if (regex.test(e.target.value)) {
-                setEmailValid(true);
-                setNotAllow(false);
-            } else {
-                setEmailValid(false);
-                setNotAllow(true);
-            }
-        }
-
-
-        const navigate = useNavigate();
-        const goToHome = () => {
-            navigate("/");
-        }
-
-        const goToNoticeBoard = () => {
-            navigate("/NoticeBoard");
-        }
-
-        const goToFreeBulletinBoard = () => {
-            navigate("/FreeBulletinBoard");
-        }
-
-        const goToReportBulletinBoard = () => {
-            navigate("/ReportBulletinBoard");
-        }
-
-        const goToLogin = () => {
-            navigate("/Login");
-        }
-
-        // 확인 버튼을 클릭했을 시 토큰 비교 (수정 필요)
-        const onClickSendEmailButton = async () => {
-            const fetchData = async () => {
-                const loadingSwal = Swal.fire({
-                    icon: "warning",
-                    title: "이메일을 발송 중입니다.",
-                    showConfirmButton: false,
+            try {
+                const response = await axios.post(SERVER_URL, dataToSend);
+                loadingSwal.close();
+                Swal.fire({
+                    icon: "success",
+                    title: "이메일 발송에 성공하였습니다.",
+                    text: "30초동안 비밀번호 찾기가 제한됩니다.",
                     showCancelButton: false
                 });
-                try {
-                    const response = await axios.post(SERVER_URL, dataToSend);
+                goToHome();
+            } catch (error) {
+                Swal.fire({
+                    icon: "error",
+                    title: "이메일 발송에 실패하였습니다.",
+                    showCancelButton: false
+                });
+            }
+        };
+    
+        fetchData();
+    }
 
-                    loadingSwal.close();
-                    Swal.fire({
-                        icon: "success",
-                        title: "이메일 발송에 성공하였습니다.",
-                        showCancelButton: false
-                    });
-                    goToHome();
-                } catch (error) {
-                    Swal.fire({
-                        icon: "error",
-                        title: "이메일 발송에 실패하였습니다.",
-                        text: "회원 가입 여부를 확인해주세요.",
-                        showCancelButton: false
-                    });
-                }
-            };
-
-            fetchData();
-        }
-
-        const goToGuide = () => {
-            navigate("/Guide");
-        }
+    const goToGuide = () => {
+        navigate("/Guide");
+    }
 
     const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 

@@ -1,3 +1,4 @@
+/* 작은 거  */
 @media (max-width: 767px) {
   .wallPaper123 {
     display: none;
@@ -17,11 +18,31 @@
   .upperLogin123
    {
     font-size: 15px;
-    font-weight: bold;
     color: white;
     border: none;
     background-color: transparent;
+    cursor: pointer;
+    font-family: "KdamThmorPro-Regular";
   }
+
+  .downloadButton {
+    cursor: pointer;
+    color: white;
+    font-size: 18px;
+    font-weight: 300;
+    width: 200px;
+    height: 60px;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px white solid;
+    color: white;
+    margin-left: 8%;
+    margin-bottom: 5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    letter-spacing :3px;
+    font-family: "KdamThmorPro-Regular";
+}
 
   .contentWrap123 {
     flex: 1;
@@ -32,28 +53,30 @@
   }
   
   .Title123 {
-    font-size: 50px;
+    font-size: 40px;
     font-weight: 600;
     color: white;
-    margin-left: 10%;
+    margin-left: 8%;
     white-space: pre-wrap;
+    font-family: 'CustomFont', sans-serif; /* 'CustomFont'로 변경 */
   }
   
   .VRGame123 {
-    font-size: 30px;
-    font-weight: 600;
+    font-size: 23px;
+    font-weight: 400;
     color: white;
-    margin-left: 10%;
-    margin-top: 5%;
+    margin-left: 8%;
+    font-family: 'CustomFont', sans-serif; /* 'CustomFont'로 변경 */
   }
   
   .Intro123 {
-    font-size: 15px;
-    font-weight: 600;
+    font-size: 13px;
     color: white;
-    margin-left: 10%;
-    margin-top: 5%;
-    margin-bottom: 10%;
+    margin-left: 8%;
+    margin-top: 2%;
+    margin-bottom: 7%;
+    line-height: 23px;
+    font-family: "KdamThmorPro-Regular";
   }
 
   .dropdownMenu123 {
@@ -173,13 +196,6 @@
     padding-bottom: 20%;
   }
 
-  @font-face {
-    font-family: 'CustomFont';
-    src: url('../public/assets/font/KdamThmorPro-Regular.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-  }
-
   .Title123 {
     font-size: 100px;
     font-weight: 100;
@@ -234,4 +250,11 @@
 body {
   font-family: "KdamThmorPro-Regular";
   src: url("../public/assets/font/KdamThmorPro-Regular.ttf");
+}
+
+@font-face {
+  font-family: 'CustomFont';
+  src: url('../public/assets/font/KdamThmorPro-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
 }

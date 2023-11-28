@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from "react-router-dom";
 import { Cookies } from 'react-cookie';
 import Swal from "sweetalert2";
@@ -7,7 +7,7 @@ const cookies = new Cookies()
 
 export default function Home() {
     const navigate = useNavigate();
-    
+
     const goToHome = () => {
         navigate("/");
     }

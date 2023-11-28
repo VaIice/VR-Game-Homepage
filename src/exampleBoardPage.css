@@ -1,3 +1,4 @@
+@media (min-width: 768px) {
 .FreeBulletinBoardPageImage {
     padding-bottom: 0.5%;
     margin-left: 1.5%;
@@ -258,4 +259,267 @@
 
 .BulletinBoardPageCommentDesignWrap {
     margin-left: 20%;
+}
+}
+
+@media (max-width: 767px) {
+    .FreeBulletinBoardPageImage {
+        padding-bottom: 0.5%;
+        margin-left: 1.5%;
+        max-width: 50%;
+        height: auto;
+    }
+    
+    .BulletinBoardPageTitleWrap {
+        margin-top: 0.5%;
+        margin-bottom: 0.5%;
+        display: flex;
+        align-items: center;
+        height: 4.5vh;
+        color: white;
+    }
+    
+    .BulletinBoardPageTitle {
+        margin-left: 0.5%;
+        padding: 1%;
+        display: flex;
+        font-size: 13px;
+    }
+    
+    .BulletinBoardPageContentsWrap {
+        margin-top: 0.5%;
+        margin-bottom: 0.5%;
+        /* background-color: gray; */
+    }
+    
+    .BulletinBoardPageContents {
+        display: block;
+        width: 96.5%;
+        min-height: 30vh;
+        font-size: 13px;
+        font-weight: 400;
+        margin-left: 1.5%;
+        padding-top: 1%;
+        font-family: 'Inter';
+        color: white;
+        white-space: pre-wrap;
+        padding-bottom: 1%;
+    }
+    
+    .BulletinBoardPageUser {
+        padding: 1.5%;
+        margin-left: auto;
+        font-size: 13px;
+    }
+    
+    .BulletinBoardPageDate {
+        padding: 1.5%;
+        font-size: 13px;
+    }
+    
+    .BulletinBoardPageContentsBottom {
+        display: flex;
+        padding-bottom: 1%;
+        padding-right: 1%;
+    }
+    
+    .BulletinBoardPageModifyButton{
+        color: white;
+        cursor: pointer; 
+        margin-left: 0.5%;
+        font-size: 13px;
+        font-weight: 400;
+        border: none;
+        background-color: transparent;
+        margin-left: auto;
+    }
+    
+    .BulletinBoardPageRemoveButton{
+        color: white;
+        cursor: pointer; 
+        margin-left: 0.5%;
+        font-size: 13px;
+        font-weight: 400;
+        border: none;
+        background-color: transparent;
+    }
+    
+    .BulletinBoardPageBottom {
+        padding-right: 15%;
+        padding-left: 15%;
+        display: flex;
+        margin-bottom: 8vh;
+        flex-direction: column;
+        /* background-color: aliceblue; */
+    }
+    
+    .BulletinBoardPageCommentWrap {
+        margin-top: 0.7%;
+        margin-bottom: 0.7%;
+        display: flex;
+        align-items: center;
+        /* height: 4.5vh; */
+        color: white;
+    }
+    
+    .BulletinBoardPageComment {
+        margin-left: 1.5%;
+        font-size: 13px;
+        margin-bottom: 0.1%;
+    }
+    
+    .BulletinBoardWritingCommentWrap {
+        /* background-color: aqua; */
+        padding-bottom: 1%;
+        display: flex;
+    }
+    
+    .inputWritingComment {
+        margin-top: 1%;
+        display: block;
+        width: 120%;
+        min-height: 5vh;
+        outline: none;
+        border: none;
+        font-size: 13px;
+        font-weight: 400;
+        margin-left: 1.5%;
+        padding-top: 1%;
+        font-family: 'Inter';
+        border: 'none';
+        outline: 'none';
+        box-shadow: 'none';
+        resize: none;
+        padding-left: 1%;
+    }
+    
+    .BulletinBoardPageCommentModifyButton {
+        width: 95px;
+        height: 40px;
+        background: black;
+        border: 0.50px white solid;  
+        cursor: pointer;
+        font-size: 20px;
+        font-family: 'Inter';
+        font-weight: 300;
+        padding-bottom: 0.15%;
+        margin-top: 8%;
+        margin-bottom: 3%;
+        color: white;
+        margin-left: 17%;
+    }
+    
+    .BulletinBoardPageCommentModifyCancelButton {
+        background-color: #919191;
+        width: 95px;
+        height: 40px;
+        border: 0.50px white solid;  
+        cursor: pointer;
+        font-size: 20px;
+        font-family: 'Inter';
+        font-weight: 300;
+        padding-bottom: 0.15%;
+        margin-bottom: 0%;
+        color: white;
+        margin-left: 17%;
+        margin-top: 5%;
+    }
+    
+    .BulletinBoardPageCommentButton {
+        width: 50px;
+        height: 30px;
+        background: black;
+        border: 0.50px white solid;  
+        cursor: pointer;
+        font-size: 15px;
+        font-family: 'Inter';
+        font-weight: 300;
+        padding-bottom: 0.15%;
+        margin-top: auto;
+        margin-bottom: 3%;
+        color: white;
+    }
+    
+    .BulletinBoardPageCommentModifyButton:disabled {
+        background-color: #919191;
+        color:white;    
+    }
+    
+    .BulletinBoardPageCommentButton:disabled {
+        background-color: #919191;
+        color:white;
+    }
+    
+    .BulletinBoardPageCommentButtonWrap {
+        display: flex;
+        flex-direction: column;
+        padding-left: 1.5%;
+        padding-right: 1.5%;
+        color: white;
+    }
+    
+    .BulletinBoardPagePostCommentList {
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+        color: white;
+        /* background-color: blueviolet; */
+    }
+    
+    .BulletinBoardPagePostCommentListItem {
+        border-bottom: 1px rgba(255, 255, 255, 0.5) solid;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .BulletinBoardPagePostCommentListWriter {
+        margin-left: 1.5%;
+        margin-top: 1.5%;
+        font-size: 13px;
+    }
+    
+    .BulletinBoardPagePostCommentListItemUpper {
+        display: flex;
+    }
+    
+    .BulletinBoardPagePostCommentListRegDate {
+        margin-left: 1%;
+        margin-top: 1.7%;
+        font-size: 13px;
+        color: rgb(167, 167, 167);
+    }
+    .BulletinBoardPagePostCommentListReplyText {
+        margin-left: 1.5%;
+        margin-top: 1.5%;
+        margin-bottom: 1.5%;
+        white-space: pre-line;
+        font-size: 13px;
+    }
+    
+    .BulletinBoardPagePostCommentListModify {
+        color: white;
+        cursor: pointer; 
+        margin-right: 0.5%;
+        margin-top: 1.5%;
+        font-size: 13px;
+        font-weight: 400;
+        border: none;
+        background-color: transparent;
+        margin-left: auto;
+    }
+    
+    .BulletinBoardPagePostCommentListRemove {
+        color: white;
+        cursor: pointer; 
+        margin-right: 1.5%;
+        margin-top: 1.5%;
+        font-size: 13px;
+        font-weight: 400;
+        border: none;
+        background-color: transparent;   
+    }
+    
+    .BulletinBoardPageCommentDesignWrap {
+        margin-left: 20%;
+    }
 }

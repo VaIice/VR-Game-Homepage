@@ -183,7 +183,7 @@ export default function FreeBulletinBoard() {
                             <span className="postListViewNumber">1</span>
                             <div className="postListItemLine"/> */}
                             <div className="postListUser123">{post.writer}</div>
-                            <div className="postListItemLine"/>
+                            <div className="postListItemLine123"/>
                             <div className="postListDate">{post.regDate[0]}-{post.regDate[1]}-{post.regDate[2]}</div>
                     </div>
                 ))
