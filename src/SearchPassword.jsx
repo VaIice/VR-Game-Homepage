@@ -73,7 +73,7 @@ export default function NoticeBoard() {
                 Swal.fire({
                     icon: "success",
                     title: "이메일 발송에 성공하였습니다.",
-                    text: "30초동안 비밀번호 찾기가 제한됩니다.",
+                    text: "약간의 시간이 걸릴 수 있습니다.",
                     showCancelButton: false
                 });
                 goToHome();
