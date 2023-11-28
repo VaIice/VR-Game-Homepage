@@ -16,6 +16,8 @@ export default function NoticeBoard() {
     const [emailValid, setEmailValid] = useState(false);
     // 이메일, 비밀번호가 유효하다면 활성화
     const [notAllow, setNotAllow] = useState(true);
+
+    const [pushButtonTime, setPushButtonTime] = useState(3000);
     // 서버에 보낼 이메일, 비밀번호
     const dataToSend = {
         email: email
@@ -213,7 +215,6 @@ export default function NoticeBoard() {
                     </div>
 
                     <button onClick={onClickSendEmailButton} disabled={notAllow} className="bottomPasswordSearchButton123">이메일 보내기</button>
-
                 </div>
             </div>
         </div>
