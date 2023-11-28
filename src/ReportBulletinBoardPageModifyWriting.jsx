@@ -392,10 +392,10 @@ export default function ReportBulletinBoardPageModifyWriting(bnum) {
                 { cookies.get('accessToken') ? (
                         <div className="upperLoginAndSignOutWrap">
                             <div className="upperInfoWrap123">
-                              <button className="upperLogin123" onClick={goToInfo}>INFO</button> 
+                                <button className="upperLogin12345" onClick={goToInfo}>INFO</button> 
                             </div>
                             <div className="upperSignOutWrap">
-                                <button className="upperLogin123" onClick={onClickSignOutButton}>LOGOUT</button> 
+                                <button className="upperLogin1234" onClick={onClickSignOutButton}>LOGOUT</button> 
                             </div>
                         </div>
                     ) : (

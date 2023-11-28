@@ -1,7 +1,38 @@
-/* 작은 거  */
 @media (max-width: 767px) {
   .wallPaper123 {
-    display: none;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: 0.7;
+  }
+
+  .upperLoginAndSignOutWrap {
+    width: 25%;
+    display: flex;
+    flex-direction: row;
+  }
+
+
+  .dropdownMenu123 {
+    position: absolute;
+    top: 105%;
+    width: 110%;
+    height: 400%;
+    padding: 10%;
+    cursor: pointer;
+    left: 50%;
+    background-color: black;
+    transform: translate(-50%, 0);
+    border: 1px solid rgba(255, 255,255, 1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+
+  .upperCommunity123:hover + .dropdownMenu123 {
+    display: block;
   }
 
   .upperSpace123 {
@@ -23,6 +54,28 @@
     background-color: transparent;
     cursor: pointer;
     font-family: "KdamThmorPro-Regular";
+    position: relative;
+  }
+
+  .upperLogin1234 {
+    font-size: 15px;
+    color: white;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    font-family: "KdamThmorPro-Regular";
+    position: relative;
+    margin-left: 60%;
+  }
+
+  .upperLogin12345 {
+    font-size: 15px;
+    color: white;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    font-family: "KdamThmorPro-Regular";
+    position: relative;
   }
 
   .downloadButton {
@@ -46,19 +99,18 @@
 
   .contentWrap123 {
     flex: 1;
-    background-color: black;
     display: flex;
     flex-direction: column;
     justify-content: center; /* 내부 요소를 수평으로 가운데 정렬 */
   }
-  
+
   .Title123 {
     font-size: 40px;
     font-weight: 600;
     color: white;
     margin-left: 8%;
     white-space: pre-wrap;
-    font-family: 'CustomFont', sans-serif; /* 'CustomFont'로 변경 */
+    font-family: 'CustomFont', sans-serif;
   }
   
   .VRGame123 {
@@ -66,7 +118,7 @@
     font-weight: 400;
     color: white;
     margin-left: 8%;
-    font-family: 'CustomFont', sans-serif; /* 'CustomFont'로 변경 */
+    font-family: 'CustomFont', sans-serif;
   }
   
   .Intro123 {
@@ -79,8 +131,8 @@
     font-family: "KdamThmorPro-Regular";
   }
 
-  .dropdownMenu123 {
-    display: none;
+  .upperCommunityWrap {
+    z-index: 1;
   }
 }
 
@@ -152,6 +204,18 @@
     font-family: "KdamThmorPro-Regular";
   }
 
+  .upperLogin1234,
+  .upperLogin12345
+   {
+    font-size: 22px;
+    color: white;
+    border: none;
+    cursor: pointer;
+    background-color: transparent;
+    position: relative;
+    font-family: "KdamThmorPro-Regular";
+  }
+
   .upperLogin1 {
     font-size: 26px;
     font-weight: bold;
@@ -188,6 +252,7 @@
 .upperLoginAndSignOutWrap {
   width: 20%;
   display: flex;
+  flex-direction: row;
   padding-left: 4%;
 }
 
@@ -221,6 +286,27 @@
     margin-bottom: 4%;
     letter-spacing :0.3px;
     line-height:35px;
+  }
+
+  
+  .dropdownMenu123 {
+    position: absolute;
+    top: 80%;
+    width: 110%;
+    height: 200%;
+    padding: 10%;
+    cursor: pointer;
+    left: 50%;
+    transform: translate(-50%, 0);
+    background-color: black;
+    border: 1px solid rgba(255, 255,255, 1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+
+  .upperCommunity123:hover + .dropdownMenu123 {
+    display: block;
   }
 }
 

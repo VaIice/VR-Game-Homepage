@@ -102,7 +102,6 @@ export default function Home() {
                 <div className="upperHomeWrap">
                     <button class="upperHome123" onClick={goToHome}>HOME</button>
                 </div>
-
                 <div className="upperNoticeWrap">
                     <button className="upperNotice123" onClick={goToNoticeBoard}>NOTICE</button>
                 </div>
@@ -125,10 +124,10 @@ export default function Home() {
                 { cookies.get('accessToken') ? (
                         <div className="upperLoginAndSignOutWrap">
                             <div className="upperInfoWrap123">
-                                <button className="upperLogin123" onClick={goToInfo}>INFO</button> 
+                                <button className="upperLogin12345" onClick={goToInfo}>INFO</button> 
                             </div>
                             <div className="upperSignOutWrap">
-                                <button className="upperLogin123" onClick={onClickSignOutButton}>LOGOUT</button> 
+                                <button className="upperLogin1234" onClick={onClickSignOutButton}>LOGOUT</button> 
                             </div>
                         </div>
                     ) : (

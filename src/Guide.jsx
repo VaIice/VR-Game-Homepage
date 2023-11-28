@@ -287,7 +287,7 @@ export default function Guide() {
     return (
         <div className="page123">
             <img src="assets/image/background.jpg" alt="background" className='wallPaper123'/>
-            <div className="upperSpace123">
+            <div className="upperSpace1234">
                 <div className="upperHomeWrap">
                     <button class="upperHome123" onClick={goToHome}>HOME</button>
                 </div>
@@ -314,10 +314,10 @@ export default function Guide() {
                 { cookies.get('accessToken') ? (
                         <div className="upperLoginAndSignOutWrap">
                             <div className="upperInfoWrap123">
-                                <button className="upperLogin123" onClick={goToInfo}>INFO</button> 
+                                <button className="upperLogin12345" onClick={goToInfo}>INFO</button> 
                             </div>
                             <div className="upperSignOutWrap">
-                                <button className="upperLogin123" onClick={onClickSignOutButton}>LOGOUT</button> 
+                                <button className="upperLogin1234" onClick={onClickSignOutButton}>LOGOUT</button> 
                             </div>
                         </div>
                     ) : (
@@ -426,7 +426,7 @@ export default function Guide() {
 나와 쿨르의 이야기를 듣던 사람들은 내가 얼른 집에 들어가 무슨 일이 생긴 건지 알아보기를 원하는 눈빛이었다.<br/>
 내가 기어이 들어가려 하자, 쿨르는 나에게 칼날이 손바닥만한 크기이지만, 매우 예리한 검과 횃불을 주었다.<br/>
 그리고 혹시 모를 위험한 상황이 닥쳤을 때, 내가 소리를 치면 자신이 칼 두 자루를 들고 달려와 나를 도와줄 것이라고 하였다.<br/>
-난 쿨르가 준 횃불과 검을 들고 검은 집 안에 한 발자국 내딛었다.<br/>
+난 쿨르가 준 횃불과 검을 들고 검은 집 안에 한 발자국 내딛었다.<br/><br/>
                         </div>
                         <div className="GuideLine"/>
                     </div>
