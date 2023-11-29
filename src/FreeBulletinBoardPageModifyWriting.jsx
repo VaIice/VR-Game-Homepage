@@ -282,7 +282,7 @@ export default function FreeBulletinBoardPageModifyWriting(bnum) {
           setFileExist(false); // checkbox 선택 상태로 변경
         }
     };
-
+    
     const onClickSignOutButton = () => {
         Swal.fire({
             icon: "warning",
@@ -314,6 +314,7 @@ export default function FreeBulletinBoardPageModifyWriting(bnum) {
                         text: '다시 로그인을 진행해주세요.',
                         showCancelButton: false
                     });
+                    goToLogin();
                 }
             } else {
                 try {
@@ -327,6 +328,7 @@ export default function FreeBulletinBoardPageModifyWriting(bnum) {
                         text: '다시 로그인을 진행해주세요.',
                         showCancelButton: false
                     });
+                    goToLogin();
                 }
             }
         });

@@ -74,6 +74,7 @@ export default function Login() {
                             cookies.remove('accessToken');
                             cookies.remove('refreshToken');
                             cookies.remove('email');
+                            goToLogin();
                         }
                     } catch (error) {
                         Swal.fire({
@@ -82,6 +83,7 @@ export default function Login() {
                             text: '다시 로그인을 진행해주세요.',
                             showCancelButton: false
                         });
+                        goToLogin();
                     }
                 } else {
                     Swal.fire({
@@ -92,7 +94,7 @@ export default function Login() {
                     cookies.remove('accessToken');
                     cookies.remove('refreshToken');
                     cookies.remove('email');
-                    window.location.reload(); // Reload the page after logging out
+                    goToHome();
                 }
             });
     };
@@ -238,6 +240,7 @@ export default function Login() {
                         text: '다시 로그인을 진행해주세요.',
                         showCancelButton: false
                     });
+                    goToLogin();
                 }
             } else {
                 try {
@@ -251,6 +254,7 @@ export default function Login() {
                         text: '다시 로그인을 진행해주세요.',
                         showCancelButton: false
                     });
+                    goToLogin();
                 }
             }
         });

@@ -273,6 +273,7 @@ export default function FreeBulletinBoard() {
                         text: '다시 로그인을 진행해주세요.',
                         showCancelButton: false
                     });
+                    goToLogin();
                 }
             } else {
                 try {
@@ -286,6 +287,7 @@ export default function FreeBulletinBoard() {
                         text: '다시 로그인을 진행해주세요.',
                         showCancelButton: false
                     });
+                    goToLogin();
                 }
             }
         });

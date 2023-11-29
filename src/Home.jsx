@@ -55,9 +55,10 @@ export default function Home() {
                     Swal.fire({
                         icon: "success",
                         title: '로그아웃이 완료되었습니다.',
+                        text: '홈 화면으로 이동합니다.',
                         showCancelButton: false
                     }).then(async () => {
-                        window.location.reload(); // Reload the page after logging out
+                        goToHome();
                     });
                 } catch (error) {
                     cookies.remove('accessToken');
@@ -69,6 +70,7 @@ export default function Home() {
                         text: '다시 로그인을 진행해주세요.',
                         showCancelButton: false
                     });
+                    goToLogin();
                 }
             } else {
                 try {
@@ -82,6 +84,7 @@ export default function Home() {
                         text: '다시 로그인을 진행해주세요.',
                         showCancelButton: false
                     });
+                    goToLogin();
                 }
             }
         });
