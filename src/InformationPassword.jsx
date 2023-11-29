@@ -98,16 +98,52 @@ export default function InformationPassword() {
     }
 
     const onClickSignOutButton = () => {
-        cookies.remove('accessToken');
-        cookies.remove('refreshToken');
-        cookies.remove('email');
         Swal.fire({
-            icon: "success",
-            title: "로그아웃이 완료되었습니다.",
-            text: "홈 화면으로 이동합니다.",
-            showCancelButton: false
+            icon: "warning",
+            title: "로그아웃 하시겠습니까?",
+            showCancelButton: true,
+            confirmButtonText: "예",
+            cancelButtonText: "아니요",
+        }).then(async (res) => {
+            if (res.isConfirmed) {
+                try {
+                    cookies.remove('accessToken');
+                    cookies.remove('refreshToken');
+                    cookies.remove('email');
+                    Swal.fire({
+                        icon: "success",
+                        title: '로그아웃이 완료되었습니다.',
+                        text: '홈 화면으로 이동합니다.',
+                        showCancelButton: false
+                    }).then(async () => {
+                        goToHome();
+                    });
+                } catch (error) {
+                    cookies.remove('accessToken');
+                    cookies.remove('refreshToken');
+                    cookies.remove('email');
+                    Swal.fire({
+                        icon: "error",
+                        title: '로그인 에러가 발생하였습니다.',
+                        text: '다시 로그인을 진행해주세요.',
+                        showCancelButton: false
+                    });
+                }
+            } else {
+                try {
+                } catch (error) {
+                    cookies.remove('accessToken');
+                    cookies.remove('refreshToken');
+                    cookies.remove('email');
+                    Swal.fire({
+                        icon: "error",
+                        title: '로그인 에러가 발생하였습니다.',
+                        text: '다시 로그인을 진행해주세요.',
+                        showCancelButton: false
+                    });
+                }
+            }
         });
-        goToHome();
     }
 
     const goToInfo = () => {

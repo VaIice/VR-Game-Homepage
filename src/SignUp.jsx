@@ -237,9 +237,10 @@ export default function NoticeBoard() {
                     Swal.fire({
                         icon: "success",
                         title: '로그아웃이 완료되었습니다.',
+                        text: '홈 화면으로 이동합니다.',
                         showCancelButton: false
                     }).then(async () => {
-                        window.location.reload();
+                        goToHome();
                     });
                 } catch (error) {
                     cookies.remove('accessToken');
@@ -268,6 +269,7 @@ export default function NoticeBoard() {
             }
         });
     }
+    
     return (
         <div className="page123">
             <img src="assets/image/background.jpg" alt="background" className='wallPaper123'/>

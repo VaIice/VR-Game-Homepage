@@ -230,7 +230,7 @@ export default function ReportBulletinBoard() {
     const goToGuide = () => {
         navigate("/Guide");
     }
-
+    
     const onClickSignOutButton = () => {
         Swal.fire({
             icon: "warning",
@@ -247,10 +247,10 @@ export default function ReportBulletinBoard() {
                     Swal.fire({
                         icon: "success",
                         title: '로그아웃이 완료되었습니다.',
-                        // text: '홈 화면으로 이동합니다.',
+                        text: '홈 화면으로 이동합니다.',
                         showCancelButton: false
                     }).then(async () => {
-                        window.location.reload(); // Reload the page after logging out
+                        goToHome();
                     });
                 } catch (error) {
                     cookies.remove('accessToken');
