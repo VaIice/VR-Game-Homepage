@@ -10,6 +10,14 @@
         height: 45%;
 }
 
+.menuIconWord {
+        color: white;
+        width: 120%;
+        font-size: 16px;
+        margin-right: 2%;
+        margin-bottom: 1%;
+}
+
 .BulletinBoardImageButton123 {
         display: flex;
         width: 110px;
@@ -20,14 +28,6 @@
         align-items: center;
         justify-content: center;
         margin-left: auto;
-}
-
-.menuIconWord {
-        color: white;
-        width: 120%;
-        font-size: 16px;
-        margin-right: 2%;
-        margin-bottom: 1%;
 }
 
 .BulletinBoardUpperLeft {
@@ -541,6 +541,31 @@ color: rgb(113, 113, 113);
                 margin-left: 28%;
         }
               
+        .menuIcon123 {
+                width: 45%;
+                height: 45%;
+        }
+        
+        .menuIconWord {
+                color: white;
+                width: 120%;
+                font-size: 13px;
+                margin-right: 2%;
+                margin-bottom: 1%;
+        }
+        
+        .BulletinBoardImageButton123 {
+                display: flex;
+                width: 90px;
+                height: 30px;
+                background: black;
+                border: 0.50px white solid;  
+                cursor: pointer;
+                align-items: center;
+                justify-content: center;
+                margin-left: auto;
+        }
+
         ul {
         list-style: none;
         padding: 0;
