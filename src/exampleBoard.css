@@ -325,6 +325,11 @@ color: rgb(113, 113, 113);
 
 /* 작은 화면 */
 @media (max-width: 767px) {
+        .dropdownWord {
+                font-size: 14px;
+                list-style-type: none; 
+        }
+
         .BulletinBoardUpper {
                 flex: 0.9;
                 display: flex;
