@@ -6,7 +6,6 @@ import Pagination from "react-js-pagination";
 import Swal from "sweetalert2";
 
 const cookies = new Cookies()
-const SERVER_URL_FREE_LIST = `${process.env.REACT_APP_SERVER_URL}/boards/FREE/list?page=1`;
 
 export default function FreeBulletinBoard() {
     const navigate = useNavigate();
@@ -16,9 +15,16 @@ export default function FreeBulletinBoard() {
     useEffect(() => {    
         const fetchData = async () => {
             try {
-                const response = await axios.get(SERVER_URL_FREE_LIST);
-                setPosts(response.data);
+                if (cookies.get('page')) {
+                    const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/boards/FREE/list?page=${cookies.get('page')}`);    
+                    setPosts(response.data);
+                }
+                else {
+                    const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/boards/FREE/list?page=1`);
+                    setPosts(response.data);
+                }
                 setPostsLoaded(true);
+                cookies.set('page', 1);
             } catch (error) {
                 Swal.fire({
                     icon: "error",
@@ -42,6 +48,7 @@ export default function FreeBulletinBoard() {
                     });
                     setPosts(response.data);
                     setPostsLoaded(true);
+                    cookies.set('page', page);
                 }
                 else {
                         const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/boards/FREE/search?type=${searchWord}&keyword=${searchKeyword}&page=${page}`, {
