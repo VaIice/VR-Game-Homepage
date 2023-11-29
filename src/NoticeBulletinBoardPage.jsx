@@ -127,10 +127,12 @@ export default function NoticeBulletinBoardPage(bno) {
 
     const goToFreeBulletinBoard = () => {
         navigate("/FreeBulletinBoard");
+        cookies.set('page', 1);
     }
 
     const goToReportBulletinBoard = () => {
         navigate("/ReportBulletinBoard");
+        cookies.set('page', 1);
     }
 
     const [isDropdownVisible, setIsDropdownVisible] = useState(false);

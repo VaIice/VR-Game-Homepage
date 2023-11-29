@@ -26,7 +26,6 @@ export default function FreeBulletinBoard() {
                     cookies.set('page', 1);
                 }
                 setPostsLoaded(true);
-                cookies.set('page', 1);
             } catch (error) {
                 Swal.fire({
                     icon: "error",
@@ -79,6 +78,7 @@ export default function FreeBulletinBoard() {
 
     const goToNoticeBoard = () => {
         navigate("/NoticeBoard");
+        cookies.set('page', 1);
     }
 
     const goToLogin = () => {
@@ -87,10 +87,12 @@ export default function FreeBulletinBoard() {
 
     const goToFreeBulletinBoard = () => {
         navigate("/FreeBulletinBoard");
+        cookies.set('page', 1);
     }
 
     const goToReportBulletinBoard = () => {
         navigate("/ReportBulletinBoard");
+        cookies.set('page', 1);
     }
 
     const goToGuide = () => {

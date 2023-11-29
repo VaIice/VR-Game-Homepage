@@ -118,6 +118,7 @@ export default function ReportBulletinBoardPage(bno) {
 
     const goToNoticeBoard = () => {
         navigate("/NoticeBoard");
+        cookies.set('page', 1);
     }
 
     
@@ -127,6 +128,7 @@ export default function ReportBulletinBoardPage(bno) {
 
     const goToFreeBulletinBoard = () => {
         navigate("/FreeBulletinBoard");
+        cookies.set('page', 1);
     }
 
     const goToReportBulletinBoard = () => {

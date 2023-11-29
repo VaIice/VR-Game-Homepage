@@ -117,6 +117,7 @@ export default function FreeBulletinBoardPage(bno) {
 
     const goToNoticeBoard = () => {
         navigate("/NoticeBoard");
+        cookies.set('page', 1);
     }
 
     const goToGuide = () => {
@@ -133,6 +134,7 @@ export default function FreeBulletinBoardPage(bno) {
 
     const goToReportBulletinBoard = () => {
         navigate("/ReportBulletinBoard");
+        cookies.set('page', 1);
     }
 
     const [isDropdownVisible, setIsDropdownVisible] = useState(false);

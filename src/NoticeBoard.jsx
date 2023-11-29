@@ -78,6 +78,7 @@ export default function NoticeBulletinBoard() {
 
     const goToNoticeBoard = () => {
         navigate("/NoticeBoard");
+        cookies.set('page', 1);
     }
 
     const goToLogin = () => {
@@ -86,10 +87,12 @@ export default function NoticeBulletinBoard() {
 
     const goToFreeBulletinBoard = () => {
         navigate("/FreeBulletinBoard");
+        cookies.set('page', 1);
     }
 
     const goToReportBulletinBoard = () => {
         navigate("/ReportBulletinBoard");
+        cookies.set('page', 1);
     }
 
     const onClickNoticeBulletinBoardPageButton = async (bno, secret) => {

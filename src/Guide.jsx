@@ -70,6 +70,7 @@ export default function Guide() {
 
     const goToNoticeBoard = () => {
         navigate("/NoticeBoard");
+        cookies.set('page', 1);
     }
 
     const goToLogin = () => {
@@ -78,10 +79,12 @@ export default function Guide() {
 
     const goToFreeBulletinBoard = () => {
         navigate("/FreeBulletinBoard");
+        cookies.set('page', 1);
     }
 
     const goToReportBulletinBoard = () => {
         navigate("/ReportBulletinBoard");
+        cookies.set('page', 1);
     }
 
     const onClickFreeBulletinBoardPageButton = async (bno, secret) => {
