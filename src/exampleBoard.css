@@ -5,6 +5,31 @@
         align-items: flex-end; /* 요소를 수직 중앙에 정렬 */
 }
 
+.menuIcon123 {
+        width: 45%;
+        height: 45%;
+}
+
+.BulletinBoardImageButton123 {
+        display: flex;
+        width: 110px;
+        height: 40px;
+        background: black;
+        border: 0.50px white solid;  
+        cursor: pointer;
+        align-items: center;
+        justify-content: center;
+        margin-left: auto;
+}
+
+.menuIconWord {
+        color: white;
+        width: 120%;
+        font-size: 16px;
+        margin-right: 2%;
+        margin-bottom: 1%;
+}
+
 .BulletinBoardUpperLeft {
         flex: 1;
         padding-left: 15%;

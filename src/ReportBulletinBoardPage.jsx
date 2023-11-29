@@ -471,6 +471,14 @@ export default function ReportBulletinBoardPage(bno) {
                     <div className="BulletinBoardWritingUpperLeft">
                         <div className="BulletinBoardTitle123">신고 게시판</div>
                     </div>
+                    <div className="BulletinBoardWritingUpperRight">
+                        <button className="BulletinBoardImageButton123" onClick={goToReportBulletinBoard}>
+                            <img src={"/assets/image/menu.svg"} alt="dropdown" className='menuIcon123'/>
+                            <span className="menuIconWord">
+                                목록가기
+                            </span>
+                        </button>
+                    </div>
                 </div>
                 <div className="BulletinBoardLongLineUpper"/>
                 <div className = "BulletinBoardWritingMiddle">
