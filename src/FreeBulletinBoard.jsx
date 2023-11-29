@@ -18,10 +18,12 @@ export default function FreeBulletinBoard() {
                 if (cookies.get('page')) {
                     const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/boards/FREE/list?page=${cookies.get('page')}`);    
                     setPosts(response.data);
+                    setPage(cookies.get('page'));
                 }
                 else {
                     const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/boards/FREE/list?page=1`);
                     setPosts(response.data);
+                    cookies.set('page', 1);
                 }
                 setPostsLoaded(true);
                 cookies.set('page', 1);
