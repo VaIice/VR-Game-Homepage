@@ -228,8 +228,9 @@ export default function NoticeBulletinBoardPageWriting() {
                         title: '로그인 에러가 발생하였습니다.',
                         text: '다시 로그인을 진행해주세요.',
                         showCancelButton: false
+                    }).then(async () => {
+                        goToLogin();
                     });
-                    goToLogin();
                 }
             } else {
                 try {
@@ -242,8 +243,9 @@ export default function NoticeBulletinBoardPageWriting() {
                         title: '로그인 에러가 발생하였습니다.',
                         text: '다시 로그인을 진행해주세요.',
                         showCancelButton: false
+                    }).then(async () => {
+                        goToLogin();
                     });
-                    goToLogin();
                 }
             }
         });

@@ -58,7 +58,7 @@ export default function Home() {
                         text: '홈 화면으로 이동합니다.',
                         showCancelButton: false
                     }).then(async () => {
-                        goToHome();
+                        window.location.reload();
                     });
                 } catch (error) {
                     cookies.remove('accessToken');
@@ -69,8 +69,9 @@ export default function Home() {
                         title: '로그인 에러가 발생하였습니다.',
                         text: '다시 로그인을 진행해주세요.',
                         showCancelButton: false
+                    }).then(async () => {
+                        goToLogin();
                     });
-                    goToLogin();
                 }
             } else {
                 try {
@@ -83,8 +84,9 @@ export default function Home() {
                         title: '로그인 에러가 발생하였습니다.',
                         text: '다시 로그인을 진행해주세요.',
                         showCancelButton: false
+                    }).then(async () => {
+                        goToLogin();
                     });
-                    goToLogin();
                 }
             }
         });

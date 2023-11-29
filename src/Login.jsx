@@ -57,7 +57,7 @@ export default function Login() {
                             cookies.set('accessToken', response.data.accessToken, { maxAge: 60*30});
                             cookies.set('refreshToken', response.data.refreshToken, { maxAge: 10000000 });
                             cookies.set('email', encodeURIComponent(email), {maxAge: 60*30});
-                            setTimeout(checkToken, 60*25*1000); // 10초 후에 checkTokenInterval 함수를 다시 호출
+                            setTimeout(checkToken, 60*25*1000);
                             Swal.fire({
                                 icon: "success",
                                 title: '로그인을 연장하였습니다.',
@@ -70,11 +70,12 @@ export default function Login() {
                                 title: '로그인 연장에 실패하였습니다.',
                                 text: '다시 로그인을 진행해주세요.',
                                 showCancelButton: false
+                            }).then(async () => {
+                                goToLogin();
                             });
                             cookies.remove('accessToken');
                             cookies.remove('refreshToken');
                             cookies.remove('email');
-                            goToLogin();
                         }
                     } catch (error) {
                         Swal.fire({
@@ -82,8 +83,12 @@ export default function Login() {
                             title: '로그인 연장에 실패하였습니다.',
                             text: '다시 로그인을 진행해주세요.',
                             showCancelButton: false
+                        }).then(async () => {
+                            goToLogin();
                         });
-                        goToLogin();
+                        cookies.remove('accessToken');
+                        cookies.remove('refreshToken');
+                        cookies.remove('email');
                     }
                 } else {
                     Swal.fire({
@@ -239,8 +244,9 @@ export default function Login() {
                         title: '로그인 에러가 발생하였습니다.',
                         text: '다시 로그인을 진행해주세요.',
                         showCancelButton: false
+                    }).then(async () => {
+                        goToLogin();
                     });
-                    goToLogin();
                 }
             } else {
                 try {
@@ -253,8 +259,9 @@ export default function Login() {
                         title: '로그인 에러가 발생하였습니다.',
                         text: '다시 로그인을 진행해주세요.',
                         showCancelButton: false
+                    }).then(async () => {
+                        goToLogin();
                     });
-                    goToLogin();
                 }
             }
         });
