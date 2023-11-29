@@ -177,7 +177,7 @@ export default function Login() {
             } catch (error) {
                 Swal.fire({
                     icon: "error",
-                    title: '등록되지 않은 정보입니다.',
+                    title: '비밀번호를 확인해주세요.',
                     showCancelButton: false
                 });
             }
