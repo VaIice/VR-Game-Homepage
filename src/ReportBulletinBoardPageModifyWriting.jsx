@@ -360,6 +360,10 @@ export default function ReportBulletinBoardPageModifyWriting(bnum) {
         const updatedFiles = [...file];
         updatedFiles.splice(index, 1);
         setFile(updatedFiles);
+
+        const updatedFileId = [...fileId];
+        updatedFileId.splice(index, 1);
+        setFileId(updatedFileId);
         setFlag(true);
         if (!updatedFiles[0]) {
             setFileExist(false);

@@ -341,7 +341,9 @@ export default function FreeBulletinBoardPageModifyWriting(bnum) {
             const fetchData = async () => {
                 try {
                     const response = await axios.delete(`${process.env.REACT_APP_SERVER_URL}/boards/api/delete/${fileId[index]}`);
-                    // setImageFlag(false);
+                    // if (!file) {
+                    //     setImageFlag(false);
+                    // }
                 } catch (error) {
                     Swal.fire({
                         icon: "error",
@@ -356,10 +358,15 @@ export default function FreeBulletinBoardPageModifyWriting(bnum) {
         const updatedFiles = [...file];
         updatedFiles.splice(index, 1);
         setFile(updatedFiles);
+
+        const updatedFileId = [...fileId];
+        updatedFileId.splice(index, 1);
+        setFileId(updatedFileId);
         setFlag(true);
         if (!updatedFiles[0]) {
             setFileExist(false);
         }
+        console.log(updatedFiles);
     };
 
     const goToGuide = () => {
