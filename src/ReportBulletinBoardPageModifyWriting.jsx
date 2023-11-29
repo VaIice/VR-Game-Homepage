@@ -345,7 +345,7 @@ export default function ReportBulletinBoardPageModifyWriting(bnum) {
             const fetchData = async () => {
                 try {
                     const response = await axios.delete(`${process.env.REACT_APP_SERVER_URL}/boards/api/delete/${fileId[index]}`);
-                    setImageFlag(false);
+                    // setImageFlag(false);
                 } catch (error) {
                     Swal.fire({
                         icon: "error",
