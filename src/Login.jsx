@@ -30,7 +30,7 @@ export default function Login() {
         const [refreshToken, setRefreshToken] = useState('');
         // accessTokenExpiresln
         const [accessTokenExpiresln, setAccessTokenExpiresln] = useState('');
-    
+
         // 서버에 보낼 이메일, 비밀번호
         const dataToSend = {
             email: email,
@@ -40,6 +40,9 @@ export default function Login() {
         const goToGuide = () => {
             navigate("/Guide");
         }
+
+        let tokenRefreshTimeoutOnClick; // onClickConfirmButton에서 사용할 타이머
+        let tokenRefreshTimeoutCheck;  // checkToken에서 사용할 타이머
 
         const checkToken = async () => {
             Swal.fire({
@@ -54,10 +57,17 @@ export default function Login() {
                     try {
                         if (cookies.get('accessToken') && cookies.get('refreshToken')) {
                             const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/auth/reissue`, { accessToken: cookies.get('accessToken'), refreshToken: cookies.get('refreshToken') });
-                            cookies.set('accessToken', response.data.accessToken, { maxAge: 60*30});
-                            cookies.set('refreshToken', response.data.refreshToken, { maxAge: 10000000 });
-                            cookies.set('email', encodeURIComponent(email), {maxAge: 60*30});
-                            setTimeout(checkToken, 60*25*1000);
+                            
+                            if (tokenRefreshTimeoutCheck) {
+                                clearTimeout(tokenRefreshTimeoutCheck);
+                            }
+        
+                            tokenRefreshTimeoutCheck = setTimeout(() => checkToken(), response.data.accessTokenExpiresIn - 5*60*1000);
+                            cookies.set('accessToken', response.data.accessToken, {maxAge: response.data.accessTokenExpiresIn/1000})
+                            // 일주일
+                            cookies.set('refreshToken', response.data.refreshToken, {maxAge: 604800});
+                            cookies.set('email', encodeURIComponent(email), {maxAge: response.data.accessTokenExpiresIn/1000});
+
                             Swal.fire({
                                 icon: "success",
                                 title: '로그인을 연장하였습니다.',
@@ -177,20 +187,19 @@ export default function Login() {
             const fetchData = async () => {
             try {
                 const response = await axios.post(SERVER_URL, dataToSend);
-                cookies.set('accessToken', response.data.accessToken, {maxAge: 60*30})
-                cookies.set('refreshToken', response.data.refreshToken, {maxAge: 10000000});
-                cookies.set('email', encodeURIComponent(email), {maxAge: 60*30});
-                loginSuccess();
-            } catch (error) {
-                Swal.fire({
-                    icon: "error",
-                    title: '비밀번호를 확인해주세요.',
-                    showCancelButton: false
-                });
-            }
-            };
-        
-            const loginSuccess = () => {
+
+                if (tokenRefreshTimeoutOnClick) {
+                    clearTimeout(tokenRefreshTimeoutOnClick);
+                }
+                // 새로운 타이머 설정
+
+                tokenRefreshTimeoutOnClick = setTimeout(() => checkToken(response), response.data.accessTokenExpiresIn - 5*60*1000);
+                cookies.set('accessToken', response.data.accessToken, {maxAge: response.data.accessTokenExpiresIn/1000})
+                // cookies.set('accessToken', response.data.accessToken, {maxAge: 1800000/1000})
+                // 일주일
+                cookies.set('refreshToken', response.data.refreshToken, {maxAge: 604800});
+                cookies.set('email', encodeURIComponent(email), {maxAge: response.data.accessTokenExpiresIn/1000});
+                
                 axios.defaults.headers.common['Authorization'] = `${grantType} ${accessToken}`;
                 Swal.fire({
                     icon: "success",
@@ -198,7 +207,14 @@ export default function Login() {
                     showCancelButton: false
                 });
                 goToHome();
-                setTimeout(checkToken, 60*25*1000); // 10초 후에 checkTokenInterval 함수를 다시 호출
+                // 5분 전 연장 메시지
+            } catch (error) {
+                Swal.fire({
+                    icon: "error",
+                    title: '비밀번호를 확인해주세요.',
+                    showCancelButton: false
+                });
+            }
             };
 
             fetchData();
