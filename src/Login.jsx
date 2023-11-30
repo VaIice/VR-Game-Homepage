@@ -62,11 +62,11 @@ export default function Login() {
                                 clearTimeout(tokenRefreshTimeoutCheck);
                             }
         
-                            tokenRefreshTimeoutCheck = setTimeout(() => checkToken(), response.data.accessTokenExpiresIn - 5*60*1000);
-                            cookies.set('accessToken', response.data.accessToken, {maxAge: response.data.accessTokenExpiresIn/1000})
+                            tokenRefreshTimeoutCheck = setTimeout(() => checkToken(), 1800000 - 5*60*1000);
+                            cookies.set('accessToken', response.data.accessToken, {maxAge: 1800000/1000})
                             // 일주일
                             cookies.set('refreshToken', response.data.refreshToken, {maxAge: 604800});
-                            cookies.set('email', encodeURIComponent(email), {maxAge: response.data.accessTokenExpiresIn/1000});
+                            cookies.set('email', encodeURIComponent(email), {maxAge: 1800000/1000});
 
                             Swal.fire({
                                 icon: "success",
@@ -193,12 +193,11 @@ export default function Login() {
                 }
                 // 새로운 타이머 설정
 
-                tokenRefreshTimeoutOnClick = setTimeout(() => checkToken(response), response.data.accessTokenExpiresIn - 5*60*1000);
-                cookies.set('accessToken', response.data.accessToken, {maxAge: response.data.accessTokenExpiresIn/1000})
-                // cookies.set('accessToken', response.data.accessToken, {maxAge: 1800000/1000})
+                tokenRefreshTimeoutOnClick = setTimeout(() => checkToken(response), 1800000 - 5*60*1000);
+                cookies.set('accessToken', response.data.accessToken, {maxAge: 1800000/1000})
                 // 일주일
                 cookies.set('refreshToken', response.data.refreshToken, {maxAge: 604800});
-                cookies.set('email', encodeURIComponent(email), {maxAge: response.data.accessTokenExpiresIn/1000});
+                cookies.set('email', encodeURIComponent(email), {maxAge: 1800000/1000});
                 
                 axios.defaults.headers.common['Authorization'] = `${grantType} ${accessToken}`;
                 Swal.fire({

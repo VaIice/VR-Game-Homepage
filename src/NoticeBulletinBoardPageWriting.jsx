@@ -33,6 +33,7 @@ export default function NoticeBulletinBoardPageWriting() {
 
     const goToNoticeBoard = () => {
         navigate("/NoticeBoard");
+        cookies.set('page', 1);
     }
 
     
@@ -42,10 +43,12 @@ export default function NoticeBulletinBoardPageWriting() {
 
     const goToFreeBulletinBoard = () => {
         navigate("/FreeBulletinBoard");
+        cookies.set('page', 1);
     }
 
     const goToReportBulletinBoard = () => {
         navigate("/ReportBulletinBoard");
+        cookies.set('page', 1);
     }
 
     const [isDropdownVisible, setIsDropdownVisible] = useState(false);
@@ -95,8 +98,6 @@ export default function NoticeBulletinBoardPageWriting() {
         secret: secret
     };
 
-    const [bno, setBno] = useState(-1);
-
     const onClickSecretButton = async () => {
         if (secret===1) {
             setSecret(0);
@@ -120,7 +121,9 @@ export default function NoticeBulletinBoardPageWriting() {
                     }
                 });
 
-                if (fileExist) {
+                const shouldShowLoading = file.some(f => f.name.toLowerCase().endsWith('.gif')) || ( file.length === 3 || file.length === 4 || file.length === 5);
+
+                if (shouldShowLoading) {
                     const loadingSwal = Swal.fire({
                         icon: "warning",
                         title: "게시글을 등록 중입니다.",
@@ -128,24 +131,46 @@ export default function NoticeBulletinBoardPageWriting() {
                         showCancelButton: false
                     });
 
-                    for (let i = 0; i < file.length; i++) {
-                        const responseImage = await axios.post(SERVER_URL_IMAGE, 
-                            {
-                                file: file[i],
-                                boardType: "NOTICE",
-                                bno: response.data
-                            },
-                            {
-                                headers: {
-                                    'Authorization': `Bearer ${cookies.get('accessToken')}`,
-                                    'Content-Type': 'multipart/form-data'
-                                }
-                        });
+                    if (fileExist) {
+                        for (let i = 0; i < file.length; i++) {
+                            const responseImage = await axios.post(SERVER_URL_IMAGE, 
+                                {
+                                    file: file[i],
+                                    boardType: "NOTICE",
+                                    bno: response.data
+                                },
+                                {
+                                    headers: {
+                                        'Authorization': `Bearer ${cookies.get('accessToken')}`,
+                                        'Content-Type': 'multipart/form-data'
+                                    }
+                            });
+                        }
+                        loadingSwal.close();
                     }
-                    loadingSwal.close();
+                    cookies.set('secret', secret, { maxAge: 60*60*24});
+                    navigate(`/NoticeBulletinBoardPage/${response.data}`);
                 }
-                cookies.set('secret', secret, { maxAge: 60*60*24});
-                navigate(`/NoticeBulletinBoardPage/${response.data}`);
+                else {
+                    if (fileExist) {
+                        for (let i = 0; i < file.length; i++) {
+                            const responseImage = await axios.post(SERVER_URL_IMAGE, 
+                                {
+                                    file: file[i],
+                                    boardType: "NOTICE",
+                                    bno: response.data
+                                },
+                                {
+                                    headers: {
+                                        'Authorization': `Bearer ${cookies.get('accessToken')}`,
+                                        'Content-Type': 'multipart/form-data'
+                                    }
+                            });
+                        }
+                    }
+                    cookies.set('secret', secret, { maxAge: 60*60*24});
+                    navigate(`/NoticeBulletinBoardPage/${response.data}`);
+                }
             } catch (error) {
                 Swal.fire({
                     icon: "error",
@@ -174,10 +199,15 @@ export default function NoticeBulletinBoardPageWriting() {
         imageInput.current.click();
     };
 
-    const formData = new FormData();
-
     const onFileSelect = (e) => {
-        if (e.target.files[0]) {
+        const maxFileSize = 10 * 1024 * 1024; // 10MB
+    
+        if (e.target.files.length > 0) {
+            const selectedFiles = Array.from(e.target.files);
+    
+            // 각 파일의 크기를 확인
+            const isFileSizeValid = selectedFiles.every(file => file.size < maxFileSize);
+    
             if (e.target.files.length > 5) {
                 Swal.fire({
                     icon: "warning",
@@ -188,13 +218,22 @@ export default function NoticeBulletinBoardPageWriting() {
                 setFileExist(false);
             }
             else {
+                if (!isFileSizeValid) {
+                    Swal.fire({
+                        icon: "warning",
+                        title: "각 파일의 크기는 10MB를 초과할 수 없습니다.",
+                        showCancelButton: false
+                    });
+                    e.target.value = null; // 파일 선택 창 초기화
+                    setFileExist(false); // 파일 존재 상태 변경
+                    return;
+                }
                 const selectedFiles = Array.from(e.target.files);
                 setFile(selectedFiles);
                 setFileExist(true);
             }
-        }
-        else {
-          setFileExist(false); // checkbox 선택 상태로 변경
+        } else {
+            setFileExist(false); // 파일이 선택되지 않은 경우 checkbox 선택 상태로 변경
         }
     };
 
@@ -327,7 +366,7 @@ export default function NoticeBulletinBoardPageWriting() {
                             <input
                                 type="file"
                                 ref={imageInput}
-                                accept="image/*"
+                                accept=".jpg, .jpeg, .png, .gif"
                                 style={{display:'none'}}
                                 onChange={onFileSelect}
                                 multiple

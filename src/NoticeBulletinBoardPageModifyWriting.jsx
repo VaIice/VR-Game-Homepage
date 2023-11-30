@@ -437,7 +437,7 @@ export default function NoticeBulletinBoardPageModifyWriting(bnum) {
                             <input
                                 type="file"
                                 ref={imageInput}
-                                accept="image/*"
+                                accept=".jpg, .jpeg, .png, .gif"
                                 style={{display:'none'}}
                                 onChange={onFileSelect}
                                 multiple
