@@ -324,7 +324,7 @@ export default function ReportBulletinBoardPageModifyWriting(bnum) {
         if (!isButtonDisabled) {
             setIsButtonDisabled(true);
 
-            if (imageFlag) {
+            if (imageFlag && fileId.length !== 0) {
                 Swal.fire({
                     icon: 'warning',
                     title: '새로운 이미지를 추가하면 기존 이미지가 삭제됩니다.',
@@ -390,6 +390,7 @@ export default function ReportBulletinBoardPageModifyWriting(bnum) {
                             });
                         }
                     }
+                    setFileId([]);
                 }
 
                 const selectedFiles = Array.from(e.target.files);

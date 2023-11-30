@@ -235,7 +235,7 @@ export default function NoticeBulletinBoardPageModifyWriting(bnum) {
                     dataToSend.secret = 0;
                     cookies.set('secret', 0, { maxAge: 60*60*24});
                 }
-                const response = await axios.put(`${process.env.REACT_APP_SERVER_URL}/boards/modify/NOTICE/${bnum.bno}`, dataToSend, {
+                const response = await axios.put(`${process.env.REACT_APP_SERVER_URL}/boards/modify/Notice/${bnum.bno}`, dataToSend, {
                     headers: {
                         'Authorization': `Bearer ${cookies.get('accessToken')}`,
                         'Content-Type': 'application/json'
@@ -324,7 +324,7 @@ export default function NoticeBulletinBoardPageModifyWriting(bnum) {
         if (!isButtonDisabled) {
             setIsButtonDisabled(true);
 
-            if (imageFlag) {
+            if (imageFlag && fileId.length !== 0) {
                 Swal.fire({
                     icon: 'warning',
                     title: '새로운 이미지를 추가하면 기존 이미지가 삭제됩니다.',
@@ -390,6 +390,7 @@ export default function NoticeBulletinBoardPageModifyWriting(bnum) {
                                 });
                             }
                         }
+                        setFileId([]);
                     }
     
                     const selectedFiles = Array.from(e.target.files);

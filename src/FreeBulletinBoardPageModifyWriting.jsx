@@ -478,8 +478,6 @@ export default function FreeBulletinBoardPageModifyWriting(bnum) {
         if (!updatedFiles[0]) {
             setFileExist(false);
         }
-        console.log(123, updatedFiles);
-        console.log(456, updatedFileId);
     };
 
     const goToGuide = () => {
