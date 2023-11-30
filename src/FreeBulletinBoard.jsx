@@ -168,7 +168,7 @@ export default function FreeBulletinBoard() {
 
     const [searchWordKorean, setSearchWordKorean] = useState('제목');
     const [posts, setPosts] = useState([]);
-    const [page, setPage] = useState(1);
+    const [page, setPage] = useState();
     const [postsPerPage, setPostsPerPage] = useState(10);
     const [searchFlag, setSearchFlag] = useState(false);
 

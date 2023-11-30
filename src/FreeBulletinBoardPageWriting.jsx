@@ -181,7 +181,7 @@ export default function FreeBulletinBoardPageWriting() {
     }
 
     const onClickCancelButton = async () => {
-        goToFreeBulletinBoard();
+        navigate("/FreeBulletinBoard");
     }
 
 

@@ -110,7 +110,6 @@ export default function FreeBulletinBoardPageModifyWriting(bnum) {
         cookies.set('page', 1);
     }
 
-    
     const goToLogin = () => {
         navigate("/Login");
     }
@@ -165,8 +164,6 @@ export default function FreeBulletinBoardPageModifyWriting(bnum) {
         boardType: "FREE",
         secret: secret
     };
-
-    const [bno, setBno] = useState(-1);
 
     const onClickSecretButton = async () => {
         if (secret===true) {
@@ -306,7 +303,7 @@ export default function FreeBulletinBoardPageModifyWriting(bnum) {
     }
 
     const onClickCancelButton = async () => {
-        goToFreeBulletinBoard();
+        navigate(-1);
     }
 
 
@@ -316,32 +313,31 @@ export default function FreeBulletinBoardPageModifyWriting(bnum) {
 
     const [file, setFile] = useState('');
 
-    const dataToSendImage = {
-        file: file,
-        boardType: "FREE",
-        bno: bnum.bno
-    };
-
     const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
     const onClickImageUpload = () => {
-    if (!isButtonDisabled) {
-        setIsButtonDisabled(true);
+        if (!isButtonDisabled) {
+            setIsButtonDisabled(true);
 
-        Swal.fire({
-            icon: 'warning',
-            title: '새로운 이미지를 추가하면 기존 이미지가 삭제됩니다.',
-            text: '계속하시겠습니까?',
-            showCancelButton: true,
-            confirmButtonText: '확인',
-            cancelButtonText: '취소',
-        }).then((result) => {
-            if (result.isConfirmed) {
-            imageInput.current.click();
+            if (imageFlag && fileId.length !== 0) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: '새로운 이미지를 추가하면 기존 이미지가 삭제됩니다.',
+                    text: '계속하시겠습니까?',
+                    showCancelButton: true,
+                    confirmButtonText: '확인',
+                    cancelButtonText: '취소',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    imageInput.current.click();
+                }
+                setIsButtonDisabled(false); // 파일 선택 창이 닫힐 때 버튼을 다시 활성화
+            });
             }
-
-            setIsButtonDisabled(false); // 파일 선택 창이 닫힐 때 버튼을 다시 활성화
-        });
+            else {
+                imageInput.current.click();
+                setIsButtonDisabled(false); // 파일 선택 창이 닫힐 때 버튼을 다시 활성화
+            }
         }
     };
 
@@ -362,7 +358,6 @@ export default function FreeBulletinBoardPageModifyWriting(bnum) {
                 });
                 e.target.value = null; // 파일 선택 창 초기화
                 return;
-                // setFileExist(false);
             }
             else {
                 if (!isFileSizeValid) {
@@ -372,7 +367,6 @@ export default function FreeBulletinBoardPageModifyWriting(bnum) {
                         showCancelButton: false
                     });
                     e.target.value = null;
-                    // setFileExist(false);
                     return;
                 }
 
@@ -386,9 +380,10 @@ export default function FreeBulletinBoardPageModifyWriting(bnum) {
                                 icon: "error",
                                 title: '기존의 이미지를 삭제하는데 실패하였습니다.',
                                 showCancelButton: false
-                            });
+                        });
                         }
                     }
+                    setFileId([]);
                 }
 
                 const selectedFiles = Array.from(e.target.files);
@@ -483,6 +478,8 @@ export default function FreeBulletinBoardPageModifyWriting(bnum) {
         if (!updatedFiles[0]) {
             setFileExist(false);
         }
+        console.log(123, updatedFiles);
+        console.log(456, updatedFileId);
     };
 
     const goToGuide = () => {

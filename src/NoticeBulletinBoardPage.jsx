@@ -244,7 +244,7 @@ export default function NoticeBulletinBoardPage(bno) {
     const [modifyComment, setModifyComment] = useState(null);
 
     const onSetModifyComment = (rno, replyer) => {
-        if (decodeURIComponent(cookies.get('email')) === replyer) {
+        if (decodeURIComponent(cookies.get('email')) === replyer ||  decodeURIComponent(cookies.get('email')) === 'darkest0722@gmail.com') {
             const commentToEdit = postsComment.dtoList.find((comment) => comment.rno === rno);
             setModifyCommentRno(rno);
             setModifyComment(commentToEdit.replyText);
@@ -413,7 +413,7 @@ export default function NoticeBulletinBoardPage(bno) {
 
     const goToNoticeBulletinBoardPageModifyWriting = () => {
         const decodedEmail = decodeURIComponent(cookies.get('email'));
-        if (decodedEmail === writer && cookies.get('accessToken')) {
+        if ((decodedEmail === writer ||  decodeURIComponent(cookies.get('email')) === 'darkest0722@gmail.com') && cookies.get('accessToken')) {
             navigate(`/NoticeBulletinBoardPageModifyWriting/${bno.bno}`)    
         }
         else {

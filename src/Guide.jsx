@@ -437,14 +437,14 @@ export default function Guide() {
                         </div>
                         <div className="GuideLine"/>
                     </div>
-                    <div className = "GuideMiddleDivision">
+                    {/* <div className = "GuideMiddleDivision">
                         <div className="GuideSubTitle">조작 방법</div>
                         <div className="GuideLine"/>
                     </div>
                     <div className = "GuideMiddleDivision">
                         <div className="GuideSubTitle">시작 화면</div>
                         <div className="GuideLine"/>
-                    </div>
+                    </div> */}
                 </div>
                 <div className="BulletinBoardLongLineBottom"/>
                 <div className = "BulletinBoardBottom">
