@@ -321,10 +321,15 @@ export default function FreeBulletinBoardPageModifyWriting(bnum) {
         boardType: "FREE",
         bno: bnum.bno
     };
-    
+
+    const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+
     const onClickImageUpload = () => {
+    if (!isButtonDisabled) {
+        setIsButtonDisabled(true);
+
         Swal.fire({
-            icon: "warning",
+            icon: 'warning',
             title: '새로운 이미지를 추가하면 기존 이미지가 삭제됩니다.',
             text: '계속하시겠습니까?',
             showCancelButton: true,
@@ -332,9 +337,12 @@ export default function FreeBulletinBoardPageModifyWriting(bnum) {
             cancelButtonText: '취소',
         }).then((result) => {
             if (result.isConfirmed) {
-                imageInput.current.click();
+            imageInput.current.click();
             }
+
+            setIsButtonDisabled(false); // 파일 선택 창이 닫힐 때 버튼을 다시 활성화
         });
+        }
     };
 
     const onFileSelect = async (e) => {
