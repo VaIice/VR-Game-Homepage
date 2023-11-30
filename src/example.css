@@ -1,4 +1,4 @@
-@media (max-width: 767px) {
+@media (max-width: 1015px) {
   .wallPaper123 {
     left: 0;
     top: 0;
@@ -136,7 +136,7 @@
   }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1016px) {
   .upperSpace123 {
     height: 10%;
     display: flex;

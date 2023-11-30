@@ -1,5 +1,5 @@
 
-@media (max-width: 767px) {
+@media (max-width: 1015px) {
 .SignUpWrap {
     height: 70%;
     width: 50%;
@@ -128,7 +128,7 @@
 }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1016px) {
 
     .SignUpWrap {
         height: 70%;

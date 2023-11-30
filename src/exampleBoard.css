@@ -1,4 +1,4 @@
-@media (min-width: 768px) {
+@media (min-width: 1016px) {
 .BulletinBoardUpper {
         flex: 0.9;
         display: flex;
@@ -324,7 +324,7 @@ color: rgb(113, 113, 113);
 }
 
 /* 작은 화면 */
-@media (max-width: 767px) {
+@media (max-width: 1015px) {
         .dropdownWord {
                 font-size: 14px;
                 list-style-type: none; 

@@ -1,4 +1,4 @@
-@media (min-width: 768px) {
+@media (min-width: 1016px) {
 
 .SignInWrap {
     height: 50%;
@@ -127,7 +127,7 @@
 }
 
 /* 작은 화면 */
-@media (max-width: 767px) {
+@media (max-width: 1015px) {
     .SignInWrap {
         height: 50%;
         width: 50%;

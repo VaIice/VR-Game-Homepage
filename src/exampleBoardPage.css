@@ -1,4 +1,4 @@
-@media (min-width: 768px) {
+@media (min-width: 1016px) {
 .FreeBulletinBoardPageImage {
     padding-bottom: 0.5%;
     margin-left: 1.5%;
@@ -262,7 +262,7 @@
 }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 1015px) {
     .FreeBulletinBoardPageImage {
         padding-bottom: 0.5%;
         margin-left: 1.5%;

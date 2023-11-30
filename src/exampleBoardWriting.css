@@ -1,4 +1,4 @@
-@media (min-width: 768px) {
+@media (min-width: 1016px) {
 .page12345 {
     position: fixed;
     top: 0;
@@ -212,7 +212,7 @@
 }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 1015px) {
     .page12345 {
         position: fixed;
         top: 0;

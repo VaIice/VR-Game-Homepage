@@ -1,4 +1,4 @@
-@media (min-width: 768px) {
+@media (min-width: 1016px) {
 .GuideSubTitle {
     margin-top: 1%;
     margin-bottom: 1%;
@@ -45,7 +45,7 @@
   }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 1015px) {
     .upperSpace1234 {
         margin-top: 3vh;
         display: flex;
