@@ -99,7 +99,18 @@ export default function Home() {
       };
 
     const onClickDownloadButton = () => {
-        window.open('https://drive.google.com/file/d/19hewc4ibBTHQj4TcjKOcq55Xz_eID3Qx/view?usp=drive_link', '_blank');
+        if (cookies.get('accessToken') && cookies.get('refreshToken')) {
+            window.open('https://drive.google.com/file/d/19hewc4ibBTHQj4TcjKOcq55Xz_eID3Qx/view?usp=drive_link', '_blank');
+        }
+        else {
+            Swal.fire({
+                icon: "info",
+                title: '로그인을 해주세요.',
+                showCancelButton: false
+            }).then(async () => {
+                goToLogin();
+            });
+        }
     }
     
     return (
