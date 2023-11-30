@@ -142,8 +142,8 @@ export default function FreeBulletinBoardPageWriting() {
                                     }
                             });
                         }
-                        loadingSwal.close();
                     }
+                    loadingSwal.close();
                     cookies.set('secret', secret, { maxAge: 60*60*24});
                     navigate(`/FreeBulletinBoardPage/${response.data}`);
                 }
