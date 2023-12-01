@@ -195,8 +195,32 @@ export default function NoticeBulletinBoardPageWriting() {
 
     const [file, setFile] = useState('');
     
+    const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+
     const onClickImageUpload = () => {
-        imageInput.current.click();
+        if (!isButtonDisabled) {
+            setIsButtonDisabled(true);
+
+            if (file.length !== 0) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: '새로운 이미지를 추가하면 기존 이미지가 삭제됩니다.',
+                    text: '계속하시겠습니까?',
+                    showCancelButton: true,
+                    confirmButtonText: '확인',
+                    cancelButtonText: '취소',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    imageInput.current.click();
+                }
+                setIsButtonDisabled(false); // 파일 선택 창이 닫힐 때 버튼을 다시 활성화
+            });
+            }
+            else {
+                imageInput.current.click();
+                setIsButtonDisabled(false); // 파일 선택 창이 닫힐 때 버튼을 다시 활성화
+            }
+        }
     };
 
     const onFileSelect = (e) => {
