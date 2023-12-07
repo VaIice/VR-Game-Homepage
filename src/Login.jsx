@@ -193,7 +193,8 @@ export default function Login() {
                 }
                 // 새로운 타이머 설정
 
-                tokenRefreshTimeoutOnClick = setTimeout(() => checkToken(response), 1800000 - 5*60*1000);
+                // tokenRefreshTimeoutOnClick = setTimeout(() => checkToken(response), 1800000 - 5*60*1000);
+                tokenRefreshTimeoutOnClick = setTimeout(() => checkToken(response), 10);
                 cookies.set('accessToken', response.data.accessToken, {maxAge: 1800000/1000})
                 // 일주일
                 cookies.set('refreshToken', response.data.refreshToken, {maxAge: 604800});
