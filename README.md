@@ -26,6 +26,16 @@
 ![](https://github.com/VaIice/Capstone/assets/141003473/a503faa3-b1ab-4e6f-95e6-afa22d4120b2)
 
 ----
+## 유스케이스 다이어그램
+![](https://github.com/VaIice/Capstone/assets/141003473/8b3e13e7-4e16-4f22-ab97-9a6232dd8bdc)
+
+## 유스케이스 시나리오 中
+![](https://github.com/VaIice/Capstone/assets/141003473/63dce755-70cb-4d5f-9640-5ac463dbc96c)
+
+## 시퀀스 다이어그램 中
+![](https://github.com/VaIice/Capstone/assets/141003473/f349a370-bca6-4399-bca5-1f6c5dadd815)
+
+----
 ## 웹 페이지 화면
 #### 메인 화면
 ---
