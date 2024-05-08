@@ -24,23 +24,16 @@
 ----
 ## 웹 페이지 화면
 #### 메인 화면
-![](https://github.com/VaIice/Capstone/assets/141003473/04882f4a-8032-45de-828c-b4fd77f0afc8)
 ---
 #### 회원가입
-![image](https://github.com/VaIice/Capstone/assets/141003473/673f43c7-984b-4a56-b94f-07186c659c0a)
 ---
 #### 로그인 연장
-![image](https://github.com/VaIice/Capstone/assets/141003473/d8f66685-2216-43f8-9ea1-f14d02add4c2)
 ---
 #### 비밀번호 찾기
-![](https://github.com/VaIice/Capstone/assets/141003473/f7fb5212-e799-4e28-b2f4-e1c9c7d3506e)
 ---
 #### 게시물 검색
-![image](https://github.com/VaIice/Capstone/assets/141003473/ec37cb6d-5f74-48f7-867f-8a0af1e63e3b)
 ---
 #### 웹 시연
-![image](https://github.com/VaIice/Capstone/assets/141003473/7d67276e-c7d3-459f-b581-24182c3b8ea1)
-![image](https://github.com/VaIice/Capstone/assets/141003473/6155e90b-51bf-4715-8a2d-69bf27be09c4)
 
 ----
 ## 👥 팀 소개
