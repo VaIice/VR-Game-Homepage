@@ -61,6 +61,8 @@ SW 등록번호: c-2023-060485
 
 ---
 #### 웹 시연
+![](https://github.com/VaIice/Capstone/assets/141003473/42ccac85-6e6f-433c-9782-f77fdced3099)
+![](https://github.com/VaIice/Capstone/assets/141003473/5082e859-6288-43d7-960c-ea1cb1d43659)
 
 ----
 ## 🛠 시스템 구성도
