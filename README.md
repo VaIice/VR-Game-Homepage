@@ -11,33 +11,32 @@
 - 로그인, 로그아웃
 - JWT토큰 기반 로그인, 로그아웃
 - 게시물 CRUD
-- 이미지 첨부 기능
+- 게시물 비공개 설정
+- 게시물 이미지 첨부
 - 검색 기능
 - 댓글 기능
 - 내 정보 수정
-
+- 비밀번호 찾기
+- 회원탈퇴
+  
 ---
 
 ## 🌏 Darkest Planet
 ##### <http://d10v0gqnjifjsl.cloudfront.net>
-
----
-
-## 유니티 화면
-- 제작 중
-
-
+###### 현재는 접속이 불가합니다.
 ---
 
 ## 웹 페이지 화면
 #### 메인 화면
-![Home](https://github.com/VaIice/Capstone/assets/141003473/1ff68715-a7ac-4c61-9940-7034dc2d8e97)
+![](https://github.com/VaIice/Capstone/assets/141003473/04882f4a-8032-45de-828c-b4fd77f0afc8)
 
 #### 게시판 이미지 업로드 시 화면
 <img width="701" alt="이미지 업로드" src="https://github.com/VaIice/Capstone/assets/141003473/cf488b25-70c0-446a-b631-9e53d3b4f489">
 
 #### 게시글 검색 시 화면
-![검색 기능](https://github.com/VaIice/Capstone/assets/141003473/b5a28746-9f82-4b3d-bc8e-b0af50d75cfe)
+![image](https://github.com/VaIice/Capstone/assets/141003473/e2c55847-7c92-439d-8a27-385624f503d4)
+
+![image](https://github.com/VaIice/Capstone/assets/141003473/8aac38d9-58a3-4e6a-b296-ad24a6723792)
 
 #### 게시글 삭제 시 화면
 ![게시글 삭제](https://github.com/VaIice/Capstone/assets/141003473/a55e52eb-0575-4404-9546-f3706192d256)
