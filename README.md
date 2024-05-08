@@ -52,7 +52,7 @@ SW 등록번호: c-2023-060485
 
 ---
 #### 비밀번호 찾기
-![](https://github.com/VaIice/Capstone/assets/141003473/9dd02206-7fbf-451e-ba5d-46e94f9da60a | width=800)
+<img src="https://github.com/VaIice/Capstone/assets/141003473/9dd02206-7fbf-451e-ba5d-46e94f9da60a" width="800"/>
 
 ---
 #### 게시물 검색
