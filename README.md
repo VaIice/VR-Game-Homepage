@@ -44,6 +44,7 @@ SW 등록번호: c-2023-060485
 
 ---
 #### 회원가입
+![](https://github.com/VaIice/Capstone/assets/141003473/ce558ae8-e03c-44b9-929b-a13a044b206d)
 
 ---
 #### 로그인 연장
