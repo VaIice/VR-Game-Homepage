@@ -15,8 +15,8 @@
 - 내 정보 수정
 - 비밀번호 찾기
 - 회원탈퇴
-----
 
+----
 ## 🌏 Darkest Planet
 ##### <http://d10v0gqnjifjsl.cloudfront.net>
 ###### 현재는 접속이 불가합니다.
@@ -88,4 +88,7 @@
 |      ****1548    |  ****1552 |
 
 🛠️ **Tools and Technologies :** <br><br>
-- 제작 중
+<img src="https://img.shields.io/badge/Unity-000000?style=for-the-badge&logo=unity&logoColor=white">
+<img src="https://img.shields.io/badge/Oculus-1C1E22?style=for-the-badge&logo=oculus&logoColor=white">
+<img src="https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white">
+<img src="https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=c-sharp&logoColor=white">
