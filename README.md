@@ -50,6 +50,7 @@ SW 등록번호: c-2023-060485
 
 ---
 #### 게시물 검색
+![](https://github.com/VaIice/Capstone/assets/141003473/3ac026f7-6a69-4989-b5e4-022049fe4ee5)
 
 
 ---
