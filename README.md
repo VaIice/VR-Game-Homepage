@@ -61,6 +61,10 @@
 #### 비밀번호 찾기
 ---
 #### 게시물 검색
+
+https://github.com/VaIice/Capstone/assets/141003473/68158350-c2c6-479c-a6e9-370ca6e846a0
+
+
 ---
 #### 웹 시연
 
