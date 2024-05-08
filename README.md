@@ -1,10 +1,7 @@
 ## 📝 Capstone 
-##### 주제: VR, 인공지능을 활용한 던전 RPG 제작 및 웹 서비스 제공
+##### VR, 인공지능을 활용한 던전 RPG 제작 및 웹 서비스 제공
 
----
-
-## 유니티 기능
-- 제작 중
+----
 
 ## 웹 기능
 - 회원가입
@@ -18,44 +15,53 @@
 - 내 정보 수정
 - 비밀번호 찾기
 - 회원탈퇴
-  
----
+----
 
 ## 🌏 Darkest Planet
 ##### <http://d10v0gqnjifjsl.cloudfront.net>
 ###### 현재는 접속이 불가합니다.
----
 
+----
 ## 웹 페이지 화면
 #### 메인 화면
 ![](https://github.com/VaIice/Capstone/assets/141003473/04882f4a-8032-45de-828c-b4fd77f0afc8)
-
-#### 게시판 이미지 업로드 시 화면
-<img width="701" alt="이미지 업로드" src="https://github.com/VaIice/Capstone/assets/141003473/cf488b25-70c0-446a-b631-9e53d3b4f489">
-
-#### 게시글 검색 시 화면
-![image](https://github.com/VaIice/Capstone/assets/141003473/e2c55847-7c92-439d-8a27-385624f503d4)
-
-![image](https://github.com/VaIice/Capstone/assets/141003473/8aac38d9-58a3-4e6a-b296-ad24a6723792)
-
-#### 게시글 삭제 시 화면
-![게시글 삭제](https://github.com/VaIice/Capstone/assets/141003473/a55e52eb-0575-4404-9546-f3706192d256)
-
 ---
+#### 회원가입
+![image](https://github.com/VaIice/Capstone/assets/141003473/673f43c7-984b-4a56-b94f-07186c659c0a)
+---
+#### 로그인 연장
+![image](https://github.com/VaIice/Capstone/assets/141003473/d8f66685-2216-43f8-9ea1-f14d02add4c2)
+---
+#### 비밀번호 찾기
+![](https://github.com/VaIice/Capstone/assets/141003473/f7fb5212-e799-4e28-b2f4-e1c9c7d3506e)
+---
+#### 게시물 검색
+![image](https://github.com/VaIice/Capstone/assets/141003473/ec37cb6d-5f74-48f7-867f-8a0af1e63e3b)
+---
+#### 웹 시연
+![image](https://github.com/VaIice/Capstone/assets/141003473/7d67276e-c7d3-459f-b581-24182c3b8ea1)
+![image](https://github.com/VaIice/Capstone/assets/141003473/6155e90b-51bf-4715-8a2d-69bf27be09c4)
+
 
 ## 👥 팀 소개
 
-#### 🎮 Unity
-| Unity |  Unity  |
-| :------------: | :------------: |
-| 팀장 : 문경필 | 박승완 |
-|      ****1548    |  ****1552 |
+#### 🎨 FrontEnd
+|   FrontEnd |
+| :------------: |
+| 김승현|
+|  ****1677 |
+| [![GitHub](https://img.shields.io/badge/-GitHub-black?style=flat-square&logo=github)](https://github.com/VaIice) |
 
 🛠️ **Tools and Technologies :** <br><br>
-- 제작 중
+![HTML5](https://img.shields.io/badge/HTML5-%23E34F26.svg?&style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/-CSS3-1572B6?logo=css3&logoColor=white&style=for-the-badge)
+![JavaScript](https://img.shields.io/badge/JavaScript-%23F7DF1E.svg?&style=for-the-badge&logo=javascript&logoColor=black)
+![React](https://img.shields.io/badge/React-%2361DAFB.svg?&style=for-the-badge&logo=react&logoColor=white)
+![Amazon S3](https://img.shields.io/badge/Amazon_S3-%23D9313D.svg?&style=for-the-badge&logo=amazon-aws&logoColor=white)
+![Amazon CloudFront](https://img.shields.io/badge/Amazon_CloudFront-%23FF9900.svg?&style=for-the-badge&logo=amazon-aws&logoColor=black)
+![Figma](https://img.shields.io/badge/-Figma-F24E1E?logo=Figma&logoColor=white&style=for-the-badge)
 
----
-
+----
 #### 🖥 BackEnd
 |   BackEnd |
 | :------------: |
@@ -73,21 +79,13 @@
 <img src="https://img.shields.io/badge/amazons3-569A31?style=for-the-badge&logo=amazons3&logoColor=white">
 <img src="https://img.shields.io/badge/githubactions-2088FF?style=for-the-badge&logo=githubactions&logoColor=white">
 <img src="https://img.shields.io/badge/postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white">
+----
 
----
-
-#### 🎨 FrontEnd
-|   FrontEnd |
-| :------------: |
-| 김승현|
-|  ****1677 |
-| [![GitHub](https://img.shields.io/badge/-GitHub-black?style=flat-square&logo=github)](https://github.com/VaIice) |
+#### 🎮 Unity
+| Unity |  Unity  |
+| :------------: | :------------: |
+| 팀장 : 문경필 | 박승완 |
+|      ****1548    |  ****1552 |
 
 🛠️ **Tools and Technologies :** <br><br>
-![HTML5](https://img.shields.io/badge/HTML5-%23E34F26.svg?&style=for-the-badge&logo=html5&logoColor=white)
-![CSS3](https://img.shields.io/badge/-CSS3-1572B6?logo=css3&logoColor=white&style=for-the-badge)
-![JavaScript](https://img.shields.io/badge/JavaScript-%23F7DF1E.svg?&style=for-the-badge&logo=javascript&logoColor=black)
-![React](https://img.shields.io/badge/React-%2361DAFB.svg?&style=for-the-badge&logo=react&logoColor=white)
-![Amazon S3](https://img.shields.io/badge/Amazon_S3-%23D9313D.svg?&style=for-the-badge&logo=amazon-aws&logoColor=white)
-![Amazon CloudFront](https://img.shields.io/badge/Amazon_CloudFront-%23FF9900.svg?&style=for-the-badge&logo=amazon-aws&logoColor=black)
-![Figma](https://img.shields.io/badge/-Figma-F24E1E?logo=Figma&logoColor=white&style=for-the-badge)
+- 제작 중
