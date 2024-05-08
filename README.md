@@ -42,7 +42,6 @@
 ![image](https://github.com/VaIice/Capstone/assets/141003473/7d67276e-c7d3-459f-b581-24182c3b8ea1)
 ![image](https://github.com/VaIice/Capstone/assets/141003473/6155e90b-51bf-4715-8a2d-69bf27be09c4)
 
-
 ## 👥 팀 소개
 
 #### 🎨 FrontEnd
