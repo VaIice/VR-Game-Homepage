@@ -7,15 +7,15 @@
 ###### 현재는 접속이 불가합니다.
 
 ----
-## 프로젝트 기간
+## 📅 프로젝트 기간
 2023.09-2023.11
 
 ----
-## 한국 저작권 위원회 등록
+## 📂 한국 저작권 위원회 등록
 SW 등록번호: c-2023-060485
 
 ----
-## 프로젝트 개발 배경
+## ⚙ 프로젝트 개발 배경
 - 코로나 시절 VR 기기 보급의 증가
 - 쉽게 접하기 힘든 VR 기술에 도전
 - VR기기 플레이에 있어 새로운 즐거움 창출
@@ -25,7 +25,7 @@ SW 등록번호: c-2023-060485
 - 게시판 등의 소셜 경험을 촉진하여 전반적인 유지율 증가
 
 ----
-## 웹 기능
+## 🛠 웹 기능
 - 회원가입
 - 로그인, 로그아웃
 - JWT토큰 기반 로그인, 로그아웃
@@ -37,23 +37,6 @@ SW 등록번호: c-2023-060485
 - 내 정보 수정
 - 비밀번호 찾기
 - 회원탈퇴
-
-----
-## 시스템 구성도
-![](https://github.com/VaIice/Capstone/assets/141003473/a503faa3-b1ab-4e6f-95e6-afa22d4120b2)
-
-----
-## 유스케이스 다이어그램
-![](https://github.com/VaIice/Capstone/assets/141003473/8b3e13e7-4e16-4f22-ab97-9a6232dd8bdc)
-
-----
-## 유스케이스 시나리오 - 로그인
-![](https://github.com/VaIice/Capstone/assets/141003473/63dce755-70cb-4d5f-9640-5ac463dbc96c)
-
-----
-## 시퀀스 다이어그램 - 회원가입
-![](https://github.com/VaIice/Capstone/assets/141003473/f349a370-bca6-4399-bca5-1f6c5dadd815)
-
 ----
 ## 웹 페이지 화면
 #### 메인 화면
@@ -71,6 +54,23 @@ SW 등록번호: c-2023-060485
 
 ---
 #### 웹 시연
+
+----
+
+## 시스템 구성도
+![](https://github.com/VaIice/Capstone/assets/141003473/a503faa3-b1ab-4e6f-95e6-afa22d4120b2)
+
+----
+## 유스케이스 다이어그램
+![](https://github.com/VaIice/Capstone/assets/141003473/8b3e13e7-4e16-4f22-ab97-9a6232dd8bdc)
+
+----
+## 유스케이스 시나리오 - 로그인
+![](https://github.com/VaIice/Capstone/assets/141003473/63dce755-70cb-4d5f-9640-5ac463dbc96c)
+
+----
+## 시퀀스 다이어그램 - 회원가입
+![](https://github.com/VaIice/Capstone/assets/141003473/f349a370-bca6-4399-bca5-1f6c5dadd815)
 
 ----
 ## 👥 팀 소개
