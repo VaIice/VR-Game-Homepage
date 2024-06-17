@@ -20,7 +20,7 @@
 ![Amazon CloudFront](https://img.shields.io/badge/Amazon_CloudFront-%23FF9900.svg?&style=for-the-badge&logo=amazon-aws&logoColor=black)
 ![Figma](https://img.shields.io/badge/-Figma-F24E1E?logo=Figma&logoColor=white&style=for-the-badge)
 
----
+----
 #### 🖥 BackEnd
 |   BackEnd |
 | :------------: |
@@ -39,7 +39,7 @@
 <img src="https://img.shields.io/badge/githubactions-2088FF?style=for-the-badge&logo=githubactions&logoColor=white">
 <img src="https://img.shields.io/badge/postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white">
 
----
+----
 #### 🎮 Unity
 | Unity |  Unity  |
 | :------------: | :------------: |
