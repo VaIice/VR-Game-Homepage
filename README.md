@@ -6,7 +6,7 @@
 #### 🎨 FrontEnd
 |   FrontEnd |
 | :------------: |
-| 김승현|
+| 김*현|
 |  ****1677 |
 | [![GitHub](https://img.shields.io/badge/-GitHub-black?style=flat-square&logo=github)](https://github.com/VaIice) |
 
@@ -23,7 +23,7 @@
 #### 🖥 BackEnd
 |   BackEnd |
 | :------------: |
-| 김지수|
+| 김*수|
 |  ****1570 |
 | [![GitHub](https://img.shields.io/badge/-GitHub-black?style=flat-square&logo=github)](https://github.com/VaIice) |
 
@@ -42,7 +42,7 @@
 #### 🎮 Unity
 | Unity |  Unity  |
 | :------------: | :------------: |
-| 팀장 : 문경필 | 박승완 |
+| 팀장 : 문*필 | 박*완 |
 |      ****1548    |  ****1552 |
 
 🛠️ **Tools and Technologies :** <br><br>
