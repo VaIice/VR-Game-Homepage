@@ -52,11 +52,6 @@
 <img src="https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=c-sharp&logoColor=white">
 
 ----
-## 🌏 주소
-##### <http://d10v0gqnjifjsl.cloudfront.net>
-###### 현재는 접속이 불가합니다.
-
-----
 ## 📅 프로젝트 기간
 2023.09-2023.11
 
