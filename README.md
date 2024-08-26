@@ -25,7 +25,6 @@
 | :------------: |
 | 김*수|
 |  ****1570 |
-| [![GitHub](https://img.shields.io/badge/-GitHub-black?style=flat-square&logo=github)](https://github.com/VaIice) |
 
 🛠️ **Tools and Technologies :** <br><br>
 <img src="https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=mysql&logoColor=white"> 
